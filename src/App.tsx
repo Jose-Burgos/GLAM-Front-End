@@ -2,7 +2,7 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Test } from './views/test'
 import { Landing } from './views/landing';
-import { NavBar } from './components/navbar';
+import  NavBar  from './components/navbar';
 import { NavBarType } from './components/navbartype';
 import { Footer } from './components/footer';
 
