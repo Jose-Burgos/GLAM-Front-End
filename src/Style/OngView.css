@@ -1,0 +1,16 @@
+.title{
+    color: #dd760fc0;
+    padding-left: 50px;
+    text-align: center;
+}
+.ong-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas de igual anchura */
+    gap: 20px; /* Espacio entre las columnas */
+    width: 100%; /* Ancho del contenedor al 100% de la pantalla */
+  }
+  
+
+
+  
+  
