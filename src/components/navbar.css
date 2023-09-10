@@ -51,6 +51,11 @@ a {
     }
 }
 
+.links a:hover {
+    color: red;
+}
+
+
 .links.active {
     @media (max-width: 768px) {
         width: 100%;
@@ -69,6 +74,10 @@ a {
     font-size: 2rem;
     margin-top: 1rem;
     color: white;
+}
+
+.links.active a:hover {
+    color: red;
 }
 
 .r-cont {

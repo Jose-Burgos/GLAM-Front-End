@@ -1,8 +1,9 @@
 import { Divider, Grid } from "@mui/material";
+import './landing.css'
 
 export const Landing = () => {
     return (
-        <>
+        <div className="content">
             <h1>Grupo Latinoamericano de ayuda a mascotas</h1>
             <Grid container>
                 <Grid item xs>
@@ -13,6 +14,6 @@ export const Landing = () => {
                     <h2>Right</h2>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 }
