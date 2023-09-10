@@ -1,5 +1,5 @@
 import '../Style/OngView.css';
-import Grid from '../Components/grid';
+import Grid from '../components/grid';
 export const OngView = () => {
   return (
     <div className='ong-container'>
