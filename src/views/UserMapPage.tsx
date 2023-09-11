@@ -1,9 +1,11 @@
 
+import './App.css'
 import 'react-dom'
-export function UserMapPage() {
+export function App() {
   return (
 <>
     
+
 <div style={{width: 1440, height: 1024, position: 'relative', background: 'white'}}>
   <h1>¡Hola Marta!</h1>
   <h2>Éstas son las ONGs cerca tuyo que alojan mascotas que buscan hogar.</h2>
@@ -26,4 +28,4 @@ export function UserMapPage() {
   )
 }
 
-export default UserMapPage
+export default App

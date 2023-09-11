@@ -1,6 +1,6 @@
 
 
-function LostPetReportView(){
+function LostPetReport(){
     return(
         <div>
             <h1>Pagina de mascotas perdidas.</h1>
@@ -10,4 +10,4 @@ function LostPetReportView(){
     );
 }
 
-export default LostPetReportView
+export default LostPetReport
