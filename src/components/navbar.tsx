@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { Button, styled } from '@mui/material';
 
 const LogButton = styled(Button)({
-    fontFamily: 'Shadows Into Light',
+    fontFamily: 'Shantell Sans',
     fontSize: '2rem',
     color: 'blue',
 })
