@@ -1,19 +1,41 @@
-import { Divider, Grid } from "@mui/material";
+import ContactForm from '../components/contactforma';
+import LandingContainter from '../components/landingcontainter';
 import './landing.css'
 
 export const Landing = () => {
     return (
         <div className="content">
             <h1>Grupo Latinoamericano de ayuda a mascotas</h1>
-            <Grid container>
-                <Grid item xs>
-                    <h2>Left</h2>
-                </Grid>
-                <Divider orientation="vertical" flexItem />
-                <Grid item xs>
-                    <h2>Right</h2>
-                </Grid>
-            </Grid>
+            <LandingContainter 
+            left={true}
+            path="../src/assets/cat&dogs.png"
+            subt="Quienes somos?"
+            parag="Somos una organización sin fines de lucro, 
+            con el objetivo de que todos los animales maltratados o en situación 
+            de calle tengan la posibilidad de encontrar un nuevo hogar."/>
+            <LandingContainter 
+            left={false}
+            path="../src/assets/cat&dogs.png"
+            subt="Quienes somos?"
+            parag="Somos una organización sin fines de lucro, 
+            con el objetivo de que todos los animales maltratados o en situación 
+            de calle tengan la posibilidad de encontrar un nuevo hogar."/>
+            <LandingContainter 
+            left={true}
+            path="../src/assets/cat&dogs.png"
+            subt="Quienes somos?"
+            parag="Somos una organización sin fines de lucro, 
+            con el objetivo de que todos los animales maltratados o en situación 
+            de calle tengan la posibilidad de encontrar un nuevo hogar."/>
+            <LandingContainter 
+            left={false}
+            path="../src/assets/cat&dogs.png"
+            subt="Quienes somos?"
+            parag="Somos una organización sin fines de lucro, 
+            con el objetivo de que todos los animales maltratados o en situación 
+            de calle tengan la posibilidad de encontrar un nuevo hogar."/>
+            <h1>Contactanos</h1>
+            <ContactForm/>
         </div>
     );
 }

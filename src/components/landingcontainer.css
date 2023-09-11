@@ -1,0 +1,35 @@
+.cont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    box-shadow: gray;
+    @media (max-width: 655px) {
+        flex-direction: column;
+    }
+}
+
+.cont-img {
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    border-radius: .4rem;
+}
+
+.divider {
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.const-parag {
+    font-size: 1.25rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.cont-card {
+    height: auto;
+    margin-bottom: 20px;
+}
