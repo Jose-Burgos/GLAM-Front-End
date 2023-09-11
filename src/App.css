@@ -3,3 +3,16 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* No se ve el border por alguna razón ¯\_(ツ)_/¯ */
+tr {
+  border-bottom: 1px solid #ff0000;
+}
+
+thead {
+  background-color: grey;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
