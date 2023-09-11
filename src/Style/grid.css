@@ -1,0 +1,6 @@
+.image-typography {
+    position: relative;
+    padding: 16px; /* Esto es equivalente a 'p: 4' en tu código */
+    padding-top: 8px; /* Esto es equivalente a 'pt: 2' en tu código */
+    padding-bottom: calc(8px + 6px); /* Esto es equivalente a 'pb: (theme) => `calc(${theme.spacing(1)} + 6px)`' en tu código */
+  }

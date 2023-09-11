@@ -35,6 +35,8 @@ export default function NavBar() {
                 <Link onClick={handleClick} to="/test">Denuncias</Link>
                 <Link onClick={handleClick} to="/ong">Organizaciones</Link>
                 <Link onClick={handleClick} to="/test">Donar</Link>
+                <Link onClick={handleClick} to="/rescue">Reportar</Link>
+                <Link onClick={handleClick} to="/map">Mapa</Link>
             </div>
             <div className='r-cont'>
                 <Link to="/test"><LogButton className='logbtn'>Ingresa</LogButton></Link>
