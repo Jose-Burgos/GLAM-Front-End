@@ -7,7 +7,7 @@ import { Button, styled } from '@mui/material';
 const LogButton = styled(Button)({
     fontFamily: 'Shadows Into Light',
     fontSize: '2rem',
-    color: 'red',
+    color: 'blue',
 })
 
 export default function NavBar() {
@@ -28,16 +28,16 @@ export default function NavBar() {
 
     return (
         <nav>
-            <h1 className='tittle-nav' >GLAM</h1>
+            <h1 className='tittle-nav' ><Link to="/">GLAM</Link></h1>
             <div className={`links ${clicked ? 'active' : ''}`}>
                 <Link onClick={handleClick} to="/">Inicio</Link>
-                <Link onClick={handleClick} to="/test">Test 1</Link>
-                <Link onClick={handleClick} to="/test">Test 2</Link>
-                <Link onClick={handleClick} to="/test">Test 3</Link>
+                <Link onClick={handleClick} to="/test">Adopcion</Link>
+                <Link onClick={handleClick} to="/test">Denuncias</Link>
+                <Link onClick={handleClick} to="/test">Organizaciones</Link>
+                <Link onClick={handleClick} to="/test">Donar</Link>
             </div>
-
             <div className='r-cont'>
-                <LogButton className='logbtn'>Ingresa</LogButton>
+                <Link to="/test"><LogButton className='logbtn'>Ingresa</LogButton></Link>
                 <div className='burger'>
                     <BurgerButton clicked={clicked} handleClick={handleClick} />
                 </div>
