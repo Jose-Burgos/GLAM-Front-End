@@ -1,4 +1,4 @@
-import ContactForm from '../components/contactforma';
+import ContactForm from '../components/contactform';
 import LandingContainter from '../components/landingcontainter';
 import './landing.css'
 
@@ -35,7 +35,7 @@ export const Landing = () => {
             con el objetivo de que todos los animales maltratados o en situación 
             de calle tengan la posibilidad de encontrar un nuevo hogar."/>
             <h1>Contactanos</h1>
-            <ContactForm/>
+            <ContactForm />
         </div>
     );
 }

@@ -4,13 +4,13 @@ import { useState } from 'react';
 import './contactform.css'
 
 const Tf = styled(TextField)({
-    fontFamily: 'Shadows Into Light',
+    fontFamily: 'Shantell Sans',
     fontSize: '2rem',
     color: 'blue',
 })
 
 const Sbtn = styled(Button) ({
-    fontFamily: 'Shadows Into Light',
+    fontFamily: 'Shantell Sans',
     fontSize: '1.5rem',
     color: 'blue',
 })
