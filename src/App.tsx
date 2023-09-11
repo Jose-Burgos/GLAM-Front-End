@@ -5,6 +5,7 @@ import { Landing } from './views/landing';
 import  NavBar  from './components/navbar';
 import { NavBarType } from './components/navbartype';
 import { Footer } from './components/footer';
+import { OngView } from './Views/OngView';
 
 function hasJWT() : boolean {
   return window.localStorage.getItem("authUser") !== null;
@@ -18,6 +19,7 @@ export const App = () => (
     <Routes>
       <Route path='/' element={<Landing/>}/>
       <Route path='/test' element={<Test/>}/>
+      <Route path='/ong' element={<OngView/>}/>
     </Routes>
     <Footer/>
   </Router>

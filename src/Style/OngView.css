@@ -4,10 +4,9 @@
     text-align: center;
 }
 .ong-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas de igual anchura */
-    gap: 20px; /* Espacio entre las columnas */
-    width: 100%; /* Ancho del contenedor al 100% de la pantalla */
+    flex:1;
+    min-height: 100vh;
+    padding: 20px;
   }
   
 

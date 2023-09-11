@@ -34,6 +34,7 @@ export default function NavBar() {
                 <Link onClick={handleClick} to="/test">Test 1</Link>
                 <Link onClick={handleClick} to="/test">Test 2</Link>
                 <Link onClick={handleClick} to="/test">Test 3</Link>
+                <Link onClick={handleClick} to="/ong">ONG</Link>
             </div>
 
             <div className='r-cont'>
