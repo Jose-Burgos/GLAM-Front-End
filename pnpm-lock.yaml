@@ -20,6 +20,9 @@ dependencies:
   '@mui/styled-engine-sc':
     specifier: ^5.14.8
     version: 5.14.8(styled-components@5.3.11)
+  '@supabase/postgrest-js':
+    specifier: ^1.8.4
+    version: 1.8.4
   '@supabase/supabase-js':
     specifier: ^2.33.1
     version: 2.33.1

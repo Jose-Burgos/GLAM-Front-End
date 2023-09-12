@@ -21,7 +21,6 @@ const App = () => {
 
   async function getAnimals() {
     let { data: animals, error } = await selectAnimals()
-    // let { data: animals, error } = await supabase.from('animals').select('*')
     if (animals === null) {
       console.log('Error: ', error)
     } else {
