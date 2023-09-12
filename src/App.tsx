@@ -10,6 +10,7 @@ import { Proyecto4patas } from './Views/proyecto4patas';
 import { PatitasGlew } from './Views/PatitasGlew';
 import { Zaguatesrefugio } from './Views/zaguatesrefugio';
 import { Patitasalrescate } from './Views/patitasalrescate';
+import { AdoptView } from './Views/AdoptView';
 import  LostPetReportView from './Views/LostPetReport'
 import  UserMapPageView  from './Views/UserMapPage'
 
@@ -32,6 +33,7 @@ export const App = () => (
       <Route path='/patitasglew' element={<PatitasGlew/>}/>
       <Route path='/rescue' element={<LostPetReportView/>}/>
       <Route path='/map' element={<UserMapPageView/>}/>
+      <Route path='/adopcion' element={<AdoptView/>}/>
     </Routes>
     <Footer/>
   </Router>

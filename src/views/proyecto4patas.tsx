@@ -1,4 +1,3 @@
-
 export const Proyecto4patas = () => {
   return (
     <div>
