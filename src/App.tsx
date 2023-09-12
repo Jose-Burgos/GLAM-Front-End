@@ -5,18 +5,18 @@ import { Landing } from './views/landing';
 import  NavBar  from './components/navbar';
 import { NavBarType } from './components/navbartype';
 import { Footer } from './components/footer';
-import { OngView } from './Views/OngView';
-import { Proyecto4patas } from './Views/proyecto4patas';
-import { PatitasGlew } from './Views/PatitasGlew';
-import { Zaguatesrefugio } from './Views/zaguatesrefugio';
-import { Patitasalrescate } from './Views/patitasalrescate';
-import { AdoptView } from './Views/AdoptView';
-import  LostPetReportView from './Views/LostPetReport'
-import  UserMapPageView  from './Views/UserMapPage'
+import { OngView } from './views/OngView';
+import { Proyecto4patas } from './views/proyecto4patas';
+import { PatitasGlew } from './views/PatitasGlew';
+import { Zaguatesrefugio } from './views/zaguatesrefugio';
+import { Patitasalrescate } from './views/patitasalrescate';
+import { AdoptView } from './views/AdoptView';
+import  LostPetReportView from './views/LostPetReport'
+import  UserMapPageView  from './views/UserMapPage'
 
-function hasJWT() : boolean {
-  return window.localStorage.getItem("authUser") !== null;
-}
+// function hasJWT() : boolean {
+//   return window.localStorage.getItem("authUser") !== null;
+// }
 
 const flag = true;
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import Card from '../Components/card';
+// import React from 'react';
+import Card from '../components/card';
 
 export const AdoptView = () => {
   const cardData = [
