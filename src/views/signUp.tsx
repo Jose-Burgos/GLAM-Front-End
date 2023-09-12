@@ -6,6 +6,7 @@ interface SignUpForm {
   username: string
   first_name: string
   last_name: string
+  identification: string
   email: string
   password: string
 }
@@ -15,6 +16,7 @@ export const SignUp = () => {
     username: '',
     first_name: '',
     last_name: '',
+    identification: '',
     email: '',
     password: '',
   }
@@ -22,7 +24,7 @@ export const SignUp = () => {
 
   const handleChange = (e: any) => {
     const { name: key, value } = e.target
-    console.log(key, value)
+    // console.log(key, value)
     setFormData((prevData: SignUpForm) => ({
       ...prevData,
       [key]: value,
@@ -31,7 +33,7 @@ export const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { username, first_name, last_name, email, password } = formData
+    const { username, first_name, last_name, identification, email, password } = formData
     console.log(formData)
 
     const { data, error } = await supabase.auth.signUp({
@@ -42,6 +44,7 @@ export const SignUp = () => {
           username,
           first_name,
           last_name,
+          identification,
         },
       },
     })
@@ -91,6 +94,17 @@ export const SignUp = () => {
                 fullWidth
                 required
                 value={formData.last_name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="DNI"
+                name="identification"
+                variant="outlined"
+                fullWidth
+                required
+                value={formData.identification}
                 onChange={handleChange}
               />
             </Grid>
