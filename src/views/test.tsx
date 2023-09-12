@@ -1,5 +1,11 @@
+import BuildIcon from '@mui/icons-material/Build';
+import '../Style/test.css'
 export const Test = () => {
     return (
-        <h1>This is a test</h1>
+        <div>
+        <BuildIcon className='icon'></BuildIcon>
+        <h1>Lo sentimos, estamos actualizando esta página para brindarle una mejor experiencia</h1>
+        </div>
+
     );
 }

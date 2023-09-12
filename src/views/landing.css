@@ -13,3 +13,23 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.title{
+    font-size: 70px;
+}
+.info-container {
+    background-image: url('../assets/cat&dogs.png'); 
+    background-size: cover; 
+    text-align: center; 
+    height: 1000px;
+}
+.info1 {
+    text-align: center;
+    font-size: 60px; 
+    color: rgb(14, 6, 104); 
+  }
+.info2 {
+    margin-top: 550px;
+    text-align: center;
+    font-size: 60px; 
+    color: rgb(14, 6, 104); 
+  }
