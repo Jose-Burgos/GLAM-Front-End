@@ -1,31 +1,56 @@
 import { Button, Divider, Grid, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { supabase } from '../supabaseClient'
+
+interface SignUpForm {
+  username: string
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+}
 
 export const SignUp = () => {
-  const [formData, setFormData] = useState({
+  const init_form: SignUpForm = {
     username: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
-  })
+  }
+  const [formData, setFormData] = useState(init_form)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    console.log(e.target)
-    setFormData((prevData) => ({
+  const handleChange = (e: any) => {
+    const { name: key, value } = e.target
+    console.log(key, value)
+    setFormData((prevData: SignUpForm) => ({
       ...prevData,
-      [name]: value,
+      [key]: value,
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Access the values from the formData object
-    const { username, email, password } = formData
-    // Add your sign-up logic here, using the captured values
-    console.log('Username:', username)
-    console.log('Email:', email)
-    console.log('Password:', password)
-    // For example, you can send a POST request to your backend API
+    const { username, first_name, last_name, email, password } = formData
+    console.log(formData)
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          username,
+          first_name,
+          last_name,
+        },
+      },
+    })
+
+    if (error) {
+      console.log(error)
+    } else {
+      console.log(data)
+    }
   }
 
   return (
@@ -44,6 +69,28 @@ export const SignUp = () => {
                 fullWidth
                 required
                 value={formData.username}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="First Name"
+                name="first_name"
+                variant="outlined"
+                fullWidth
+                required
+                value={formData.first_name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Last Name"
+                name="last_name"
+                variant="outlined"
+                fullWidth
+                required
+                value={formData.last_name}
                 onChange={handleChange}
               />
             </Grid>
