@@ -1,7 +1,8 @@
-// import React from 'react';
-import Card from '../components/card';
+import React from 'react';
 
-export const AdoptView = () => {
+import Card from '@/components/card';
+
+export default function AdoptView() {
   const cardData = [
     {
       img: 'https://www.proyecto4patas.org/wp-content/uploads/photo-gallery/thumb/Almendra_(1).jpeg?bwg=1694262163',
@@ -49,11 +50,10 @@ export const AdoptView = () => {
               img={card.img}
               name={card.name}
               description={card.description}
-            ></Card>
+            />
           </div>
         ))}
       </div>
     </div>
   );
-};
-
+}

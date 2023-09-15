@@ -1,0 +1,35 @@
+footer {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.3rem;
+}
+
+.f-tittle {
+    padding-top: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+@media (max-width: 768px) {
+    .f-tittle {
+        padding-top: 0.8rem;
+        margin-top: 0.4rem;
+        font-size: 1.5rem;
+    }
+    .f-description {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 2000px) {
+    .f-tittle {
+        padding-top: 0.7rem;
+        margin-top: 0.4rem;
+        font-size: 4rem;
+    }
+    .f-description {
+        font-size: 3rem;
+    }
+  }

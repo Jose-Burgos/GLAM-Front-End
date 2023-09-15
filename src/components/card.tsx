@@ -1,3 +1,5 @@
+'use Client';
+
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 export default function MediaCard(props:any) {
   return (
-    <Card sx={{ width: 345}}>
+    <Card sx={{ width: 345 }}>
       <CardMedia
         sx={{ height: 400 }}
         image={props.img}

@@ -1,7 +1,8 @@
-import  NavBar  from "./navbar"
+import React from 'react';
+import NavBar from './navabar';
 
-export const NavBarType = () => {
-    return (
-        <NavBar/>
-    )
+export default function NavBarType() {
+  return (
+    <NavBar />
+  );
 }

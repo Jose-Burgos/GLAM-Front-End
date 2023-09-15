@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+# Importante:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* Se puede elegir donde se renderiza un componente (client o server), el default es server si se quiere cambiar arriba de todo se debe colocar lo siguiente "use Client"
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* El css correspondiente a cada componente va dentro de la carpeta de style.
 
-## Expanding the ESLint configuration
+* Las **rutas** en next.js son los nombres de las carpetas que se encuentran en el directorio **app**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* Para crear una nueva ruta se tiene que crear una carpeta y dentro una archivo que debe llamarse **page.tsx**
 
-- Configure the top-level `parserOptions` property like this:
+* El css correspondiente a una página va dentro de la carpeta que la contiene.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+* Se puede abreviar *./src/* por *@/*
+
+* Las **imágenes** tienen que ir dentro de la carpeta assets dentro de public
+
+* Mantener el formato de etiquetado para carpetas y archivos
+
+* Antes de hacer un push verificar el estilo de los archivos con
+
+
 ```
+npm run lint
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```
+Algunos errores son inevitables en ese caso agregar una nueva regla en el archivo **.eslintrc.json**.

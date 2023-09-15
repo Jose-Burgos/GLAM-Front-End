@@ -1,10 +1,13 @@
-import './footer.css'
+'use client';
 
-export const Footer = () => {
-    return (
-        <footer>
-            <h1>GLAM</h1>
-            <h3>Grupo Latinoamericano de ayuda a mascotas</h3>
-        </footer>
-    );
+import React from 'react';
+import '../style/footer.css';
+
+export default function Footer() {
+  return (
+    <footer>
+      <h1 className="f-tittle">GLAM</h1>
+      <h3 className="f-description">Grupo Latinoamericano de ayuda a mascotas</h3>
+    </footer>
+  );
 }
