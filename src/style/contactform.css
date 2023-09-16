@@ -1,3 +1,12 @@
+.contact-card {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 90%;
+    border-radius: 9%;
+    border-style:ridge;
+}
+
 .contact-input {
     margin-top: .5rem;
     width: 50%;
@@ -7,11 +16,4 @@
     margin-top: 0.5rem;
     padding: 0.3rem;
     margin-bottom: 0.5rem;
-}
-
-.contact-card {
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    width: 70%;
 }
