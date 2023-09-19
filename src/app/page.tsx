@@ -11,7 +11,6 @@ const Data = [
     subt: 'Quienes somos?',
     parag:
       'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
-    idx: 0,
   },
   {
     position: false,
@@ -19,7 +18,6 @@ const Data = [
     subt: 'Quienes somos?',
     parag:
       'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
-    idx: 1,
   },
   {
     position: true,
@@ -27,7 +25,6 @@ const Data = [
     subt: 'Quienes somos?',
     parag:
       'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
-    idx: 2,
   },
   {
     position: false,
@@ -35,7 +32,6 @@ const Data = [
     subt: 'Quienes somos?',
     parag:
       'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
-    idx: 3,
   },
 ];
 
@@ -43,12 +39,13 @@ export default function Landing() {
   return (
     <div className="content">
       <h1 className="tittle">Grupo Latinoamericano de ayuda a mascotas</h1>
-      {Data.map((d) => (
+      {Data.map((d, idx) => (
         <LandingContainter
           left={d.position}
           path={d.path}
           subt={d.subt}
           parag={d.parag}
+          key={idx}
         />
       ))}
       <h1 className="tittle">Contactanos</h1>

@@ -44,8 +44,8 @@ export default function AdoptView() {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h1>Adopción</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {cardData.map((card, index) => (
-          <div key={index} style={cardStyle}>
+        {cardData.map((card, idx) => (
+          <div key={idx} style={cardStyle}>
             <Card
               img={card.img}
               name={card.name}

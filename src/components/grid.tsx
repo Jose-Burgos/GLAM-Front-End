@@ -97,12 +97,13 @@ const ImageMarked = styled('span')(({ theme }) => ({
 export default function ButtonBaseDemo() {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', width: 1200 }}>
-      {images.map((image) => (
+      {images.map((image, idx) => (
         <ImageButton
           focusRipple
           style={{
             width: image.width,
           }}
+          key={idx}
         >
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
