@@ -37,6 +37,8 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/">Denuncias</Link>
         <Link onClick={handleClick} href="/ong">Organizaciones</Link>
         <Link onClick={handleClick} href="/">Donar</Link>
+        <Link onClick={handleClick} href="/create-account">Crear Cuenta</Link>
+
         <Link href="/test"><LogButton className="logbtn-burger">Ingresa</LogButton></Link>
       </div>
       <div className="r-cont">
