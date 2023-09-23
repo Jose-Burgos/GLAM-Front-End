@@ -34,5 +34,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# lock files
 package-lock.json
 pnpm-lock.yaml
+
+# For login into supabase cli. Contains private token.
+supabase_login

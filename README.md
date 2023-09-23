@@ -25,3 +25,8 @@ npm run lint
 
 ```
 Algunos errores son inevitables en ese caso agregar una nueva regla en el archivo **.eslintrc.json**.
+
+## Supabase
+
+* Los tipos de supabase hay que regenerarlos cada vez que se modifica/agrega alguna tabla en la base de datos.
+Para eso primero hay que loguearse con `npx supabase login` que pide una token que se puede generar en `https://supabase.com/dashboard/account/tokens`. Después de loguearse se puede correr el comando `npm run gen-types-npx` que actualiza automáticamente los tipos en el archivo `supabase/types/supabase.ts`
