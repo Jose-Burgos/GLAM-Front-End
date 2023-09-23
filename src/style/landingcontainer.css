@@ -1,62 +1,62 @@
 .cont-card {
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    margin-bottom: 20px;
-    width: 90%;
-    border-style: ridge;
-    border-radius: 9%;
-    background-color: beige;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  margin-bottom: 20px;
+  width: 90%;
+  border-style: ridge;
+  border-radius: 9%;
+  background-color: beige;
 }
 
 .cont {
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .img-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 78/45;
-     @media (max-width: 600px) {
-        aspect-ratio: 58/25;
-    }
+  position: relative;
+  width: 100%;
+  aspect-ratio: 78/45;
+  @media (max-width: 600px) {
+    aspect-ratio: 58/25;
+  }
 }
 
 .img-next.right {
-    border-radius: 10% 0 0 10%;
-    @media (max-width: 600px) {
-        border-radius: 10% 10% 0 0;
-    }
+  border-radius: 10% 0 0 10%;
+  @media (max-width: 600px) {
+    border-radius: 10% 10% 0 0;
+  }
 }
 
 .img-next.left {
-    border-radius: 0 10% 10% 0;
-    @media (max-width: 600px) {
-        border-radius: 0 0 10% 10%;
-    }
+  border-radius: 0 10% 10% 0;
+  @media (max-width: 600px) {
+    border-radius: 0 0 10% 10%;
+  }
 }
 
 .const-parag {
-    font-size: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 
-    @media (max-width: 768px) {
-        font-size: 0.7rem;
-    }
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 
-    @media (min-width: 1440px) {
-        font-size: 1.5rem;
-    }
+  @media (min-width: 1440px) {
+    font-size: 1.5rem;
+  }
 }
 
 .cont-subt {
-    @media (max-width: 1000px) {
-        font-size: 1rem;
-    }
+  @media (max-width: 1000px) {
+    font-size: 1rem;
+  }
 
-    @media (min-width: 1440px) {
-        font-size: 1.75rem;
-    }
+  @media (min-width: 1440px) {
+    font-size: 1.75rem;
+  }
 }

@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Button, Card, TextField, styled,
-} from '@mui/material';
+import { Button, Card, TextField, styled } from '@mui/material';
 import '../style/contactform.css';
 
 const Tf = styled(TextField)({
@@ -75,7 +73,9 @@ function ContactForm() {
             onChange={handleChange}
           />
         </div>
-        <Sbtn className="submit-btn" type="submit">Enviar</Sbtn>
+        <Sbtn className="submit-btn" type="submit">
+          Enviar
+        </Sbtn>
       </form>
     </Card>
   );

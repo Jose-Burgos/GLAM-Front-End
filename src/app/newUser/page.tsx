@@ -1,20 +1,23 @@
 'use client';
 
 import React, { FormEvent } from 'react';
+import { UserInfo } from '~/supabase/types/supabase.tables';
+import { userSignUp } from '~/supabase/helpers';
 
 export default function newUser() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const response = await fetch('/api/submit', {
-      method: 'POST',
-      body: formData,
-    });
-
-    // Handle response if necessary
-    const data = await response.json();
-    // ...
+    // Esto por qué lo están haciendo así y no con lo de useState de react? Onda es mejor así o solo pintó?
+    // Porque el tema es que así me parece que no se pueden poner bien los tipos de ts
+    const formData = Object.fromEntries(
+      new FormData(event.currentTarget)
+    ) as unknown as UserInfo;
+    /*
+     * formData verifications here
+     */
+    const res = await userSignUp(formData);
+    console.log(res);
   }
 
   return (
@@ -24,24 +27,31 @@ export default function newUser() {
       <form onSubmit={onSubmit}>
         <div>
           Nombre:
-          <input type="text" name="Nombre" />
+          <input type="text" name="firstName" defaultValue="TestName" />
         </div>
-
         <div>
-          Direccion:
-          <input type="text" name="Direccion" />
+          Apellido:
+          <input type="text" name="lastName" defaultValue="TestSurname" />
+        </div>
+        <div>
+          DNI:
+          <input type="text" name="identification" defaultValue="TestDNI" />
         </div>
         <div>
           Correo Electronico:
-          <input type="text" name="Email" />
+          <input type="email" name="email" defaultValue="Test@Email.com" />
         </div>
         <div>
           Contraseña:
-          <input type="text" name="Password" />
+          <input type="password" name="password" defaultValue="TestPass" />
         </div>
         <div>
           Repetir Contraseña:
-          <input type="text" name="PasswordRepeat" />
+          <input
+            type="password"
+            name="passwordRepeat"
+            defaultValue="TestPassRep"
+          />
         </div>
         <button type="submit">Submit</button>
       </form>

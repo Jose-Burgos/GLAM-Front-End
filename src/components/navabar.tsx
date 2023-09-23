@@ -30,19 +30,37 @@ export default function NavBar() {
 
   return (
     <nav>
-      <h1 className="tittle-nav"><Link href="/">GLAM</Link></h1>
+      <h1 className="tittle-nav">
+        <Link href="/">GLAM</Link>
+      </h1>
       <div className={`links ${clicked ? 'active' : ''}`}>
-        <Link onClick={handleClick} href="/">Inicio</Link>
-        <Link onClick={handleClick} href="/patitas">Adopcion</Link>
-        <Link onClick={handleClick} href="/">Denuncias</Link>
-        <Link onClick={handleClick} href="/ong">Organizaciones</Link>
-        <Link onClick={handleClick} href="/">Donar</Link>
-        <Link onClick={handleClick} href="/create-account">Crear Cuenta</Link>
+        <Link onClick={handleClick} href="/">
+          Inicio
+        </Link>
+        <Link onClick={handleClick} href="/patitas">
+          Adopcion
+        </Link>
+        <Link onClick={handleClick} href="/">
+          Denuncias
+        </Link>
+        <Link onClick={handleClick} href="/ong">
+          Organizaciones
+        </Link>
+        <Link onClick={handleClick} href="/">
+          Donar
+        </Link>
+        <Link onClick={handleClick} href="/create-account">
+          Crear Cuenta
+        </Link>
 
-        <Link href="/test"><LogButton className="logbtn-burger">Ingresa</LogButton></Link>
+        <Link href="/test">
+          <LogButton className="logbtn-burger">Ingresa</LogButton>
+        </Link>
       </div>
       <div className="r-cont">
-        <Link href="/test"><LogButton className="logbtn">Ingresa</LogButton></Link>
+        <Link href="/test">
+          <LogButton className="logbtn">Ingresa</LogButton>
+        </Link>
         <div className="burger">
           <BurgerButton clicked={clicked} handleClick={handleClick} />
         </div>

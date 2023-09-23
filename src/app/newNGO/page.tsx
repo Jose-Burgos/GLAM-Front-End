@@ -6,14 +6,14 @@ export default function newNGO() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const response = await fetch('/api/submit', {
-      method: 'POST',
-      body: formData,
-    });
+    // const formData = new FormData(event.currentTarget);
+    // const response = await fetch('/api/submit', {
+    //   method: 'POST',
+    //   body: formData,
+    // });
 
     // Handle response if necessary
-    const data = await response.json();
+    // const data = await response.json();
     // ...
   }
 

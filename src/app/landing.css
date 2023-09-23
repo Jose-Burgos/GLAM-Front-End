@@ -1,23 +1,23 @@
 .content {
-    position: relative;
-    padding: 20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 .land-card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .tittle {
-    font-size: 1.5rem;
-    @media (max-width: 1000px) {
-        font-size: 1.35rem;
-    }
-    @media (min-width: 1440px) {
-        font-size: 1.9rem;
-    }
+  font-size: 1.5rem;
+  @media (max-width: 1000px) {
+    font-size: 1.35rem;
+  }
+  @media (min-width: 1440px) {
+    font-size: 1.9rem;
+  }
 }

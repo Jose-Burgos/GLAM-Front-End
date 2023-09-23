@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@600&display=swap');
 
 #root {
-    font-family: 'Shantell Sans';
+  font-family: 'Shantell Sans';
   line-height: 1.5;
   font-weight: 400;
   width: 100%;
@@ -20,6 +20,6 @@
 }
 
 body {
-    height: 100vh;
-    margin: 0 auto;
+  height: 100vh;
+  margin: 0 auto;
 }

@@ -8,13 +8,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard(props:any) {
+export default function MediaCard(props: any) {
   return (
     <Card sx={{ width: 345 }}>
-      <CardMedia
-        sx={{ height: 400 }}
-        image={props.img}
-      />
+      <CardMedia sx={{ height: 400 }} image={props.img} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {props.name}
