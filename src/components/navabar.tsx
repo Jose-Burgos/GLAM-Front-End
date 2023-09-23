@@ -53,12 +53,12 @@ export default function NavBar() {
           Crear Cuenta
         </Link>
 
-        <Link href="/test">
+        <Link onClick={handleClick} href="/login">
           <LogButton className="logbtn-burger">Ingresa</LogButton>
         </Link>
       </div>
       <div className="r-cont">
-        <Link href="/test">
+        <Link onClick={handleClick} href="/login">
           <LogButton className="logbtn">Ingresa</LogButton>
         </Link>
         <div className="burger">

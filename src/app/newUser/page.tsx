@@ -13,11 +13,28 @@ export default function newUser() {
     const formData = Object.fromEntries(
       new FormData(event.currentTarget)
     ) as unknown as UserInfo;
+
     /*
-     * formData verifications here
+     * formData verifications here like password repeate matching, etc
      */
-    const res = await userSignUp(formData);
-    console.log(res);
+
+    try {
+      console.log('Form data: ', formData);
+      const { data, existingAccount } = await userSignUp(formData);
+      console.log('Res: ', data);
+      if (existingAccount) {
+        // Handle as you see fit
+        alert('Ya existe una cuenta asociada al email ingresado.');
+      } else {
+        // Handle as you see fit
+        alert(
+          'Registro exitoso, revise su casilla electrónica para verificar la dirección de email.'
+        );
+      }
+    } catch (err) {
+      // Handle as you see fit
+      alert('Some unexpected error: ' + err);
+    }
   }
 
   return (
@@ -32,6 +49,10 @@ export default function newUser() {
         <div>
           Apellido:
           <input type="text" name="lastName" defaultValue="TestSurname" />
+        </div>
+        <div>
+          Usuario:
+          <input type="text" name="username" defaultValue="TestUsername" />
         </div>
         <div>
           DNI:
