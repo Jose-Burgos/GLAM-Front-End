@@ -196,6 +196,40 @@ export interface Database {
         };
         Relationships: [];
       };
+      users: {
+        Row: {
+          first_name: string;
+          id: string;
+          identification: string;
+          last_name: string;
+          reputation: number | null;
+          username: string;
+        };
+        Insert: {
+          first_name: string;
+          id: string;
+          identification: string;
+          last_name: string;
+          reputation?: number | null;
+          username: string;
+        };
+        Update: {
+          first_name?: string;
+          id?: string;
+          identification?: string;
+          last_name?: string;
+          reputation?: number | null;
+          username?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'users_id_fkey';
+            columns: ['id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;

@@ -7,11 +7,21 @@ export type Animal = Tables<'animals'> & {
   species: Tables<'species'>;
 };
 
+export type RegularUser = Tables<'users'>;
+export type Organization = Tables<'organizations'>;
+export type ProfileType = 'RegularUser' | 'Organization';
+
 export interface UserInfo {
   username: string;
   firstName: string;
   lastName: string;
   identification: string;
+  email: string;
+  password: string;
+}
+
+export interface OrgInfo {
+  name: string;
   email: string;
   password: string;
 }

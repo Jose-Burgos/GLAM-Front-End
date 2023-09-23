@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button, styled } from '@mui/material';
 import BurgerButton from './burgerbutton';
+import { logout } from '~/supabase/helpers';
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -16,6 +17,10 @@ export default function NavBar() {
   const [clicked, setClicked] = useState(false);
   const handleClick = () => {
     setClicked(!clicked);
+  };
+
+  const handleLogOut = () => {
+    logout();
   };
 
   useEffect(() => {
@@ -52,9 +57,11 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/create-account">
           Crear Cuenta
         </Link>
-
         <Link onClick={handleClick} href="/login">
           <LogButton className="logbtn-burger">Ingresa</LogButton>
+        </Link>
+        <Link onClick={handleLogOut} href="/">
+          Logout
         </Link>
       </div>
       <div className="r-cont">

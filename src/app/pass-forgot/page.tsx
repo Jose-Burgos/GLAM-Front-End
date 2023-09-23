@@ -2,7 +2,7 @@
 
 import React, { FormEvent } from 'react';
 import { LoginInfo } from '~/supabase/types/supabase.tables';
-import { login, resetPass } from '~/supabase/helpers';
+import { sendForgotPassEmail } from '~/supabase/helpers';
 import Link from 'next/link';
 import { styled } from '@mui/material';
 
@@ -16,12 +16,12 @@ export default function newUser() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const {email} = Object.fromEntries(
-      new FormData(event.currentTarget)
-    ) as {email: string}
+    const { email } = Object.fromEntries(new FormData(event.currentTarget)) as {
+      email: string;
+    };
 
     try {
-      const data = await resetPass(email);
+      const data = await sendForgotPassEmail(email);
       console.log(data);
     } catch (err) {
       // Handle as you see fit

@@ -1,8 +1,14 @@
+// Tiene que ser client para el password reset que necesita useEffect.
+// Después igual se puede cambiar a dónde redirecciona el mail de confimación
+// de cambio de clave y movemos el useEffect ahí y listo.
+'use client';
+
 // This is the landing
-import React from 'react';
+import React, { useEffect } from 'react';
 import '@/app/landing.css';
 import ContactForm from '@/components/contactform';
 import LandingContainter from '@/components/landingcontainter';
+import { askNewPassOnReset } from '~/supabase/helpers';
 
 const Data = [
   {
@@ -36,6 +42,14 @@ const Data = [
 ];
 
 export default function Landing() {
+  useEffect(() => {
+    try {
+      askNewPassOnReset();
+    } catch (err) {
+      // Handle the error
+    }
+  }, []);
+
   return (
     <div className="content">
       <h1 className="tittle">Grupo Latinoamericano de ayuda a mascotas</h1>
