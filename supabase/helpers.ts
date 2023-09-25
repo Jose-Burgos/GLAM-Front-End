@@ -21,6 +21,7 @@ export async function getAnimals() {
   return data;
 }
 
+
 export async function getCurrentUser(): Promise<{
   profile: RegularUser | Organization;
   type: ProfileType;
