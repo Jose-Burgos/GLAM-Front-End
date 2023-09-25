@@ -28,7 +28,6 @@ export async function getCurrentUser(): Promise<{
   const session = await verifySession();
   if (!session) {
     throw new Error('No active session found');
-    
   }
 
   const {
@@ -78,7 +77,7 @@ export async function userSignUp({
   lastName: last_name,
   identification,
 }: UserInfo) {
-  const profile_type: ProfileType = 'RegularUser'
+  const profile_type: ProfileType = 'RegularUser';
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -109,7 +108,7 @@ export async function userSignUp({
 }
 
 export async function orgSignUp({ email, password, name }: OrgInfo) {
-  const profile_type: ProfileType = 'Organization'
+  const profile_type: ProfileType = 'Organization';
   const { data, error } = await supabase.auth.signUp({
     email,
     password,

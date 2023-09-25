@@ -1,0 +1,21 @@
+.createBox{
+    text-align: center;
+}
+
+.NGOButton{
+    color: black;
+    padding: 10px;
+    background-color: orange;
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.AdoptantButton{
+    color: black;
+    padding: 10px;
+    background-color: purple;
+    border-radius: 15px;
+    margin: 10px;
+
+}
+

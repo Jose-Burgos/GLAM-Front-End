@@ -1,6 +1,7 @@
 // Tiene que ser client para el password reset que necesita useEffect.
 // Después igual se puede cambiar a dónde redirecciona el mail de confimación
 // de cambio de clave y movemos el useEffect ahí y listo.
+
 'use client';
 
 // This is the landing

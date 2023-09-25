@@ -5,6 +5,7 @@ import { LoginInfo } from '~/supabase/types/supabase.tables';
 import { login, verifySession } from '~/supabase/helpers';
 import Link from 'next/link';
 import { styled } from '@mui/material';
+import './login.css';
 
 const ResetPass = styled(Link)({
   fontFamily: 'Shantell Sans',
@@ -12,20 +13,20 @@ const ResetPass = styled(Link)({
   color: 'blue',
 });
 
-export default function newUser() {
+export default function NewUser() {
   useEffect(() => {
     // redirectIfSignedIn()
     (async () => {
       try {
         const session = await verifySession();
         if (session) {
-          console.log('Signed session: ', session)
+          console.log('Signed session: ', session);
           alert('Already signed in');
           // Redirect to home page
         }
       } catch (err) {
         // Handle the error
-        alert('Some unexpected error: ' + err);
+        alert(`Some unexpected error: ${err}`);
       }
     })();
   }, []);
@@ -48,27 +49,35 @@ export default function newUser() {
       alert('Login successful');
     } catch (err) {
       // Handle as you see fit
-      alert('Some unexpected error: ' + err);
+      alert(`Some unexpected error: ${err}`);
     }
   }
 
   return (
-    <div>
-      <h1>Ingrese a su cuenta</h1>
+    <div className="globalLogin">
+      <h1 className="loginMessage">Ingrese a su cuenta</h1>
       <form onSubmit={onSubmit}>
-        <div>
+        <div className="correoBox">
           Correo Electronico:
           <input
+            className="correoInput"
             type="email"
             name="email"
             defaultValue="vomapa9028@bnovel.com"
           />
         </div>
-        <div>
+        <div className="passBox">
           Contraseña:
-          <input type="password" name="password" defaultValue="asdf1234" />
+          <input
+            className="passInput"
+            type="password"
+            name="password"
+            defaultValue="asdf1234"
+          />
         </div>
-        <button type="submit">Submit</button>
+        <button className="submitButton" type="submit">
+          Entrar
+        </button>
       </form>
       <ResetPass href="/pass-forgot">Olvidé mi contraseña</ResetPass>
     </div>
