@@ -1,49 +1,48 @@
-.globalContainer{
-    text-align: center;
+.globalContainer {
+  text-align: center;
 }
-.newNGOtitle{
-    text-align: center;
+.newNGOtitle {
+  text-align: center;
 }
-.newNGOSubtitle1{
-    text-align: center;
+.newNGOSubtitle1 {
+  text-align: center;
 }
-.newNGOSubtitle2{
-    text-align: center;
+.newNGOSubtitle2 {
+  text-align: center;
 }
-.submissionForm{
-    text-align: center;
+.submissionForm {
+  text-align: center;
 }
-.emailInput{
-    margin: 5px;
+.emailInput {
+  margin: 5px;
 }
-.emailInput:focus{
-    background-color: lightcyan;
-    padding: 2px;
+.emailInput:focus {
+  background-color: lightcyan;
+  padding: 2px;
 }
-.passwordInput{
-    margin: 5px;
+.passwordInput {
+  margin: 5px;
 }
-.passwordInput:focus{
-    background-color: lightcyan;
-    padding: 2px;
+.passwordInput:focus {
+  background-color: lightcyan;
+  padding: 2px;
 }
-.nameInput{
-    margin: 5px;
+.nameInput {
+  margin: 5px;
 }
-.nameInput:focus{
-    background-color: lightcyan;
-    padding: 2px;
+.nameInput:focus {
+  background-color: lightcyan;
+  padding: 2px;
 }
-.addressInput{
-    margin: 5px;
+.addressInput {
+  margin: 5px;
 }
-.addressInput:focus{
-    background-color: lightcyan;
-    padding: 2px;
+.addressInput:focus {
+  background-color: lightcyan;
+  padding: 2px;
 }
 .submitButton {
-    background-color: orange;
-    color: cornsilk;
-    margin: 5px;
-  }
-  
+  background-color: orange;
+  color: cornsilk;
+  margin: 5px;
+}
