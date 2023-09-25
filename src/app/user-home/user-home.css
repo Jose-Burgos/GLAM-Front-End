@@ -1,0 +1,4 @@
+.pet-card {
+  display: flex;
+  flex-direction: row;
+}

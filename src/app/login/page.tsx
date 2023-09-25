@@ -5,7 +5,7 @@ import { LoginInfo } from '~/supabase/types/supabase.tables';
 import { login, verifySession } from '~/supabase/helpers';
 import Link from 'next/link';
 import { styled } from '@mui/material';
-import './login.css';
+import { useRouter } from 'next/navigation';
 
 const ResetPass = styled(Link)({
   fontFamily: 'Shantell Sans',
@@ -13,7 +13,8 @@ const ResetPass = styled(Link)({
   color: 'blue',
 });
 
-export default function NewUser() {
+export default function newUser() {
+  const router = useRouter();
   useEffect(() => {
     // redirectIfSignedIn()
     (async () => {
@@ -22,7 +23,6 @@ export default function NewUser() {
         if (session) {
           console.log('Signed session: ', session);
           alert('Already signed in');
-          // Redirect to home page
         }
       } catch (err) {
         // Handle the error
@@ -41,6 +41,7 @@ export default function NewUser() {
     try {
       const { session, profile, type } = await login(formData);
       if (type === 'RegularUser') {
+        router.push('/user-home');
         // Do something
       } else if (type === 'Organization') {
         // Do something else
