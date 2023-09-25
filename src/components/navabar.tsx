@@ -4,8 +4,8 @@ import '../style/navbar.css';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button, styled } from '@mui/material';
-import BurgerButton from './burgerbutton';
 import { logout } from '~/supabase/helpers';
+import BurgerButton from './burgerbutton';
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -15,11 +15,13 @@ const LogButton = styled(Button)({
 
 export default function NavBar() {
   const [clicked, setClicked] = useState(false);
+  const [islogged, setlogged] = useState(false); // Cambiar esto
   const handleClick = () => {
     setClicked(!clicked);
   };
 
-  const handleLogOut = () => {
+  const handleLog = () => {
+    setlogged(!islogged);
     logout();
   };
 
@@ -42,10 +44,10 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/">
           Inicio
         </Link>
-        <Link onClick={handleClick} href="/patitas">
+        <Link onClick={handleClick} href="/adoption">
           Adopcion
         </Link>
-        <Link onClick={handleClick} href="/">
+        <Link onClick={handleClick} href="/reports/lost">
           Denuncias
         </Link>
         <Link onClick={handleClick} href="/ong">
@@ -54,20 +56,17 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/">
           Donar
         </Link>
-        <Link onClick={handleClick} href="/create-account">
-          Crear Cuenta
-        </Link>
-        <Link onClick={handleClick} href="/login">
-          <LogButton className="logbtn-burger">Ingresa</LogButton>
-        </Link>
-        <Link onClick={handleLogOut} href="/">
-          Logout
-        </Link>
       </div>
       <div className="r-cont">
-        <Link onClick={handleClick} href="/login">
-          <LogButton className="logbtn">Ingresa</LogButton>
-        </Link>
+        {islogged ? (
+          <Link onClick={handleLog} href="/">
+            <LogButton className="logbtn">Cerrar sesion</LogButton>
+          </Link>
+        ) : (
+          <Link onClick={handleLog} href="/login">
+            <LogButton className="logbtn">Ingresa</LogButton>
+          </Link>
+        )}
         <div className="burger">
           <BurgerButton clicked={clicked} handleClick={handleClick} />
         </div>

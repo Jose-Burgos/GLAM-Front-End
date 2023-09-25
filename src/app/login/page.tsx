@@ -41,7 +41,7 @@ export default function newUser() {
     try {
       const { session, profile, type } = await login(formData);
       if (type === 'RegularUser') {
-        router.push('/user-home');
+        router.push('/user/home');
         // Do something
       } else if (type === 'Organization') {
         // Do something else
@@ -80,7 +80,8 @@ export default function newUser() {
           Entrar
         </button>
       </form>
-      <ResetPass href="/pass-forgot">Olvidé mi contraseña</ResetPass>
+      <ResetPass href="/register">Todavia no tienes cuenta?</ResetPass>
+      <ResetPass href="/login/password-reset">Olvidé mi contraseña</ResetPass>
     </div>
   );
 }

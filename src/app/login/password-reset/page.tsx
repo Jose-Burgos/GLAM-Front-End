@@ -2,14 +2,6 @@
 
 import React, { FormEvent } from 'react';
 import { sendForgotPassEmail } from '~/supabase/helpers';
-import Link from 'next/link';
-import { styled } from '@mui/material';
-
-const ResetPass = styled(Link)({
-  fontFamily: 'Shantell Sans',
-  fontSize: '2rem',
-  color: 'blue',
-});
 
 export default function newUser() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -24,7 +16,7 @@ export default function newUser() {
       console.log(data);
     } catch (err) {
       // Handle as you see fit
-      alert('Some unexpected error: ' + err);
+      alert(`Some unexpected error: ${err}`);
     }
   }
 

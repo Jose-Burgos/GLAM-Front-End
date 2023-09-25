@@ -11,10 +11,10 @@ export default function NewAccLanding() {
         Necesitamos saber que tipo de usuario eres.
       </h2>
       <div className="buttonsBox">
-        <a href="/newNGO" className="NGOButton">
+        <a href="/register/newNGO" className="NGOButton">
           Soy ONG.
         </a>
-        <a className="AdoptantButton" href="/newUser">
+        <a className="AdoptantButton" href="/register/newUser">
           Soy adoptante.
         </a>
       </div>
