@@ -1,6 +1,6 @@
 'use client';
 
-import PetCard from '@/components/petcard';
+import RecipeReviewCard from '@/components/petcard';
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser, getAnimals } from '~/supabase/helpers';
 import {
@@ -48,8 +48,9 @@ export default function UserHome() {
         <div className="pet-card">
           <h2>Animales Disponibles</h2>
           {animals.map((animal) => (
-            <PetCard {...animal} />
-          ))}
+          <RecipeReviewCard {...animal} >
+          </RecipeReviewCard>
+            ))}
         </div>
       </div>
     </div>

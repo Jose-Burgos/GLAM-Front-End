@@ -59,8 +59,8 @@ export default function RecipeReviewCard(props: Animal) {
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
+        src={"https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"}
+        alt={props.name}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
