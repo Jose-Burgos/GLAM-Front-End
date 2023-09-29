@@ -6,6 +6,7 @@ import { login, verifySession } from '~/supabase/helpers';
 import Link from 'next/link';
 import { styled } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import './login.css';
 
 const ResetPass = styled(Link)({
   fontFamily: 'Shantell Sans',
@@ -13,7 +14,7 @@ const ResetPass = styled(Link)({
   color: 'blue',
 });
 
-export default function newUser() {
+export default function NewUser() {
   const router = useRouter();
   useEffect(() => {
     // redirectIfSignedIn()

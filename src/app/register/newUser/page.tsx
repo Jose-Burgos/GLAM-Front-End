@@ -3,6 +3,7 @@
 import React, { FormEvent } from 'react';
 import { UserInfo } from '~/supabase/types/supabase.tables';
 import { userSignUp } from '~/supabase/helpers';
+import './newUser.css';
 
 export default function newUser() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -33,38 +34,68 @@ export default function newUser() {
       }
     } catch (err) {
       // Handle as you see fit
-      alert('Some unexpected error: ' + err);
+      alert(`Some unexpected error: ${err}`);
     }
   }
 
   return (
-    <div>
+    <div className="globalDiv">
       <h1>Nuevo Usuario Adoptante.</h1>
       <h2>Vamos a necesitar algunos datos...</h2>
       <form onSubmit={onSubmit}>
         <div>
           Nombre:
-          <input type="text" name="firstName" defaultValue="TestName" />
+          <input
+            type="text"
+            name="firstName"
+            defaultValue="TestName"
+            className="textFieldInput"
+          />
         </div>
         <div>
           Apellido:
-          <input type="text" name="lastName" defaultValue="TestSurname" />
+          <input
+            type="text"
+            name="lastName"
+            defaultValue="TestSurname"
+            className="textFieldInput"
+          />
         </div>
         <div>
           Usuario:
-          <input type="text" name="username" defaultValue="TestUsername" />
+          <input
+            type="text"
+            name="username"
+            defaultValue="TestUsername"
+            className="textFieldInput"
+          />
         </div>
         <div>
           DNI:
-          <input type="text" name="identification" defaultValue="TestDNI" />
+          <input
+            type="text"
+            name="identification"
+            defaultValue="TestDNI"
+            className="textFieldInput"
+          />
         </div>
         <div>
           Correo Electronico:
-          <input type="email" name="email" defaultValue="Test@Email.com" />
+          <input
+            type="email"
+            name="email"
+            defaultValue="Test@Email.com"
+            className="textFieldInput"
+          />
         </div>
         <div>
           Contraseña:
-          <input type="password" name="password" defaultValue="TestPass" />
+          <input
+            type="password"
+            name="password"
+            defaultValue="TestPass"
+            className="textFieldInput"
+          />
         </div>
         <div>
           Repetir Contraseña:
@@ -72,9 +103,12 @@ export default function newUser() {
             type="password"
             name="passwordRepeat"
             defaultValue="TestPassRep"
+            className="textFieldInput"
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="submitButton">
+          Crear
+        </button>
       </form>
     </div>
   );

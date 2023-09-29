@@ -17,9 +17,16 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  
+  
 }
 
 body {
   height: 100vh;
   margin: 0 auto;
+  
+}
+
+html{
+  background-color: beige;
 }

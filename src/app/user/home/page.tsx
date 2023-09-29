@@ -48,9 +48,8 @@ export default function UserHome() {
         <div className="pet-card">
           <h2>Animales Disponibles</h2>
           {animals.map((animal) => (
-          <RecipeReviewCard {...animal} >
-          </RecipeReviewCard>
-            ))}
+            <RecipeReviewCard {...animal}></RecipeReviewCard>
+          ))}
         </div>
       </div>
     </div>

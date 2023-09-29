@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './adoption.css';
 import Card from '@/components/card';
 
 export default function AdoptView() {
@@ -39,22 +39,30 @@ export default function AdoptView() {
     },
   ];
 
-  const cardStyle = {
-    margin: '10px', // Ajusta el valor de acuerdo a la separación deseada
-  };
-
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: '10px',
+      }}
     >
       <h1>Adopción</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}
+      >
         {cardData.map((card, idx) => (
-          <div key={idx} style={cardStyle}>
+          <div key={idx} className="cardStyle">
             <Card
               img={card.img}
               name={card.name}
               description={card.description}
+              className="card"
             />
           </div>
         ))}
