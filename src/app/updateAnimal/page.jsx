@@ -5,13 +5,12 @@ import { supabase } from '../../../supabase/supabaseClient'
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function updateAnimal() {
-    const [animals, setAnimals] = useState<Animal>();
-    const [name, setName] = useState(null);
-    const [breed, setBreed] = useState(null);
-    const [height, setHeight] = useState(null);
-    const [back_length, setBacklength] = useState(null);
-    const [weight, setWeight] = useState(null);
-    const [age, setAge] = useState(null);
+    const [name, setName] = useState();
+    const [breed, setBreed] = useState();
+    const [height, setHeight] = useState();
+    const [back_length, setBacklength] = useState();
+    const [weight, setWeight] = useState();
+    const [age, setAge] = useState();
     const [loading, setLoading] = useState(true)
     const [session, setSession] = useState(null)
 
@@ -53,31 +52,29 @@ export default function updateAnimal() {
     async function updateAnimals(event) {
         event.preventDefault()
         console.log(event)
-        const updates = {
-        name ,
-        breed,
-        height ,
-        back_length ,
-        weight,
-        age,
-        updated_at: new Date(),
-        }
-
-        let { error } = await supabase.from('animals').upsert(updates)
+        let { error } = await supabase.from('animals').update({
+            name:name,
+            breed:breed,
+            height:height,
+            back_length:back_length,
+            weight:weight,
+            age:age,
+            updated_at:new Date(),
+        }).eq('name','Señor Gato').select()
 
         if (error) {
         alert(error.message)
+        console.log('error')
+        }
+        else{
+            console.log('exito')
         }
     }
-
-    // setName(animaluno.name);
     return (
         <form onSubmit={updateAnimals} className="form-widget">
         <div>
             <label htmlFor="name">Nombre</label>
             <input id="name" type="text" value={name || ' '} disabled /> 
-
-
         </div>
         <div>
             <label htmlFor="breed">Raza</label>
@@ -124,12 +121,7 @@ export default function updateAnimal() {
             {loading ? 'Cargando ...' : 'Actualizar Datos'}
             </button>
         </div>
-{/* 
-        <div>
-            <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
-            Cerrar Sesion
-            </button> 
-        </div> */}
+
         </form>
     )
 }

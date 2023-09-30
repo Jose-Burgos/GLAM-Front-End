@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Button, styled } from '@mui/material';
 import BurgerButton from './burgerbutton';
 import { logout } from '~/supabase/helpers';
+import { supabase } from '../../supabase/supabaseClient'
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -15,6 +16,9 @@ const LogButton = styled(Button)({
 
 export default function NavBar() {
   const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [session, setSession] = useState(null)
+
   const handleClick = () => {
     setClicked(!clicked);
   };
@@ -24,6 +28,18 @@ export default function NavBar() {
   };
 
   useEffect(() => {
+    setLoading(true)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+        })
+  
+        supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        })
+    console.log("session: ")
+    console.log(session)
+    setLoading(false)
+
     function handleResize() {
       if (window.innerWidth >= 768) {
         setClicked(false);
@@ -31,7 +47,9 @@ export default function NavBar() {
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+    
   }, []);
+
 
   return (
     <nav>
@@ -60,9 +78,14 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/login">
           <LogButton className="logbtn-burger">Ingresa</LogButton>
         </Link>
-        <Link onClick={handleLogOut} href="/">
+        { session ? 
+          <Link onClick={handleLogOut} href="/">
           Logout
-        </Link>
+          </Link>
+          : 
+          <>
+          </>
+        }
       </div>
       <div className="r-cont">
         <Link onClick={handleClick} href="/login">

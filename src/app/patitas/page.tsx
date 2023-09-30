@@ -12,21 +12,21 @@ export default function PatitasGlew() {
   const [session, setSession] = useState(null)
 
   useEffect(() => {
-    
-    // supabase.auth.getSession().then(({ data: { session } }) => {
-    //   setSession(session)
-    //   })
-
-    //   supabase.auth.onAuthStateChange((_event, session) => {
-    //   setSession(session)
-    // })
-    // console.log(session)
-
     (async () => {
       const animalsData = await getAnimals();
       setAnimals(animalsData);
-    })();
-  }, []);
+    })()
+  }, [])
+
+  const AddAnimal = async (animal: Animal) => {
+    const { data, error } = await supabase.from('animals').insert(animal).select() 
+    if(error){
+      console.log(error)
+    }
+    else{
+      console.log('exito')
+    }
+  }
 
   return (
     <div>
