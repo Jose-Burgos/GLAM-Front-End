@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Button, Card, TextField, styled } from '@mui/material';
 import '../style/contactform.css';
 

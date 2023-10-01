@@ -45,6 +45,7 @@ export default function newUser() {
         // Do something
       } else if (type === 'Organization') {
         // Do something else
+        router.push('/patitas')
       }
       console.log('Login data: ', session, profile);
       alert('Login successful');
@@ -64,7 +65,7 @@ export default function newUser() {
             className="correoInput"
             type="email"
             name="email"
-            defaultValue="vomapa9028@bnovel.com"
+            defaultValue="jrmalex_2002@outlook.com"
           />
         </div>
         <div className="passBox">
@@ -73,7 +74,7 @@ export default function newUser() {
             className="passInput"
             type="password"
             name="password"
-            defaultValue="asdf1234"
+            defaultValue="123456"
           />
         </div>
         <button className="submitButton" type="submit">
