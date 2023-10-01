@@ -5,7 +5,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button, styled } from '@mui/material';
 import { logout } from '~/supabase/helpers';
+<<<<<<< HEAD
 import BurgerButton from './burgerbutton';
+=======
+import { supabase } from '../../supabase/supabaseClient'
+>>>>>>> 61a26cdc0e0001c6f5fe769fa5b65a21b8d49cba
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -15,7 +19,13 @@ const LogButton = styled(Button)({
 
 export default function NavBar() {
   const [clicked, setClicked] = useState(false);
+<<<<<<< HEAD
   const [islogged, setlogged] = useState(false); // Cambiar esto
+=======
+  const [loading, setLoading] = useState(true)
+  const [session, setSession] = useState(null)
+
+>>>>>>> 61a26cdc0e0001c6f5fe769fa5b65a21b8d49cba
   const handleClick = () => {
     setClicked(!clicked);
   };
@@ -26,6 +36,18 @@ export default function NavBar() {
   };
 
   useEffect(() => {
+    setLoading(true)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+        })
+  
+        supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        })
+    console.log("session: ")
+    console.log(session)
+    setLoading(false)
+
     function handleResize() {
       if (window.innerWidth >= 768) {
         setClicked(false);
@@ -33,7 +55,9 @@ export default function NavBar() {
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+    
   }, []);
+
 
   return (
     <nav>
@@ -56,6 +80,23 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/">
           Donar
         </Link>
+<<<<<<< HEAD
+=======
+        <Link onClick={handleClick} href="/create-account">
+          Crear Cuenta
+        </Link>
+        <Link onClick={handleClick} href="/login">
+          <LogButton className="logbtn-burger">Ingresa</LogButton>
+        </Link>
+        { session ? 
+          <Link onClick={handleLogOut} href="/">
+          Logout
+          </Link>
+          : 
+          <>
+          </>
+        }
+>>>>>>> 61a26cdc0e0001c6f5fe769fa5b65a21b8d49cba
       </div>
       <div className="r-cont">
         {islogged ? (
