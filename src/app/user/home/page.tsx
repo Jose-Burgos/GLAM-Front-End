@@ -3,27 +3,23 @@
 import RecipeReviewCard from '@/components/petcard';
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser, getAnimals } from '~/supabase/helpers';
-import {
-  RegularUserPublic,
-  OrganizationPublic,
-  Animal,
-} from '~/supabase/types/supabase.tables';
+import * as Sb from '~/supabase/types/supabase.tables';
 import './user-home.css';
 
 export default function UserHome() {
   const [userName, setUserName] = useState('');
-  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [animals, setAnimals] = useState<Sb.Animal[]>([]);
   useEffect(() => {
     async function fetchUser() {
       try {
         const { profile, type } = await getCurrentUser();
 
         if (type === 'RegularUser') {
-          const regularUserProfile = profile as RegularUserPublic;
-          setUserName(regularUserProfile.first_name);
+          const regularUserProfile = profile as Sb.Profile<Sb.UserType>;
+          setUserName(regularUserProfile.private.first_name);
         } else if (type === 'Organization') {
-          const organizationProfile = profile as OrganizationPublic;
-          setUserName(organizationProfile.name);
+          const organizationProfile = profile as Sb.Profile<Sb.OrgType>;
+          setUserName(organizationProfile.public.name);
         }
       } catch (error) {
         console.error('Error fetching user:', error);

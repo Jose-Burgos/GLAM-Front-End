@@ -15,7 +15,7 @@ export interface Profile<T> {
   public: T extends OrgType ? Table<'organizations'> : Table<'users'>;
   private: T extends OrgType
     ? Table<'private_org_info'>
-    : Table<'private_user_info'> | null;
+    : Table<'private_user_info'>;
 }
 
 // export type RegularUserPublic = Tables<'users'>;
