@@ -102,7 +102,7 @@ export interface Database {
           {
             foreignKeyName: "organizations_id_fkey"
             columns: ["id"]
-            referencedRelation: "users"
+            referencedRelation: "private_org_info"
             referencedColumns: ["id"]
           }
         ]
@@ -237,7 +237,7 @@ export interface Database {
           {
             foreignKeyName: "users_id_fkey"
             columns: ["id"]
-            referencedRelation: "users"
+            referencedRelation: "private_user_info"
             referencedColumns: ["id"]
           },
           {

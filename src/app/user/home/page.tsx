@@ -4,8 +4,8 @@ import RecipeReviewCard from '@/components/petcard';
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser, getAnimals } from '~/supabase/helpers';
 import {
-  RegularUser,
-  Organization,
+  RegularUserPublic,
+  OrganizationPublic,
   Animal,
 } from '~/supabase/types/supabase.tables';
 
@@ -18,10 +18,10 @@ export default function UserHome() {
         const { profile, type } = await getCurrentUser();
 
         if (type === 'RegularUser') {
-          const regularUserProfile = profile as RegularUser;
+          const regularUserProfile = profile as RegularUserPublic;
           setUserName(regularUserProfile.first_name);
         } else if (type === 'Organization') {
-          const organizationProfile = profile as Organization;
+          const organizationProfile = profile as OrganizationPublic;
           setUserName(organizationProfile.name);
         }
       } catch (error) {

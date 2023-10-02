@@ -1,7 +1,7 @@
 'use client';
 
 import React, { FormEvent } from 'react';
-import { UserInfo } from '~/supabase/types/supabase.tables';
+import { UserSignupInfo } from '~/supabase/types/supabase.tables';
 import { userSignUp } from '~/supabase/helpers';
 import './newUser.css';
 
@@ -13,7 +13,7 @@ export default function newUser() {
     // Porque el tema es que así me parece que no se pueden poner bien los tipos de ts
     const formData = Object.fromEntries(
       new FormData(event.currentTarget)
-    ) as unknown as UserInfo;
+    ) as unknown as UserSignupInfo;
 
     /*
      * formData verifications here like password repeate matching, etc

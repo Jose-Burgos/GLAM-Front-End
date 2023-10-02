@@ -65,7 +65,7 @@ export default function NewUser() {
             className="correoInput"
             type="email"
             name="email"
-            defaultValue="vomapa9028@bnovel.com"
+            defaultValue="danov18155@gekme.com"
           />
         </div>
         <div className="passBox">
@@ -74,7 +74,7 @@ export default function NewUser() {
             className="passInput"
             type="password"
             name="password"
-            defaultValue="asdf1234"
+            defaultValue="TestPass"
           />
         </div>
         <button className="submitButton" type="submit">

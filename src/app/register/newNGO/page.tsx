@@ -1,7 +1,7 @@
 'use client';
 
 import React, { FormEvent } from 'react';
-import { OrgInfo } from '~/supabase/types/supabase.tables';
+import { OrgSignupInfo } from '~/supabase/types/supabase.tables';
 import { orgSignUp } from '~/supabase/helpers';
 import './newNGO.css';
 
@@ -13,7 +13,7 @@ export default function newNGO() {
     // Porque el tema es que así me parece que no se pueden poner bien los tipos de ts
     const formData = Object.fromEntries(
       new FormData(event.currentTarget)
-    ) as unknown as OrgInfo;
+    ) as unknown as OrgSignupInfo;
 
     /*
      * formData verifications here like password repeate matching, etc
