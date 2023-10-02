@@ -1,28 +1,28 @@
-.message{
-    text-align: center;
+.message {
+  text-align: center;
 }
 
 .genericForm {
-   text-align: center;
-  }
+  text-align: center;
+}
 
 .textFieldInput {
-    margin: 5px;
-  }
-  
-.textFieldInput:focus {
-    background-color: lightcyan;
-    padding: 2px;
-  }
+  margin: 5px;
+}
 
-  .submitButton{
-    padding: 10px;
-    background-color: yellowgreen;
-    border-radius: 15px;
-    margin: 10px;
-    text-align: center;
-  }
-  
-  .globalCont{
-    text-align: center;
-  }
+.textFieldInput:focus {
+  background-color: lightcyan;
+  padding: 2px;
+}
+
+.submitButton {
+  padding: 10px;
+  background-color: yellowgreen;
+  border-radius: 15px;
+  margin: 10px;
+  text-align: center;
+}
+
+.globalCont {
+  text-align: center;
+}
