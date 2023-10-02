@@ -11,6 +11,7 @@ import {
 import { Session, PostgrestResponse } from '@supabase/supabase-js';
 // import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
 
+// Tendría que agregar pagination a esto probablemente. Y filtering.
 export async function getAnimals() {
   const { data, error, status }: PostgrestResponse<Animal> = await supabase
     .from('animals')
@@ -19,6 +20,17 @@ export async function getAnimals() {
     throw new Error(error.message);
   }
   return data;
+}
+
+export async function insertAnimal(animal: Animal) {
+  const { error } = await supabase
+    .from('animals')
+    .insert([animal])
+    .select();
+
+  if (error) {
+    throw new Error(error.message)
+  }
 }
 
 export async function getCurrentUser(): Promise<{
@@ -224,3 +236,10 @@ export async function askNewPassOnReset() {
     }
   });
 }
+
+declare global {
+  interface Window {
+    supabase: any;
+  }
+}
+window.supabase = { verifySession, getAnimals, getCurrentUser, login, logout, supabase };
