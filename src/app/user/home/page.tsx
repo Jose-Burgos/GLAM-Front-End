@@ -8,6 +8,7 @@ import {
   OrganizationPublic,
   Animal,
 } from '~/supabase/types/supabase.tables';
+import './user-home.css';
 
 export default function UserHome() {
   const [userName, setUserName] = useState('');
@@ -42,13 +43,13 @@ export default function UserHome() {
   }, []);
 
   return (
-    <div>
-      <h1>Bienvenido {userName}!</h1>
-      <div>
+    <div className="globalDiv">
+      <h1 className="welcomeMessage">Bienvenido {userName}!</h1>
+      <h2 className="subMessage">Animales Disponibles</h2>
+      <div className="allCards">
         <div className="pet-card">
-          <h2>Animales Disponibles</h2>
           {animals.map((animal) => (
-            <RecipeReviewCard {...animal}></RecipeReviewCard>
+            <RecipeReviewCard {...animal} />
           ))}
         </div>
       </div>
