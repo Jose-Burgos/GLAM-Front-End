@@ -4,6 +4,8 @@ import React, { useState , useEffect } from 'react';
 import { Button, Card, TextField, styled , RadioGroup,Radio, FormControlLabel} from '@mui/material';
 import '../style/contactform.css';
 import { supabase } from '@/../supabase/supabaseClient';
+import { Animal } from '~/supabase/types/supabase.tables'
+import { UUID } from 'crypto';
 
 const Tf = styled(TextField)({
 fontFamily: 'Shantell Sans',
@@ -18,47 +20,45 @@ fontSize: '.5 rem',
 color: 'blue',
 });
 
-function AnimalForm() {
+function AnimalForm(props : any) {
     const [user, setUser] = useState<string>()
+    const [ animal, setAnimal] = useState<Animal>()
     const [formData, setFormData] = useState({
-        org_id : '',
-        name: '',
-        breed: '',
-        height: 0,
-        species_id : 1,
-        back_length : 0,
-        weight : 0,
-        age : 0,
-        sex : false,
-        health_rating : 0,
-        vaccinated : false
-    });
-
+        id : props.animal?.id,
+        org_id : props.animal?.org_id ,
+        // updated_at: new Date(),
+        name: props.animal?.name ,
+        breed: props.animal?.breed ,
+        height: props.animal?.height,
+        species_id : props.animal?.species_id ,
+        back_length : props.animal?.back_length ,
+        weight : props.animal?.weight ,
+        age : props.animal?.age,
+        sex : props.animal?.sex ,
+        health_rating : props.animal?.health_rating ,
+        vaccinated : props.animal?.vaccinated 
+    })
     useEffect (() =>{
         (async () =>{
         const { data: { user } } = await supabase.auth.getUser()
         setUser(user?.id)
-        })()
-    })
+        // GetAnimal(props.animal.id)
+    })()
+    },[]);
+
+    // const GetAnimal = async (id : string) => {   
+    //     let { data: animals, error } = await supabase
+    //     .from('animals')
+    //     .select('*')
+    //     .eq('id', id )
+    //     setAnimal(animals as any)
+    // }
 
     const AgregaAnimal = async ()=>{
         formData.org_id = user as string;
-        const { data, error } = await supabase
+        let { error } = await supabase
         .from('animals')
-        .insert({   
-            org_id: formData.org_id, 
-            name: formData.name,
-            breed: formData.breed,
-            height: formData.height,
-            species_id: formData.species_id,
-            back_length: formData.back_length, 
-            weight: formData.weight, 
-            age: formData.age,
-            sex: formData.sex,
-            health_rating: formData.health_rating,
-            vaccinated: formData.vaccinated,
-        })
-        .select()
+        .upsert(formData)
     }
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -87,7 +87,7 @@ function AnimalForm() {
                 id="name"
                 variant="standard"
                 name="name"
-                value={formData.name}
+                value={formData.name || ''}
                 onChange={handleChange}
             />
             </div>
@@ -99,7 +99,7 @@ function AnimalForm() {
                 id="breed"
                 name="breed"
                 variant="standard"
-                value={formData.breed}
+                value={formData.breed || ''}
                 onChange={handleChange}
             />
             </div>
@@ -111,7 +111,7 @@ function AnimalForm() {
                 id="height"
                 name="height"
                 variant="standard"
-                value={formData.height}
+                value={formData.height || ''}
                 onChange={handleChange}
             />
             </div>
@@ -123,7 +123,7 @@ function AnimalForm() {
                 id="back_length"
                 name="back_length"
                 variant="standard"
-                value={formData.back_length}
+                value={formData.back_length || ''}
                 onChange={handleChange}
             />
             </div>
@@ -135,7 +135,7 @@ function AnimalForm() {
                 id="weight"
                 name="weight"
                 variant="standard"
-                value={formData.weight}
+                value={formData.weight || ''}
                 onChange={handleChange}
             />
             </div>
@@ -147,7 +147,7 @@ function AnimalForm() {
                 id="age"
                 name="age"
                 variant="standard"
-                value={formData.age}
+                value={formData.age || ''}
                 onChange={handleChange}
             />
             </div>
@@ -156,7 +156,7 @@ function AnimalForm() {
                 id='sex'
                 aria-label="Sexo"
                 name="sex"
-                value={formData.sex}
+                value={formData.sex || ''}
                 onChange={handleChange}
                 >
                 <FormControlLabel value={true} control={<Radio />} label="Masculino" />
@@ -171,7 +171,19 @@ function AnimalForm() {
                 id="health_rating"
                 name="health_rating"
                 variant="standard"
-                value={formData.health_rating}
+                value={formData.health_rating || ''}
+                onChange={handleChange}
+            />
+            </div>
+            <div>
+            <Tf
+                // className="contact-input"
+                label="Tipo de Animal"
+                type="number"
+                id="species_id"
+                name="species_id"
+                variant="standard"
+                value={formData.species_id || ''}
                 onChange={handleChange}
             />
             </div>
@@ -180,7 +192,7 @@ function AnimalForm() {
                 id='vaccinated'
                 aria-label="Vacunado"
                 name="vaccinated"
-                value={formData.vaccinated}
+                value={formData.vaccinated || ''}
                 onChange={handleChange}
                 >
                 <FormControlLabel value={true} control={<Radio />} label="Sí" />
@@ -188,7 +200,7 @@ function AnimalForm() {
                 </RadioGroup>
             </div>
             <Sbtn className="submit-btn" type="submit">
-            Agregar Animal
+            Editar Animal
             </Sbtn>
         </form>
         }

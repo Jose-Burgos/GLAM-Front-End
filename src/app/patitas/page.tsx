@@ -1,10 +1,10 @@
-'use client';
-import React, { useEffect , useState } from 'react';
-import { getAnimals , getCurrentUser } from '~/supabase/helpers';
-import { supabase } from '../../../supabase/supabaseClient';
-import { Animal , RegularUser, Organization} from '~/supabase/types/supabase.tables';
+'use client'
+import React, { useEffect , useState } from 'react'
+import { getAnimals , getCurrentUser } from '~/supabase/helpers'
+import { supabase } from '../../../supabase/supabaseClient'
+import { Animal , RegularUser, Organization} from '~/supabase/types/supabase.tables'
 import AnimalForm from '@/components/animalform'
-import RecipeReviewCard from '@/components/petcard';
+import RecipeReviewCard from '@/components/petcard'
 
 export default function PatitasGlew() {
 
@@ -19,23 +19,24 @@ export default function PatitasGlew() {
       let { data: { user } } = await supabase.auth.getUser()
       setUserID(user?.id)
       setUserName(user?.user_metadata.name)
-      const { profile, type } = await getCurrentUser();
+      const { profile, type } = await getCurrentUser()
       if(type === 'Organization'){
         setIsOrg(true);
       }
       setAnimals(animals)
+      fetchAnimals();
     })()
   },[userID])
 
   async function fetchAnimals() {
     try {
-      const animalsArray = await getAnimals();
-      setAnimals(animalsArray);
+      const animalsArray = await getAnimals()
+      setAnimals(animalsArray)
     } catch (error) {
-      console.error('Error fetching animals:', error);
+      console.error('Error fetching animals:', error)
     }
   }
-  fetchAnimals();
+ 
     
     return (
       <div>
@@ -43,19 +44,15 @@ export default function PatitasGlew() {
       <ul>
         {
           isOrg?
-          // animals?.map((animal) => (
-          //   animal.org_id === userID && 
-          //   
-          //   ))
           <div className="pet-card">
-            <h2>Animales Disponibles</h2>
+            <h2>Estos son sus animales</h2>
             {animals?.map((animal) => (
               animal.org_id === userID &&
               <li key={animal.id}>{animal.name}</li>
               ))}
-        </div>
+          </div>
         :
-          <h1>La organizacion no tiene animales agregados</h1>
+          <h1>No eres una Organizacion</h1>
         }
       </ul>
 
