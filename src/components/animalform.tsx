@@ -5,7 +5,7 @@ import { Button, Card, TextField, styled , RadioGroup,Radio, FormControlLabel} f
 import '../style/contactform.css';
 import { supabase } from '@/../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables'
-import { UUID } from 'crypto';
+import { upsertAnimal } from '~/supabase/helpers';
 
 const Tf = styled(TextField)({
 fontFamily: 'Shantell Sans',
@@ -22,7 +22,6 @@ color: 'blue',
 
 function AnimalForm(props : any) {
     const [user, setUser] = useState<string>()
-    const [ animal, setAnimal] = useState<Animal>()
     const [formData, setFormData] = useState({
         id : props.animal?.id,
         org_id : props.animal?.org_id ,
@@ -38,36 +37,24 @@ function AnimalForm(props : any) {
         health_rating : props.animal?.health_rating ,
         vaccinated : props.animal?.vaccinated 
     })
+
     useEffect (() =>{
         (async () =>{
         const { data: { user } } = await supabase.auth.getUser()
         setUser(user?.id)
-        // GetAnimal(props.animal.id)
     })()
     },[]);
 
-    // const GetAnimal = async (id : string) => {   
-    //     let { data: animals, error } = await supabase
-    //     .from('animals')
-    //     .select('*')
-    //     .eq('id', id )
-    //     setAnimal(animals as any)
-    // }
-
-    const AgregaAnimal = async ()=>{
-        formData.org_id = user as string;
-        let { error } = await supabase
-        .from('animals')
-        .upsert(formData)
-    }
     const handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
         try {
-            AgregaAnimal()
+            formData.org_id = user as string;
+            upsertAnimal(formData as Animal);
         } catch (error) {
             console.log(error)
         }

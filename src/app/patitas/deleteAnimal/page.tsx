@@ -58,7 +58,7 @@ export default function DeleteAnimal() {
                     <button onClick={() => handleClick(animal.id)}>{animal.name}</button>
                     <br/>
                 </div>   
-                ))}
+            ))}
         </div>
     )
 }

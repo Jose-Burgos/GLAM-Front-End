@@ -49,15 +49,13 @@ export default function EditAnimal() {
                 :
                 <div>
                     <p>Selecciona el animal a editar</p>
-                    <ul>
                     {animals?.map((animal : Animal) => (
-                        animal.org_id === userID &&
-                        <div key={animal.id}>
-                            <button onClick={() => handleClick(animal)}>{animal.name}</button>
-                            <br/>
-                        </div>   
-                        ))}
-                    </ul>
+                    animal.org_id === userID &&
+                    <div key={animal.id}>
+                        <button onClick={() => handleClick(animal)}>{animal.name}</button>
+                        <br/>
+                    </div>   
+                    ))}
                 </div>  
 
             }

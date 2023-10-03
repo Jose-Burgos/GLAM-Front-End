@@ -21,7 +21,14 @@ export async function getAnimals() {
   return data;
 }
 
-
+export async function  upsertAnimal(animal : Animal) {
+  let { error } = await supabase
+  .from('animals')
+  .upsert(animal)
+  if (error) {
+    throw new Error(error.message)
+  }
+}
 export async function getCurrentUser(): Promise<{
   profile: RegularUser | Organization;
   type: ProfileType;
