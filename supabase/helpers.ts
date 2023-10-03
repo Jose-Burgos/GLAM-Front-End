@@ -1,16 +1,11 @@
-import { supabase } from './supabaseClient';
 import * as Sb from '~/supabase/types/supabase.tables';
-import {
-  Session,
-  PostgrestResponse,
-  SupabaseClient,
-} from '@supabase/supabase-js';
-import { profile } from 'console';
+import { Session, PostgrestResponse } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient';
 // import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
 
 // Tendría que agregar pagination a esto probablemente. Y filtering.
 export async function getAnimals() {
-  const { data, error, status }: PostgrestResponse<Sb.Animal> = await supabase
+  const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
     .from('animals')
     .select('*, species (name)');
   if (error) {
@@ -35,8 +30,9 @@ async function currentUser(
     throw new Error('No active session found');
   }
 
-  let tablePublic: Sb.TableName, tablePrivate: Sb.TableName;
-  if (profileType == 'RegularUser') {
+  let tablePublic: Sb.TableName;
+  let tablePrivate: Sb.TableName;
+  if (profileType === 'RegularUser') {
     tablePublic = 'users';
     tablePrivate = 'private_user_info';
   } else {
@@ -61,8 +57,7 @@ async function currentUser(
       throw new Error(error.message);
     } else if (!privateData[0]) {
       throw new Error(
-        "This shouldn't have happened. No private info found for the " +
-          profileType
+        `This shouldn't have happened. No private info found for the ${profileType}`
       );
     }
     return { public: publicData[0], private: privateData[0] };
@@ -93,8 +88,7 @@ export async function getCurrentUser(): Promise<{
 
   // No debería pasar nunca esto.
   throw new Error(
-    'No regular user or organization account information found for user: ' +
-      session.user.id
+    `No regular user or organization account information found for user: ${session.user.id}`
   );
 }
 
@@ -200,10 +194,10 @@ export async function sendForgotPassEmail(email: string) {
   return data;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////////////////////////
 // Todo esto probablemente se cambie cuando implementen el routing porque ni idea como
 // funca por ahora
-///////////////////////////////////////////////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////////////////////////
 
 export async function verifySession() {
   // supabase.auth.onAuthStateChange((event, session) => {

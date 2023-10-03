@@ -33,7 +33,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function RecipeReviewCard(props: Animal) {
+interface props {
+  pet: Animal;
+}
+
+export default function RecipeReviewCard(prop: props) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -45,7 +49,7 @@ export default function RecipeReviewCard(props: Animal) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {props.name.charAt(0)}
+            {prop.pet.name.charAt(0)}
           </Avatar>
         }
         action={
@@ -53,18 +57,18 @@ export default function RecipeReviewCard(props: Animal) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.name}
-        subheader={props.rescue_date}
+        title={prop.pet.name}
+        subheader={prop.pet.rescue_date}
       />
       <CardMedia
         component="img"
         height="194"
         src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-        alt={props.name}
+        alt={prop.pet.name}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          Años de edad:{props.age}
+          Años de edad:{prop.pet.age}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -87,13 +91,13 @@ export default function RecipeReviewCard(props: Animal) {
         <CardContent>
           <Typography paragraph>Información del animal:</Typography>
           <Typography paragraph>
-            Rescatado el día:{props.rescue_date}
+            Rescatado el día:{prop.pet.rescue_date}
           </Typography>
-          <Typography paragraph>Especie:{props.species.name}</Typography>
-          <Typography paragraph>Sexo:{props.sex}</Typography>
-          <Typography paragraph>Altura:{props.height}</Typography>
-          <Typography paragraph>Peso:{props.weight}</Typography>
-          <Typography paragraph>Vacunado:{props.vaccinated}</Typography>
+          <Typography paragraph>Especie:{prop.pet.species.name}</Typography>
+          <Typography paragraph>Sexo:{prop.pet.sex}</Typography>
+          <Typography paragraph>Altura:{prop.pet.height}</Typography>
+          <Typography paragraph>Peso:{prop.pet.weight}</Typography>
+          <Typography paragraph>Vacunado:{prop.pet.vaccinated}</Typography>
         </CardContent>
       </Collapse>
     </Card>
