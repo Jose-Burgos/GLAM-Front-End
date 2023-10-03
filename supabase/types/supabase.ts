@@ -82,46 +82,6 @@ export interface Database {
           },
         ];
       };
-      asdf: {
-        Row: {
-          created_at: string;
-          date: string | null;
-          health_rating: number;
-          height: number;
-          id: string;
-          sex: boolean;
-          sp_id: number;
-          temporary_home_until: string | null;
-        };
-        Insert: {
-          created_at?: string;
-          date?: string | null;
-          health_rating?: number;
-          height: number;
-          id?: string;
-          sex: boolean;
-          sp_id: number;
-          temporary_home_until?: string | null;
-        };
-        Update: {
-          created_at?: string;
-          date?: string | null;
-          health_rating?: number;
-          height?: number;
-          id?: string;
-          sex?: boolean;
-          sp_id?: number;
-          temporary_home_until?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'asdf_sp_id_fkey';
-            columns: ['sp_id'];
-            referencedRelation: 'species';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       organizations: {
         Row: {
           id: string;
@@ -142,44 +102,102 @@ export interface Database {
           {
             foreignKeyName: 'organizations_id_fkey';
             columns: ['id'];
-            referencedRelation: 'users';
+            referencedRelation: 'private_org_info';
             referencedColumns: ['id'];
           },
         ];
       };
-      profiles: {
+      private_org_info: {
         Row: {
-          avatar_url: string | null;
-          full_name: string | null;
           id: string;
-          updated_at: string | null;
-          username: string | null;
-          website: string | null;
+          idk_something_private: string | null;
         };
         Insert: {
-          avatar_url?: string | null;
-          full_name?: string | null;
           id: string;
-          updated_at?: string | null;
-          username?: string | null;
-          website?: string | null;
+          idk_something_private?: string | null;
         };
         Update: {
-          avatar_url?: string | null;
-          full_name?: string | null;
           id?: string;
-          updated_at?: string | null;
-          username?: string | null;
-          website?: string | null;
+          idk_something_private?: string | null;
         };
         Relationships: [
           {
-            foreignKeyName: 'profiles_id_fkey';
+            foreignKeyName: 'private_org_info_id_fkey';
             columns: ['id'];
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
         ];
+      };
+      private_user_info: {
+        Row: {
+          first_name: string;
+          id: string;
+          identification: string | null;
+          last_name: string;
+        };
+        Insert: {
+          first_name: string;
+          id: string;
+          identification?: string | null;
+          last_name: string;
+        };
+        Update: {
+          first_name?: string;
+          id?: string;
+          identification?: string | null;
+          last_name?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'private_user_info_id_fkey';
+            columns: ['id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      regions: {
+        Row: {
+          alpha_2: string;
+          alpha_3: string;
+          country_code: string;
+          intermediate_region: string | null;
+          intermediate_region_code: string | null;
+          iso_3166_2: string;
+          name: string;
+          region: string;
+          region_code: string | null;
+          sub_region: string | null;
+          sub_region_code: string | null;
+        };
+        Insert: {
+          alpha_2: string;
+          alpha_3: string;
+          country_code: string;
+          intermediate_region?: string | null;
+          intermediate_region_code?: string | null;
+          iso_3166_2: string;
+          name: string;
+          region: string;
+          region_code?: string | null;
+          sub_region?: string | null;
+          sub_region_code?: string | null;
+        };
+        Update: {
+          alpha_2?: string;
+          alpha_3?: string;
+          country_code?: string;
+          intermediate_region?: string | null;
+          intermediate_region_code?: string | null;
+          iso_3166_2?: string;
+          name?: string;
+          region?: string;
+          region_code?: string | null;
+          sub_region?: string | null;
+          sub_region_code?: string | null;
+        };
+        Relationships: [];
       };
       species: {
         Row: {
@@ -198,26 +216,20 @@ export interface Database {
       };
       users: {
         Row: {
-          first_name: string;
           id: string;
-          identification: string;
-          last_name: string;
+          region: string | null;
           reputation: number | null;
           username: string;
         };
         Insert: {
-          first_name: string;
           id: string;
-          identification: string;
-          last_name: string;
+          region?: string | null;
           reputation?: number | null;
           username: string;
         };
         Update: {
-          first_name?: string;
           id?: string;
-          identification?: string;
-          last_name?: string;
+          region?: string | null;
           reputation?: number | null;
           username?: string;
         };
@@ -225,8 +237,14 @@ export interface Database {
           {
             foreignKeyName: 'users_id_fkey';
             columns: ['id'];
-            referencedRelation: 'users';
+            referencedRelation: 'private_user_info';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'users_region_fkey';
+            columns: ['region'];
+            referencedRelation: 'regions';
+            referencedColumns: ['alpha_3'];
           },
         ];
       };

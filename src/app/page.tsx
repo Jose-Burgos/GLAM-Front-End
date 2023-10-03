@@ -53,7 +53,7 @@ export default function Landing() {
 
   return (
     <div className="content">
-      <h1 className="tittle">Grupo Latinoamericano de ayuda a mascotas</h1>
+      <h1 className="tittle">Grupo Latinoamericano de Ayuda a Mascotas</h1>
       {Data.map((d, idx) => (
         <LandingContainter
           left={d.position}

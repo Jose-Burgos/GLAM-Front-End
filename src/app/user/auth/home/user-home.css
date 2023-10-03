@@ -1,0 +1,20 @@
+.pet-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+}
+
+.welcomeMessage {
+  text-align: center;
+}
+
+.subMessage {
+  text-align: center;
+}
+
+.allCards {
+  text-align: center;
+  align-items: center;
+}

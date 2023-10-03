@@ -2,6 +2,7 @@
 
 import React, { FormEvent } from 'react';
 import { sendForgotPassEmail } from '~/supabase/helpers';
+import './password-reset.css';
 
 export default function newUser() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -21,14 +22,21 @@ export default function newUser() {
   }
 
   return (
-    <div>
+    <div className="globalDiv">
       <h1>Ingrese a su cuenta</h1>
       <form onSubmit={onSubmit}>
         <div>
           Correo Electronico:
-          <input type="email" name="email" defaultValue="Test@Email.com" />
+          <input
+            type="email"
+            name="email"
+            defaultValue="Test@Email.com"
+            className="emailInput"
+          />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="submitButton">
+          Reestablecer
+        </button>
       </form>
     </div>
   );

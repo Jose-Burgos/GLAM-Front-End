@@ -61,6 +61,9 @@ export default function NavBar() {
         <Link onClick={handleClick} href="/">
           Donar
         </Link>
+        <Link onClick={handleClick} href="/ong/auth/home">
+          ONG Home
+        </Link>
       </div>
       <div className="r-cont">
         {islogged ? (

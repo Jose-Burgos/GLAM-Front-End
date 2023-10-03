@@ -1,18 +1,11 @@
-import { supabase } from './supabaseClient';
-import {
-  Animal,
-  RegularUser,
-  Organization,
-  ProfileType,
-  UserInfo,
-  LoginInfo,
-  OrgInfo,
-} from '~/supabase/types/supabase.tables';
+import * as Sb from '~/supabase/types/supabase.tables';
 import { Session, PostgrestResponse } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient';
 // import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
 
+// Tendría que agregar pagination a esto probablemente. Y filtering.
 export async function getAnimals() {
-  const { data, error, status }: PostgrestResponse<Animal> = await supabase
+  const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
     .from('animals')
     .select('*, species (name)');
   if (error) {
@@ -21,7 +14,7 @@ export async function getAnimals() {
   return data;
 }
 
-export async function  upsertAnimal(animal : Animal) {
+export async function  upsertAnimal(animal : Sb.Animal) {
   let { error } = await supabase
   .from('animals')
   .upsert(animal)
@@ -29,51 +22,93 @@ export async function  upsertAnimal(animal : Animal) {
     throw new Error(error.message)
   }
 }
+
+export async function insertAnimal(animal: Sb.Animal) {
+  const { error } = await supabase.from('animals').insert([animal]).select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getAnimalById(id: string){
+  const {data, error} = await supabase.from('animals').select('*').eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
+  else{
+    console.log(data);
+    return data[0];
+  }
+}
+
+async function currentUser(
+  profileType: Sb.ProfileType
+): Promise<Sb.Profile<typeof profileType> | null> {
+  const session = await verifySession();
+  if (!session) {
+    throw new Error('No active session found');
+  }
+
+  let tablePublic: Sb.TableName;
+  let tablePrivate: Sb.TableName;
+  if (profileType === 'RegularUser') {
+    tablePublic = 'users';
+    tablePrivate = 'private_user_info';
+  } else {
+    tablePublic = 'organizations';
+    tablePrivate = 'private_org_info';
+  }
+
+  const { data: publicData, error } = await supabase
+    .from(tablePublic)
+    .select('*')
+    .eq('id', session.user.id);
+
+  if (error) {
+    throw new Error(error.message);
+  } else if (publicData[0]) {
+    const { data: privateData, error } = await supabase
+      .from(tablePrivate)
+      .select('*');
+    // .eq('id', session.user.id);
+
+    if (error) {
+      throw new Error(error.message);
+    } else if (!privateData[0]) {
+      throw new Error(
+        `This shouldn't have happened. No private info found for the ${profileType}`
+      );
+    }
+    return { public: publicData[0], private: privateData[0] };
+  } else {
+    return null;
+  }
+}
+
+// Hacelo con generics en vez de repetir todo el código dos veces
 export async function getCurrentUser(): Promise<{
-  profile: RegularUser | Organization;
-  type: ProfileType;
+  profile: Sb.Profile<Sb.ProfileType>;
+  type: Sb.ProfileType;
 }> {
   const session = await verifySession();
   if (!session) {
     throw new Error('No active session found');
   }
 
-  const {
-    data: regularUser,
-    error: userError,
-  }: PostgrestResponse<RegularUser> = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', session.user.id);
-  if (userError) {
-    throw new Error(userError.message);
-  } else if (regularUser[0]) {
-    return {
-      profile: regularUser[0],
-      type: 'RegularUser',
-    };
+  const regularUserProfile = await currentUser('RegularUser');
+  if (regularUserProfile) {
+    return { profile: regularUserProfile, type: 'RegularUser' };
   }
 
-  const {
-    data: organization,
-    error: orgError,
-  }: PostgrestResponse<Organization> = await supabase
-    .from('organizations')
-    .select('*')
-    .eq('id', session.user.id);
-  if (orgError) {
-    throw new Error(orgError.message);
-  } else if (organization[0]) {
-    return {
-      profile: organization[0],
-      type: 'Organization',
-    };
+  const orgProfile = await currentUser('Organization');
+  if (orgProfile) {
+    return { profile: orgProfile, type: 'Organization' };
   }
 
   // No debería pasar nunca esto.
   throw new Error(
-    'No regular user or organization account information found for user: ' +
-      session.user.id
+    `No regular user or organization account information found for user: ${session.user.id}`
   );
 }
 
@@ -84,8 +119,8 @@ export async function userSignUp({
   firstName: first_name,
   lastName: last_name,
   identification,
-}: UserInfo) {
-  const profile_type: ProfileType = 'RegularUser';
+}: Sb.UserSignupInfo) {
+  const profile_type: Sb.ProfileType = 'RegularUser';
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -115,8 +150,8 @@ export async function userSignUp({
   return { data: data.user, existingAccount };
 }
 
-export async function orgSignUp({ email, password, name }: OrgInfo) {
-  const profile_type: ProfileType = 'Organization';
+export async function orgSignUp({ email, password, name }: Sb.OrgSignupInfo) {
+  const profile_type: Sb.ProfileType = 'Organization';
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -143,22 +178,22 @@ export async function orgSignUp({ email, password, name }: OrgInfo) {
   return { data: data.user, existingAccount };
 }
 
-export async function login({ email, password }: LoginInfo): Promise<{
+export async function login({ email, password }: Sb.LoginInfo): Promise<{
   session: Session;
-  profile: RegularUser | Organization;
-  type: ProfileType;
+  profile: Sb.Profile<Sb.ProfileType>;
+  type: Sb.ProfileType;
 }> {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  const { profile, type } = await getCurrentUser();
-
   if (error) {
     console.log('Error: ', error);
     throw new Error(error.message);
   }
+
+  const { profile, type } = await getCurrentUser();
 
   return { session: data.session, profile, type };
 }
@@ -179,10 +214,10 @@ export async function sendForgotPassEmail(email: string) {
   return data;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////////////////////////
 // Todo esto probablemente se cambie cuando implementen el routing porque ni idea como
 // funca por ahora
-///////////////////////////////////////////////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////////////////////////
 
 export async function verifySession() {
   // supabase.auth.onAuthStateChange((event, session) => {
@@ -232,3 +267,22 @@ export async function askNewPassOnReset() {
     }
   });
 }
+
+export async function getPublicUserData() {
+  return supabase.from('users').select('*');
+}
+
+declare global {
+  interface Window {
+    supabase: any;
+  }
+}
+window.supabase = {
+  verifySession,
+  getAnimals,
+  currentUser,
+  getCurrentUser,
+  login,
+  logout,
+  supabase,
+};

@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
 
 export default function MediaCard(props: any) {
   return (
@@ -21,7 +22,9 @@ export default function MediaCard(props: any) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="medium">Detalles</Button>
+        <Link href={`/adoption/${props.id}`}>
+          <Button size="medium">Detalles</Button>
+        </Link>
       </CardActions>
     </Card>
   );

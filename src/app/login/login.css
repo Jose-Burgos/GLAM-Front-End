@@ -5,8 +5,11 @@
 
 .globalLogin {
   text-align: center;
+  position: relative;
 }
-
+.loginMessage {
+  text-align: center;
+}
 .correoInput {
   margin: 5px;
 }
@@ -26,7 +29,7 @@
 }
 
 .submitButton {
-  background-color: orange;
-  color: cornsilk;
+  background-color: darkgray;
+  color: white;
   margin: 5px;
 }
