@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/components/loading';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { verifySession } from '~/supabase/helpers';
@@ -25,5 +26,5 @@ export default function RootLayout({
   if (success) {
     return <main>{children}</main>;
   }
-  return <h1>Loading</h1>;
+  return <Loading />;
 }
