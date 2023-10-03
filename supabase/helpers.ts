@@ -15,9 +15,7 @@ export async function getAnimals() {
 }
 
 export async function  upsertAnimal(animal : Sb.Animal) {
-  let { error } = await supabase
-  .from('animals')
-  .upsert(animal)
+  let { error } = await supabase.from('animals').upsert(animal)
   if (error) {
     throw new Error(error.message)
   }
