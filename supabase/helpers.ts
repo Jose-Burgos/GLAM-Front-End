@@ -22,6 +22,17 @@ export async function insertAnimal(animal: Sb.Animal) {
   }
 }
 
+export async function getAnimalById(id: string){
+  const {data, error} = await supabase.from('animals').select('*').eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
+  else{
+    console.log(data);
+    return data[0];
+  }
+}
+
 async function currentUser(
   profileType: Sb.ProfileType
 ): Promise<Sb.Profile<typeof profileType> | null> {
