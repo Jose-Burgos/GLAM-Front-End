@@ -59,7 +59,7 @@ function AnimalForm(props : any) {
             console.log(error)
         }
     };
-
+    
     return (
         // <Card className="contact-card">
         <Card>

@@ -1,6 +1,7 @@
 import * as Sb from '~/supabase/types/supabase.tables';
 import { Session, PostgrestResponse } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
+import { UUID } from 'crypto';
 // import type { PostgrestFilterBuilder } from "@supabase/postgrest-js"
 
 // Tendría que agregar pagination a esto probablemente. Y filtering.
@@ -13,21 +14,17 @@ export async function getAnimals() {
   }
   return data;
 }
-
-export async function  upsertAnimal(animal : Sb.Animal) {
-  let { error } = await supabase
-  .from('animals')
-  .upsert(animal)
-  if (error) {
+export async function deleteAnimal(animalID: String) {
+  const { error } = await supabase.from('animals').delete().eq('id', animalID)
+  if(error){
     throw new Error(error.message)
   }
 }
 
-export async function insertAnimal(animal: Sb.Animal) {
-  const { error } = await supabase.from('animals').insert([animal]).select();
-
+export async function  upsertAnimal(animal : Sb.Animal) {
+  let { error } = await supabase.from('animals').upsert(animal)
   if (error) {
-    throw new Error(error.message);
+    throw new Error(error.message)
   }
 }
 

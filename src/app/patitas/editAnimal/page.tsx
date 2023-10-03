@@ -16,8 +16,9 @@ export default function EditAnimal() {
     useEffect (() =>{
         (async () =>{
             //Get user info
-            const { profile, type } = await getCurrentUser()
-            setUserID(profile.id)
+            const { type } = await getCurrentUser()
+            let { data: { user } } = await supabase.auth.getUser()
+            setUserID(user?.id)
             if(type === 'Organization'){
                 setIsOrg(true);
             }
