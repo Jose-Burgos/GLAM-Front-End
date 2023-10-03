@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '@/../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables'
-import { getAnimals , getCurrentUser } from '~/supabase/helpers'
+import { getAnimals , getCurrentUser, deleteAnimal } from '~/supabase/helpers'
 import { UUID } from 'crypto';
 
 
@@ -15,13 +15,15 @@ export default function DeleteAnimal() {
     useEffect (() =>{
         (async () =>{
             //Get user info
-            const { profile, type } = await getCurrentUser()
-            setUserID(profile.id)
+            const { type } = await getCurrentUser()
+            let { data: { user } } = await supabase.auth.getUser()
+            setUserID(user?.id)
             if(type === 'Organization'){
                 setIsOrg(true);
             }
             fetchAnimals();
         })()
+
         },[userID])
 
     async function fetchAnimals() {
@@ -33,18 +35,8 @@ export default function DeleteAnimal() {
         }
     }
     
-    async function DeleteAnimal(animalID: UUID) {
-        const { error } = await supabase
-        .from('animals')
-        .delete()
-        .eq('id', animalID)
-        if(error){
-            console.error('Error deleting animal:', error)
-        }
-    }
-
-    const handleClick = (nombre : String) => { 
-        DeleteAnimal(nombre as UUID)
+    const handleClick = (id : String) => { 
+        deleteAnimal(id as String)
     }
 
 

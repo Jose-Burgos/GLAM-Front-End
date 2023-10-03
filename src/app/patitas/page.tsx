@@ -2,7 +2,7 @@
 import React, { useEffect , useState } from 'react'
 import { getAnimals , getCurrentUser } from '~/supabase/helpers'
 import { supabase } from '../../../supabase/supabaseClient'
-import { Animal , RegularUser, Organization} from '~/supabase/types/supabase.tables'
+import { Animal } from '~/supabase/types/supabase.tables'
 import AnimalForm from '@/components/animalform'
 import RecipeReviewCard from '@/components/petcard'
 
@@ -36,8 +36,6 @@ export default function PatitasGlew() {
       console.error('Error fetching animals:', error)
     }
   }
- 
-    
     return (
       <div>
       <h1>Hola {userName} !</h1>
