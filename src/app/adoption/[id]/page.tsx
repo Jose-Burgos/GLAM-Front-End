@@ -1,5 +1,6 @@
 'use client';
 
+import GoogleMapsView from '@/components/googlemaps';
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAnimals } from '~/supabase/helpers';
@@ -23,6 +24,7 @@ export default function animalDescription(pparam: props) {
       <h1>{data?.name}</h1>
       <h1>{data?.age}</h1>
       <h1>{data?.breed}</h1>
+      <GoogleMapsView />
       <Button>Contactame</Button>
     </div>
   );

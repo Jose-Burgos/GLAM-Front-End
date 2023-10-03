@@ -26,3 +26,8 @@ Algunos errores son inevitables en ese caso agregar una nueva regla en el archiv
   Para eso primero hay que loguearse con `npx supabase login` que pide una token que se puede generar en `https://supabase.com/dashboard/account/tokens`. Después de loguearse se puede correr el comando `npm run gen-types-npx` que actualiza automáticamente los tipos en el archivo `supabase/types/supabase.ts`
   - Para la conexión a la API se necesitan dos variables de entorno, el URL: **https://bjsqhsdofulofilczfcj.supabase.co** y la api key: **eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqc3Foc2RvZnVsb2ZpbGN6ZmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM5MjE1NTcsImV4cCI6MjAwOTQ5NzU1N30.p5CQFnh_U_yaqjmsA_nD8DIT2Bn87Km7dNsUP2v1Liw**
     Obtené estos valores del sitio de Supabase y colócalos en un archivo en el root llamado (.env.local).
+
+## Credenciales mail de GLAM
+
+gmail: latamglam@gmail.com
+pass: 1q2w3e4r5t;
