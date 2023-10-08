@@ -1,57 +1,63 @@
-'use client'
-import React, { useEffect , useState } from 'react'
-import { getAnimals , getCurrentUser } from '~/supabase/helpers'
-import { supabase } from '../../../supabase/supabaseClient'
-import { Animal } from '~/supabase/types/supabase.tables'
-import AnimalForm from '@/components/animalform'
-import RecipeReviewCard from '@/components/petcard'
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { getAnimals, getCurrentUser } from '~/supabase/helpers';
+import { Animal } from '~/supabase/types/supabase.tables';
+import AnimalForm from '@/components/animalform';
+import RecipeReviewCard from '@/components/petcard';
+import { supabase } from '../../../supabase/supabaseClient';
+import './patitas.css';
 
 export default function PatitasGlew() {
+  const [userID, setUserID] = useState<string>();
+  const [isOrg, setIsOrg] = useState(false);
+  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [userName, setUserName] = useState();
 
-  const [userID, setUserID] = useState<string>()
-  const [isOrg, setIsOrg] = useState(false)
-  const [animals, setAnimals] = useState<Animal[]>([])
-  const [userName, setUserName] = useState()
-  
-  useEffect (() =>{
-    (async () =>{
-      //Get user info
-      let { data: { user } } = await supabase.auth.getUser()
-      setUserID(user?.id)
-      setUserName(user?.user_metadata.name)
-      const { profile, type } = await getCurrentUser()
-      if(type === 'Organization'){
+  useEffect(() => {
+    (async () => {
+      // Get user info
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUserID(user?.id);
+      setUserName(user?.user_metadata.name);
+      const { profile, type } = await getCurrentUser();
+      if (type === 'Organization') {
         setIsOrg(true);
       }
-      setAnimals(animals)
+      setAnimals(animals);
       fetchAnimals();
-    })()
-  },[userID])
+    })();
+  }, [userID]);
 
   async function fetchAnimals() {
     try {
-      const animalsArray = await getAnimals()
-      setAnimals(animalsArray)
+      const animalsArray = await getAnimals();
+      setAnimals(animalsArray);
     } catch (error) {
-      console.error('Error fetching animals:', error)
+      console.error('Error fetching animals:', error);
     }
   }
-    return (
-      <div>
+  return (
+    <div className="container">
       <h1>Hola {userName} !</h1>
       <ul>
-        {
-          isOrg?
+        {isOrg ? (
           <div className="pet-card">
             <h2>Estos son sus animales</h2>
-            {animals?.map((animal) => (
-              animal.org_id === userID &&
-              <li key={animal.id}>{animal.name}</li>
-              ))}
+            {animals?.map(
+              (animal) =>
+                animal.org_id === userID && (
+                  <li key={animal.id} className="listItem">
+                    {animal.name}
+                  </li>
+                )
+            )}
           </div>
-        :
+        ) : (
           <h1>No eres una Organizacion</h1>
-        }
+        )}
       </ul>
 
       <a href="/patitas/addAnimal">
@@ -64,5 +70,5 @@ export default function PatitasGlew() {
         <span style={{ color: 'black' }}>Editar Animal</span>
       </a>
     </div>
-  )
+  );
 }

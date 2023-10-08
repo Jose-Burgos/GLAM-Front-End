@@ -46,7 +46,7 @@ export default function NewUser() {
         // Do something
       } else if (type === 'Organization') {
         // Do something else
-        router.push('/patitas')
+        router.push('/patitas');
       }
       console.log('Login data: ', session, profile);
       alert('Login successful');

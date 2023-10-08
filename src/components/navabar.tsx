@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button, styled } from '@mui/material';
 import { logout } from '~/supabase/helpers';
 import BurgerButton from './burgerbutton';
-import { supabase } from '../../supabase/supabaseClient'
+import { supabase } from '../../supabase/supabaseClient';
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -28,7 +28,6 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-
     function handleResize() {
       if (window.innerWidth >= 768) {
         setClicked(false);
@@ -36,9 +35,7 @@ export default function NavBar() {
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-    
   }, []);
-
 
   return (
     <nav>

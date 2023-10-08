@@ -25,6 +25,7 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       {...other}
+      className="tabItem"
     >
       {value === index && (
         <Box sx={{ p: 2 }}>
@@ -46,8 +47,8 @@ function BasicTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="Ubicacion" />
-          <Tab label="Contactanos" />
+          <Tab label="Ubicacion" className="tab" />
+          <Tab label="Contactanos" className="tab" />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -122,9 +123,9 @@ export default function animalDescription(pparam: props) {
   return (
     <div>
       <Carousel />
-      <h1>{data?.name}</h1>
-      <h1>{data?.age}</h1>
-      <h1>{data?.breed}</h1>
+      <h1 className="data">{data?.name}</h1>
+      <h1 className="data">{data?.age}</h1>
+      <h1 className="data">{data?.breed}</h1>
       <BasicTabs />
     </div>
   );

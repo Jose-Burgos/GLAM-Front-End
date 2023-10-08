@@ -15,25 +15,27 @@ export async function getAnimals() {
   return data;
 }
 export async function deleteAnimal(animalID: String) {
-  const { error } = await supabase.from('animals').delete().eq('id', animalID)
-  if(error){
-    throw new Error(error.message)
-  }
-}
-
-export async function  upsertAnimal(animal : Sb.Animal) {
-  let { error } = await supabase.from('animals').upsert(animal)
-  if (error) {
-    throw new Error(error.message)
-  }
-}
-
-export async function getAnimalById(id: string){
-  const {data, error} = await supabase.from('animals').select('*').eq('id', id);
+  const { error } = await supabase.from('animals').delete().eq('id', animalID);
   if (error) {
     throw new Error(error.message);
   }
-  else{
+}
+
+export async function upsertAnimal(animal: Sb.Animal) {
+  let { error } = await supabase.from('animals').upsert(animal);
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getAnimalById(id: string) {
+  const { data, error } = await supabase
+    .from('animals')
+    .select('*')
+    .eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  } else {
     console.log(data);
     return data[0];
   }
