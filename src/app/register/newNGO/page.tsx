@@ -2,7 +2,7 @@
 
 import React, { FormEvent } from 'react';
 import { OrgSignupInfo } from '~/supabase/types/supabase.tables';
-import { orgSignUp } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 import './newNGO.css';
 
 export default function newNGO() {
@@ -21,7 +21,7 @@ export default function newNGO() {
 
     try {
       console.log('Form data: ', formData);
-      const { data, existingAccount } = await orgSignUp(formData);
+      const { data, existingAccount } = await supabase.orgSignUp(formData);
       console.log('Res: ', data);
       if (existingAccount) {
         // Handle as you see fit
@@ -65,6 +65,7 @@ export default function newNGO() {
             type="password"
             name="password"
             defaultValue="TestPass"
+            minLength={8}
             required
           />
         </div>

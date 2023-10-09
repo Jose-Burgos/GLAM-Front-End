@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useEffect } from 'react';
 import { LoginInfo } from '~/supabase/types/supabase.tables';
-import { login, verifySession } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 import Link from 'next/link';
 import { styled } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,7 @@ export default function NewUser() {
     // redirectIfSignedIn()
     (async () => {
       try {
-        const session = await verifySession();
+        const session = await supabase.getSession();
         if (session) {
           console.log('Signed session: ', session);
           alert('Already signed in');
@@ -40,7 +40,7 @@ export default function NewUser() {
     ) as unknown as LoginInfo;
 
     try {
-      const { session, profile, type } = await login(formData);
+      const { session, profile, type } = await supabase.login(formData);
       if (type === 'RegularUser') {
         router.push('/user/home');
         alert('Logueado como usuario.');
@@ -58,33 +58,36 @@ export default function NewUser() {
   }
 
   return (
-    <div className="globalLogin">
-      <h1 className="loginMessage">Ingrese a su cuenta</h1>
-      <form onSubmit={onSubmit}>
-        <div className="correoBox">
-          Correo Electronico:
-          <input
-            className="correoInput"
-            type="email"
-            name="email"
-            defaultValue="jrmalex_2002@outlook.com"
-          />
-        </div>
-        <div className="passBox">
-          Contraseña:
-          <input
-            className="passInput"
-            type="password"
-            name="password"
-            defaultValue="123456"
-          />
-        </div>
-        <button className="submitButton" type="submit">
-          Entrar
-        </button>
-      </form>
-      <ResetPass href="/register">Todavia no tienes cuenta?</ResetPass>
-      <ResetPass href="/login/password-reset">Olvidé mi contraseña</ResetPass>
+    <div className="container">
+      <div className="globalLogin">
+        <h1 className="loginMessage">Ingrese a su cuenta</h1>
+        <form onSubmit={onSubmit}>
+          <div className="correoBox">
+            Correo Electronico:
+            <input
+              className="correoInput"
+              type="email"
+              name="email"
+              defaultValue="jrmalex_2002@outlook.com"
+            />
+          </div>
+          <div className="passBox">
+            Contraseña:
+            <input
+              className="passInput"
+              type="password"
+              name="password"
+              minLength={8}
+              defaultValue="123456"
+            />
+          </div>
+          <button className="submitButton" type="submit">
+            Entrar
+          </button>
+        </form>
+        <ResetPass href="/login/password-reset">Olvidé mi contraseña</ResetPass>
+      </div>
+      <ResetPass href="/register">Todavía no tienes cuenta?</ResetPass>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import Loading from '@/components/loading';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { verifySession } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 
 export default function RootLayout({
   children,
@@ -14,7 +14,7 @@ export default function RootLayout({
   const router = useRouter();
   useEffect(() => {
     (async () => {
-      const error = await verifySession();
+      const error = await supabase.getSession();
       if (error == null) {
         router.push('/login');
       } else {
