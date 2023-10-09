@@ -209,6 +209,8 @@ const helpers: HelperFunctions = {
 
 export default helpers;
 
+// Local functions that shouldn't be exported go here
+
 async function currentUser(
   profileType: Sb.ProfileType
 ): Promise<Sb.Profile<typeof profileType> | null> {
@@ -253,6 +255,17 @@ async function currentUser(
   }
 }
 
+function accountExists(user: User | null): boolean {
+  // This is an ugly hack necessary because supabase is stupid...
+  // (See https://github.com/supabase/supabase-js/issues/296)
+  return user?.identities?.length === 0;
+}
+
+
+
+
+
+
 declare global {
   interface Window {
     supabase: any;
@@ -262,9 +275,3 @@ window.supabase = {
   ...helpers,
   supabase,
 };
-
-function accountExists(user: User | null): boolean {
-  // This is an ugly hack necessary because supabase is stupid...
-  // (See https://github.com/supabase/supabase-js/issues/296)
-  return user?.identities?.length === 0;
-}
