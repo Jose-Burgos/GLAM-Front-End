@@ -1,7 +1,7 @@
 'use client';
 
 import '../style/navbar.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button, styled } from '@mui/material';
 import HelperFunctions from '~/supabase/helpers';
@@ -21,9 +21,20 @@ export default function NavBar() {
   const handleClick = () => {
     setClicked(!clicked);
   };
+
+  useEffect(() => {
+    (async () => {
+      const user = authService.getSession();
+      if (user !== null) {
+        setClicked(true);
+      }
+      setClicked(false);
+    })();
+  }, [logged, authService]);
+
   const handleLog = () => {
     authService.logout();
-    setLogged(!logged);
+    setLogged(false);
   };
 
   return (
