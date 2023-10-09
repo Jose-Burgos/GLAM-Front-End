@@ -1,11 +1,12 @@
-import AnimalForm from '@/components/animalform'
-import React from 'react'
+import AnimalForm from '@/components/animalform';
+import React from 'react';
+import './addAnimal.css';
 
 export default function AddAnimal() {
-    return (
-        <>
-            <h1>Agregar Animal</h1>
-            <AnimalForm /> 
-        </>
-    )
+  return (
+    <>
+      <h1 className="title">Agregar Animal</h1>
+      <AnimalForm />
+    </>
+  );
 }

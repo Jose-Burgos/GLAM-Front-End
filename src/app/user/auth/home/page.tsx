@@ -3,7 +3,7 @@
 import RecipeReviewCard from '@/components/petcard';
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser, getAnimals } from '~/supabase/helpers';
-import * as Sb  from '~/supabase/types/supabase.tables';
+import * as Sb from '~/supabase/types/supabase.tables';
 import './user-home.css';
 
 export default function UserHome() {

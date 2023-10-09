@@ -43,16 +43,17 @@ export default function NewUser() {
       const { session, profile, type } = await login(formData);
       if (type === 'RegularUser') {
         router.push('/user/home');
+        alert('Logueado como usuario.');
         // Do something
       } else if (type === 'Organization') {
         // Do something else
-        router.push('/patitas')
+        alert('Logueado como ONG.');
+        router.push('/patitas');
       }
       console.log('Login data: ', session, profile);
-      alert('Login successful');
     } catch (err) {
       // Handle as you see fit
-      alert(`Some unexpected error: ${err}`);
+      alert(`Error: ${err}`);
     }
   }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Button, Card, TextField, styled } from '@mui/material';
 import '../style/contactform.css';
 
@@ -64,7 +64,7 @@ function ContactForm() {
         <div>
           <Tf
             className="contact-input msj"
-            label="Mensaje"
+            label="¿Cuál es tu consulta?"
             id="message"
             name="message"
             multiline

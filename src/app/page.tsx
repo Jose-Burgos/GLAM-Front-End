@@ -21,24 +21,24 @@ const Data = [
   },
   {
     position: false,
-    path: '/assets/cat&dogs.png',
-    subt: 'Quienes somos?',
+    path: '/assets/AdoptionsTutorial.png',
+    subt: 'Adopciones',
     parag:
-      'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
+      'Para adoptar un animal, crea una cuenta como usuario y luego ve a la página de ADOPCIONES, luego, haz clic en "Detalles" para ver los datos de un animal.',
   },
   {
     position: true,
-    path: '/assets/cat&dogs.png',
-    subt: 'Quienes somos?',
+    path: '/assets/ContactFormTutorial.png',
+    subt: 'Detalles',
     parag:
-      'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
+      'Una vez en la página de detalles, busca el formulario de contacto y envía un mensaje. La ONG se pondrá en contacto contigo pronto.',
   },
   {
     position: false,
-    path: '/assets/cat&dogs.png',
-    subt: 'Quienes somos?',
+    path: '/assets/addTutorial.png',
+    subt: 'ONG: Agregar',
     parag:
-      'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
+      'Para poner en adopción un animal, debes tener una cuenta de ONG. Una vez creada, podrás agregar animales desde tu página de inicio.',
   },
 ];
 
