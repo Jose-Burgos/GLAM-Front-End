@@ -88,6 +88,8 @@ function AnimalForm(props: any) {
               name="name"
               value={formData.name || ''}
               onChange={handleChange}
+              inputProps={{ maxLength: 20 }}
+              required
             />
           </div>
           <div className="input">
@@ -100,6 +102,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.breed || ''}
               onChange={handleChange}
+              inputProps={{ maxLength: 20 }}
+              required
             />
           </div>
           <div className="input">
@@ -112,6 +116,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.height || ''}
               onChange={handleChange}
+              inputProps={{ max: 200, min: 0 }}
+              required
             />
           </div>
           <div className="input">
@@ -124,6 +130,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.back_length || ''}
               onChange={handleChange}
+              inputProps={{ max: 200, min: 0 }}
+              required
             />
           </div>
           <div className="input">
@@ -136,6 +144,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.weight || ''}
               onChange={handleChange}
+              inputProps={{ max: 200, min: 0 }}
+              required
             />
           </div>
           <div className="input">
@@ -148,6 +158,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.age || ''}
               onChange={handleChange}
+              inputProps={{ max: 20, min: 0 }}
+              required
             />
           </div>
           <div className="input">
@@ -158,6 +170,7 @@ function AnimalForm(props: any) {
               value={formData.sex || ''}
               onChange={handleChange}
               className="roundInput "
+              defaultValue
             >
               <FormControlLabel value control={<Radio />} label="Masculino" />
               <FormControlLabel
@@ -177,6 +190,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.health_rating || ''}
               onChange={handleChange}
+              inputProps={{ max: 5, min: 0 }}
+              required
             />
           </div>
           <div className="input">
@@ -189,6 +204,8 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.species_id || ''}
               onChange={handleChange}
+              required
+              inputProps={{ min: 0 }}
             />
           </div>
           <div className="input">
@@ -199,6 +216,7 @@ function AnimalForm(props: any) {
               value={formData.vaccinated || ''}
               onChange={handleChange}
               className="roundInput"
+              defaultValue
             >
               <FormControlLabel value control={<Radio />} label="Vacunado" />
               <FormControlLabel
