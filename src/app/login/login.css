@@ -3,13 +3,15 @@
   text-align: center;
 }
 
-.globalLogin {
+.container {
   text-align: center;
   position: relative;
 }
+
 .loginMessage {
   text-align: center;
 }
+
 .correoInput {
   margin: 5px;
 }

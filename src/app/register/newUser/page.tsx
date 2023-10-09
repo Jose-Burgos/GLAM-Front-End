@@ -2,7 +2,7 @@
 
 import React, { FormEvent } from 'react';
 import { UserSignupInfo } from '~/supabase/types/supabase.tables';
-import { userSignUp } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 import './newUser.css';
 
 export default function newUser() {
@@ -21,7 +21,7 @@ export default function newUser() {
 
     try {
       console.log('Form data: ', formData);
-      const { data, existingAccount } = await userSignUp(formData);
+      const { data, existingAccount } = await supabase.userSignUp(formData);
       console.log('Res: ', data);
       if (existingAccount) {
         // Handle as you see fit
@@ -94,6 +94,7 @@ export default function newUser() {
             type="password"
             name="password"
             defaultValue="TestPass"
+            minLength={8}
             className="textFieldInput"
           />
         </div>

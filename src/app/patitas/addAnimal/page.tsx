@@ -6,7 +6,7 @@ export default function AddAnimal() {
   return (
     <>
       <h1 className="title">Agregar Animal</h1>
-      <AnimalForm />
+      <AnimalForm submitBtnText='Agregar Animal' />
     </>
   );
 }

@@ -9,17 +9,18 @@
   min-width: 0;
 }
 
-.data{
+.data {
   text-align: center;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
 
-.tab{
+.tab {
   align-items: center;
   text-align: center;
 }
 
-.tabItem{
+.tabItem {
   text-align: center;
   align-items: center;
 }

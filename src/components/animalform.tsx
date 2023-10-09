@@ -11,9 +11,8 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import '../style/contactform.css';
-import { supabase } from '@/../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables';
-import { upsertAnimal } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 import '../style/animalform.css';
 
 const Tf = styled(TextField)({
@@ -31,30 +30,19 @@ const Sbtn = styled(Button)({
   alignItems: 'center',
 });
 
-function AnimalForm(props: any) {
-  const [user, setUser] = useState<string>();
-  const [formData, setFormData] = useState({
-    id: props.animal?.id,
-    org_id: props.animal?.org_id,
-    // updated_at: new Date(),
-    name: props.animal?.name,
-    breed: props.animal?.breed,
-    height: props.animal?.height,
-    species_id: props.animal?.species_id,
-    back_length: props.animal?.back_length,
-    weight: props.animal?.weight,
-    age: props.animal?.age,
-    sex: props.animal?.sex,
-    health_rating: props.animal?.health_rating,
-    vaccinated: props.animal?.vaccinated,
-  });
+function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
+  const [orgId, setOrgId] = useState<string>();
+  const [formData, setFormData] = useState(props.animal || ({} as Animal));
 
   useEffect(() => {
     (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user?.id);
+      const id = await supabase.getCurrentUserId();
+      if (!id) {
+        alert('No logged in user')
+        throw new Error('No logged in user')
+        // Handle as necessary
+      }
+      setOrgId(id);
     })();
   }, []);
 
@@ -66,8 +54,8 @@ function AnimalForm(props: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     try {
-      formData.org_id = user as string;
-      upsertAnimal(formData as Animal);
+      formData.org_id = orgId as string;
+      supabase.upsertAnimal(formData as Animal);
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +64,7 @@ function AnimalForm(props: any) {
   return (
     // <Card className="contact-card">
     <Card>
-      {user != null && (
+      {orgId != null && (
         <form onSubmit={handleSubmit}>
           <div className="input">
             <Tf
@@ -93,6 +81,8 @@ function AnimalForm(props: any) {
             />
           </div>
           <div className="input">
+            {/* Probablemente convenga que sea un dropdown menu también y que 
+                la opción default sea 'Desconocido' o algo así */}
             <Tf
               // className="contact-input"
               label="Raza"
@@ -116,7 +106,7 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.height || ''}
               onChange={handleChange}
-              inputProps={{ max: 200, min: 0 }}
+              inputProps={{ min: 0, max: 200 }}
               required
             />
           </div>
@@ -130,7 +120,7 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.back_length || ''}
               onChange={handleChange}
-              inputProps={{ max: 200, min: 0 }}
+              inputProps={{ min: 0, max: 300 }}
               required
             />
           </div>
@@ -144,21 +134,21 @@ function AnimalForm(props: any) {
               variant="standard"
               value={formData.weight || ''}
               onChange={handleChange}
-              inputProps={{ max: 200, min: 0 }}
+              inputProps={{ min: 0, max: 50 }}
               required
             />
           </div>
           <div className="input">
             <Tf
               // className="contact-input"
-              label="Edad"
+              label="Edad (En años)" // Quizá habría que permitir meter la edad en días, meses y años o algo así
               type="number"
               id="age"
               name="age"
               variant="standard"
               value={formData.age || ''}
+              inputProps={{ min: 0 }}
               onChange={handleChange}
-              inputProps={{ max: 20, min: 0 }}
               required
             />
           </div>
@@ -171,11 +161,16 @@ function AnimalForm(props: any) {
               onChange={handleChange}
               className="roundInput "
               defaultValue
+              aria-required
             >
-              <FormControlLabel value control={<Radio />} label="Masculino" />
+              <FormControlLabel
+                value={true}
+                control={<Radio required />}
+                label="Masculino"
+              />
               <FormControlLabel
                 value={false}
-                control={<Radio />}
+                control={<Radio required />}
                 label="Femenino"
               />
             </RadioGroup>
@@ -183,14 +178,14 @@ function AnimalForm(props: any) {
           <div className="input">
             <Tf
               // className="contact-input"
-              label="Salud"
+              label="Salud (Se ve más chiquito por el límite de 0 a 10, vean cómo arreglar eso)"
               type="number"
               id="health_rating"
               name="health_rating"
               variant="standard"
               value={formData.health_rating || ''}
               onChange={handleChange}
-              inputProps={{ max: 5, min: 0 }}
+              inputProps={{ min: 0, max: 10 }}
               required
             />
           </div>
@@ -217,6 +212,7 @@ function AnimalForm(props: any) {
               onChange={handleChange}
               className="roundInput"
               defaultValue
+              aria-required
             >
               <FormControlLabel value control={<Radio />} label="Vacunado" />
               <FormControlLabel
@@ -227,7 +223,7 @@ function AnimalForm(props: any) {
             </RadioGroup>
           </div>
           <Sbtn className="submit-btn" type="submit">
-            Editar Animal
+            {props.submitBtnText || 'Submit'}
           </Sbtn>
         </form>
       )}
