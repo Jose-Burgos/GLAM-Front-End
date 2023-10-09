@@ -14,9 +14,12 @@ export default function RootLayout({
   const router = useRouter();
   useEffect(() => {
     (async () => {
-      const error = await supabase.getSession();
-      if (error == null) {
+      const user = await supabase.getSession();
+      if (user == null) {
         router.push('/login');
+      }
+      if (user?.user.user_metadata.profile_type === 'User') {
+        router.push('/user/auth/home');
       } else {
         setSuccess(true);
       }

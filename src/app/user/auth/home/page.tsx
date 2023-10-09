@@ -1,54 +1,84 @@
-'use client';
+import Image from 'next/image';
+import React from 'react';
+import 'react-dom';
 
-import RecipeReviewCard from '@/components/petcard';
-import React, { useState, useEffect } from 'react';
-import { getCurrentUser, getAnimals } from '~/supabase/helpers';
-import * as Sb from '~/supabase/types/supabase.tables';
-import './user-home.css';
-
-export default function UserHome() {
-  const [userName, setUserName] = useState('');
-  const [animals, setAnimals] = useState<Sb.Animal[]>([]);
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const { profile, type } = await getCurrentUser();
-
-        if (type === 'RegularUser') {
-          const regularUserProfile = profile as Sb.Profile<Sb.UserType>;
-          setUserName(regularUserProfile.private.first_name);
-        } else if (type === 'Organization') {
-          const organizationProfile = profile as Sb.Profile<Sb.OrgType>;
-          setUserName(organizationProfile.public.name);
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    }
-
-    async function fetchAnimals() {
-      try {
-        const animalsArray = await getAnimals();
-        setAnimals(animalsArray);
-      } catch (error) {
-        console.error('Error fetching animals:', error);
-      }
-    }
-    fetchUser();
-    fetchAnimals();
-  }, []);
-
+export default function UserMapPage() {
   return (
-    <div className="globalDiv">
-      <h1 className="welcomeMessage">Bienvenido {userName}!</h1>
-      <h2 className="subMessage">Animales Disponibles</h2>
-      <div className="allCards">
-        <div className="pet-card">
-          {animals.map((animal) => (
-            <h1>Hola</h1>
-            // <RecipeReviewCard {...animal} />
-          ))}
+    <div
+      style={{
+        width: 1440,
+        height: 1024,
+        position: 'relative',
+        background: 'white',
+      }}
+    >
+      <h1>¡Hola Marta!</h1>
+      <h2>
+        Éstas son las ONGs cerca tuyo que alojan mascotas que buscan hogar.
+      </h2>
+      <Image
+        alt="somthing"
+        style={{
+          left: 792 / 2,
+          top: 198,
+          position: 'absolute',
+          border: '0.50px black solid',
+        }}
+        src="https://via.placeholder.com/505x556"
+        height={505}
+        width={556}
+        priority
+      />
+      <div
+        style={{
+          width: 422,
+          height: 126,
+          left: 792 / 2,
+          top: 800,
+          position: 'absolute',
+          background: '#B3261E',
+          borderRadius: 100,
+          overflow: 'hidden',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 8,
+          display: 'inline-flex',
+        }}
+      >
+        <div
+          style={{
+            alignSelf: 'stretch',
+            flex: '1 1 0',
+            paddingLeft: 24,
+            paddingRight: 24,
+            paddingTop: 10,
+            paddingBottom: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 8,
+            display: 'inline-flex',
+          }}
+        >
+          <div
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              fontSize: 22,
+              fontFamily: 'Roboto',
+              fontWeight: '400',
+              lineHeight: 28,
+              wordWrap: 'break-word',
+            }}
+          >
+            Reportar una mascota perdida
+          </div>
         </div>
+      </div>
+      <div>
+        <a href="./rescue">
+          <button>Reportar una mascota perdida</button>
+        </a>
       </div>
     </div>
   );

@@ -1,20 +1,21 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables';
-import { getAnimals, getCurrentUser, deleteAnimal } from '~/supabase/helpers';
-import { UUID } from 'crypto';
+import HelperFunctions from '~/supabase/helpers';
 
 export default function DeleteAnimal() {
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [userID, setUserID] = useState<string>();
   const [isOrg, setIsOrg] = useState(false);
+  const MultipleServices = HelperFunctions;
 
   useEffect(() => {
     (async () => {
-      //Get user info
-      const { type } = await getCurrentUser();
-      let {
+      // Get user info
+      const { type } = await MultipleServices.getCurrentUser();
+      const {
         data: { user },
       } = await supabase.auth.getUser();
       setUserID(user?.id);
@@ -27,7 +28,7 @@ export default function DeleteAnimal() {
 
   async function fetchAnimals() {
     try {
-      const animalsArray = await getAnimals();
+      const animalsArray = await MultipleServices.getAnimals();
       setAnimals(animalsArray);
     } catch (error) {
       console.error('Error fetching animals:', error);
@@ -35,7 +36,7 @@ export default function DeleteAnimal() {
   }
 
   const handleClick = (id: String) => {
-    deleteAnimal(id as String);
+    MultipleServices.deleteAnimal(id as String);
   };
 
   return (

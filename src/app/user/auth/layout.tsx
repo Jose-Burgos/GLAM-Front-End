@@ -3,7 +3,7 @@
 import Loading from '@/components/loading';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import supabase from '~/supabase/helpers';
+import HelperFunctions from '~/supabase/helpers';
 
 export default function RootLayout({
   children,
@@ -12,16 +12,20 @@ export default function RootLayout({
 }) {
   const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
+  const auth = HelperFunctions;
   useEffect(() => {
     (async () => {
-      const error = await supabase.getSession();
-      if (error == null) {
+      const user = await auth.getSession();
+      if (user == null) {
         router.push('/login');
+      }
+      if (user?.user.user_metadata.profile_type === 'Organization') {
+        router.push('/ong/auth/home');
       } else {
         setSuccess(true);
       }
     })();
-  }, [router]);
+  }, [router, auth]);
 
   if (success) {
     return <main>{children}</main>;

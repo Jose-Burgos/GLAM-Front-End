@@ -1,12 +1,11 @@
 'use client';
 
 import '../style/navbar.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button, styled } from '@mui/material';
-import { logout } from '~/supabase/helpers';
+import HelperFunctions from '~/supabase/helpers';
 import BurgerButton from './burgerbutton';
-import { supabase } from '../../supabase/supabaseClient';
 
 const LogButton = styled(Button)({
   fontFamily: 'Shantell Sans',
@@ -15,27 +14,17 @@ const LogButton = styled(Button)({
 });
 
 export default function NavBar() {
-  const [clicked, setClicked] = useState(false);
-  const [islogged, setlogged] = useState(false); // Cambiar esto
+  const authService = HelperFunctions;
+  const [clicked, setClicked] = useState<Boolean>(false);
+  const [logged, setLogged] = useState<Boolean>(false);
 
   const handleClick = () => {
     setClicked(!clicked);
   };
-
   const handleLog = () => {
-    setlogged(!islogged);
-    logout();
+    authService.logout();
+    setLogged(!logged);
   };
-
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth >= 768) {
-        setClicked(false);
-      }
-    }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   return (
     <nav>
@@ -63,15 +52,11 @@ export default function NavBar() {
         </Link>
       </div>
       <div className="r-cont">
-        {islogged ? (
-          <Link onClick={handleLog} href="/">
-            <LogButton className="logbtn">Cerrar sesion</LogButton>
-          </Link>
-        ) : (
-          <Link onClick={handleLog} href="/login">
-            <LogButton className="logbtn">Ingresa</LogButton>
-          </Link>
-        )}
+        <Link onClick={handleLog} href={logged ? '/' : '/login'}>
+          <LogButton className="logbtn">
+            {logged ? 'Cerrar sesion' : 'Ingresa'}
+          </LogButton>
+        </Link>
         <div className="burger">
           <BurgerButton clicked={clicked} handleClick={handleClick} />
         </div>

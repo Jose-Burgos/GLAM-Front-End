@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import './adoption.css';
 import Card from '@/components/card';
-import { getAnimals } from '~/supabase/helpers';
+import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import { Grid } from '@mui/material';
 import Loading from '@/components/loading';
@@ -11,13 +11,14 @@ import Loading from '@/components/loading';
 export default function AdoptView() {
   const [cardData, setCardData] = useState<Animal[]>();
   const [success, setSuccess] = useState<boolean>(false);
+  const dataService = HelperFunctions;
   useEffect(() => {
     (async () => {
-      const data = await getAnimals();
+      const data = await dataService.getAnimals();
       setCardData(data);
       setSuccess(true);
     })();
-  }, []);
+  }, [dataService]);
 
   return (
     <div className="container">
