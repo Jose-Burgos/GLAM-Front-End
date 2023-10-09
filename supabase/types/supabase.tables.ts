@@ -1,6 +1,7 @@
 import { Database } from './supabase';
 
 export type TableName = keyof Database['public']['Tables'];
+export type TableColumn<T extends TableName> = keyof Database['public']['Tables'][T]['Row'];
 
 export type Table<T extends TableName> = Database['public']['Tables'][T]['Row'];
 
@@ -43,3 +44,13 @@ export interface LoginInfo {
   email: string;
   password: string;
 }
+
+// Esto es una cagada así hardcodeado, cuando se haga desde el back en express se puede mejorar
+export enum RequestStates {
+  pending = 1,
+  accepted = 2,
+  rejected = 3,
+  cancelled = 4,
+}
+
+export type AdoptionRequest = Table<'adoption_requests'>;

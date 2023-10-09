@@ -69,7 +69,10 @@ const helpers: HelperFunctions = {
 
   getCurrentUserId: async () => {
     const session = await helpers.getSession();
-    return session?.user.id || null;
+    if (!session) {
+      throw new Error('No logged in user');
+    }
+    return session.user.id;
   },
 
   userSignUp: async (signupInfo) => {
@@ -205,6 +208,75 @@ const helpers: HelperFunctions = {
       }
     });
   },
+
+  requestAdoption: async (animalId) => {
+    const { data: animal, error: animalSelectError } = await supabase
+      .from('animals')
+      .select('*')
+      .eq('id', animalId)
+      .single();
+
+    if (animalSelectError) {
+      throw new Error(animalSelectError.message);
+    } else if (!animal) {
+      throw new Error('Animal with id ' + animalId + ' not found');
+    }
+
+    const userId = await helpers.getCurrentUserId();
+
+    const { data, error: requestSelectError } = await supabase
+      .from('adoption_requests')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('animal_id', animalId);
+
+    if (requestSelectError) {
+      throw new Error(requestSelectError.message);
+    } else if (data.length > 0) {
+      throw new Error(
+        'User has already requested adoption for animal ' + animalId
+      );
+    }
+
+    const { error: requestInsertionError } = await supabase
+      .from('adoption_requests')
+      .insert({
+        user_id: userId,
+        animal_id: animalId,
+        org_id: animal.org_id,
+        state_id: Sb.RequestStates.pending,
+      });
+
+    if (requestInsertionError) {
+      throw new Error(requestInsertionError.message);
+    }
+  },
+
+  getUserAdoptionRequests: async () => {
+    const id = await helpers.getCurrentUserId();
+    const requests = await getAdoptionRequests('RegularUser', id)
+    return requests;
+  },
+
+  getOrgAdoptionRequests: async () => {
+    const id = await helpers.getCurrentUserId();
+    const requests = await getAdoptionRequests('Organization', id)
+    return requests;
+  },
+
+  cancelAdoptionRequest: async (requestId) => {
+    await supabase
+      .from('adoption_requests')
+      .update({ state_id: Sb.RequestStates.cancelled })
+      .eq('id', requestId);
+  },
+
+  reactivateAdoptionRequest: async (requestId) => {
+    await supabase
+      .from('adoption_requests')
+      .update({ state_id: Sb.RequestStates.pending })
+      .eq('id', requestId);
+  },
 };
 
 export default helpers;
@@ -259,6 +331,23 @@ function accountExists(user: User | null): boolean {
   // This is an ugly hack necessary because supabase is stupid...
   // (See https://github.com/supabase/supabase-js/issues/296)
   return user?.identities?.length === 0;
+}
+
+async function getAdoptionRequests(
+  profileType: Sb.ProfileType,
+  id: string
+): Promise<Sb.AdoptionRequest[]> {
+  const col: Sb.TableColumn<'adoption_requests'> =
+    profileType === 'RegularUser' ? 'user_id' : 'org_id';
+  const { data, error } = await supabase
+    .from('adoption_requests')
+    .select('*')
+    .eq(col, id);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 }
 
 declare global {
