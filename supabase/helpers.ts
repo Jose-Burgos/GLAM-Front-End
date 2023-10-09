@@ -68,8 +68,8 @@ const helpers: HelperFunctions = {
   },
 
   getCurrentUserId: async () => {
-    const session = await helpers.getSession()
-    return session?.user.id || null
+    const session = await helpers.getSession();
+    return session?.user.id || null;
   },
 
   userSignUp: async (signupInfo) => {
@@ -260,11 +260,6 @@ function accountExists(user: User | null): boolean {
   // (See https://github.com/supabase/supabase-js/issues/296)
   return user?.identities?.length === 0;
 }
-
-
-
-
-
 
 declare global {
   interface Window {

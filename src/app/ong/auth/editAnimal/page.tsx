@@ -47,7 +47,7 @@ export default function EditAnimal() {
     <div className="container">
       <h1>Editar Animal</h1>
       {selected ? (
-        <AnimalForm animal={selectedAnimal} submitBtnText='Editar Animal' />
+        <AnimalForm animal={selectedAnimal} submitBtnText="Editar Animal" />
       ) : (
         <div>
           <p>Selecciona el animal a editar</p>

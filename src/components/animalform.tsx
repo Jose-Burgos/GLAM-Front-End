@@ -38,8 +38,8 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
     (async () => {
       const id = await supabase.getCurrentUserId();
       if (!id) {
-        alert('No logged in user')
-        throw new Error('No logged in user')
+        alert('No logged in user');
+        throw new Error('No logged in user');
         // Handle as necessary
       }
       setOrgId(id);
