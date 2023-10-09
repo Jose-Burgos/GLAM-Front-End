@@ -24,7 +24,7 @@ Algunos errores son inevitables en ese caso agregar una nueva regla en el archiv
 
 - Los tipos de supabase hay que regenerarlos cada vez que se modifica/agrega alguna tabla en la base de datos.
   Para eso primero hay que loguearse con `npx supabase login` que pide una token que se puede generar en `https://supabase.com/dashboard/account/tokens`. Después de loguearse se puede correr el comando `npm run gen-types-npx` que actualiza automáticamente los tipos en el archivo `supabase/types/supabase.ts`
-- Para la conexión a la API se necesitan dos variables de entorno, el URL y la api key. Estas variables se obtienen del proyecto de Supabase. Hay que crear un archivo en el root llamado (.env.local) y escribir lo siguiente:
+- Para la conexión a la API se necesitan dos variables de entorno, el URL y la api key. Estas variables se obtienen del proyecto de Supabase. Hay que crear un archivo en el root llamado `.env.local` y escribir lo siguiente:
 NEXT_PUBLIC_SUPABASE_URL= `URL`
 NEXT_PUBLIC_SUPABASE_ANON_KEY= `api key`
 Utilizando las variables conseguidas anteriormente 
