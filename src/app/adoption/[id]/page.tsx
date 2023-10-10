@@ -4,7 +4,7 @@ import ContactForm from '@/components/contactform';
 import GoogleMapsView from '@/components/googlemaps';
 import { Box, CardMedia, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { getAnimals } from '~/supabase/helpers';
+import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import './carousel.css';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -113,12 +113,13 @@ interface props {
 
 export default function animalDescription(pparam: props) {
   const [data, setData] = useState<Animal>();
+  const dataService = HelperFunctions;
   useEffect(() => {
     (async () => {
-      const aux = await getAnimals();
+      const aux = await dataService.getAnimals();
       setData(aux?.find((animal) => animal.id === pparam.params.id));
     })();
-  }, [pparam.params.id]);
+  }, [pparam.params.id, dataService]);
 
   return (
     <div>

@@ -13,7 +13,7 @@ export interface HelperFunctions {
     profile: Sb.Profile<Sb.ProfileType>;
     type: Sb.ProfileType;
   }>;
-  getCurrentUserId: () => Promise<string | null>;
+  getCurrentUserId: () => Promise<string>;
   userSignUp: (signupInfo: Sb.UserSignupInfo) => Promise<{
     data: User | null;
     existingAccount: boolean;
@@ -31,4 +31,9 @@ export interface HelperFunctions {
   sendForgotPassEmail: (email: string) => Promise<void>;
   getSession: () => Promise<Session | null>;
   askNewPassOnReset: () => void;
+  requestAdoption: (animalId: string) => void;
+  getUserAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
+  getOrgAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
+  cancelAdoptionRequest: (requestId: string) => void;
+  reactivateAdoptionRequest: (requestId: string) => void;
 }

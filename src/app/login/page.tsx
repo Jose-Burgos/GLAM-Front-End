@@ -48,7 +48,7 @@ export default function NewUser() {
       } else if (type === 'Organization') {
         // Do something else
         alert('Logueado como ONG.');
-        router.push('/patitas');
+        router.push('/ong/auth/home');
       }
       console.log('Login data: ', session, profile);
     } catch (err) {

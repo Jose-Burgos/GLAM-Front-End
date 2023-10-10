@@ -21,6 +21,8 @@
     "react/jsx-props-no-spreading": 0,
     "jsx-a11y/iframe-has-title": 0,
     "react/require-default-props": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "import/order": 0,
+    "@typescript-eslint/no-use-before-define": 0
   }
 }
