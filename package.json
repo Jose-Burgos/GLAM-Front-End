@@ -29,6 +29,7 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@next/env": "^13.5.5",
     "@supabase/postgrest-js": "^1.8.4",
     "@types/jest": "^29.5.5",
