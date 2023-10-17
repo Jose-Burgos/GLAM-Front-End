@@ -349,13 +349,3 @@ async function getAdoptionRequests(
 
   return data;
 }
-
-declare global {
-  interface Window {
-    supabase: any;
-  }
-}
-window.supabase = {
-  ...helpers,
-  supabase,
-};

@@ -1,8 +1,8 @@
-import * as Sb from './types/supabase.tables';
+// import * as Sb from './types/supabase.tables';
 import { Session, PostgrestResponse } from '@supabase/supabase-js';
 
 // Por alguna razón este import tira error aunque en helpers.ts esté exactamente igual y funque bien...
-// import * as Sb from '~/supabase/types/supabase.tables';
+import * as Sb from '~/supabase/types/supabase.tables';
 
 export interface HelperFunctions {
   getAnimals: () => Promise<Sb.Animal[]>;
