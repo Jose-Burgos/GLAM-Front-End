@@ -26,7 +26,7 @@ const helpers: HelperFunctions = {
   },
 
   upsertAnimal: async (animal) => {
-    let { error } = await supabase.from('animals').upsert(animal);
+    const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
     }
@@ -219,7 +219,7 @@ const helpers: HelperFunctions = {
     if (animalSelectError) {
       throw new Error(animalSelectError.message);
     } else if (!animal) {
-      throw new Error('Animal with id ' + animalId + ' not found');
+      throw new Error(`Animal with id ${animalId} not found`);
     }
 
     const userId = await helpers.getCurrentUserId();
@@ -234,7 +234,7 @@ const helpers: HelperFunctions = {
       throw new Error(requestSelectError.message);
     } else if (data.length > 0) {
       throw new Error(
-        'User has already requested adoption for animal ' + animalId
+        `User has already requested adoption for animal ${animalId}`
       );
     }
 
@@ -254,13 +254,13 @@ const helpers: HelperFunctions = {
 
   getUserAdoptionRequests: async () => {
     const id = await helpers.getCurrentUserId();
-    const requests = await getAdoptionRequests('RegularUser', id)
+    const requests = await getAdoptionRequests('RegularUser', id);
     return requests;
   },
 
   getOrgAdoptionRequests: async () => {
     const id = await helpers.getCurrentUserId();
-    const requests = await getAdoptionRequests('Organization', id)
+    const requests = await getAdoptionRequests('Organization', id);
     return requests;
   },
 

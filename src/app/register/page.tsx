@@ -1,23 +1,63 @@
 'use client';
 
 import React from 'react';
-import './create-acc.css';
+import {
+  Button,
+  useToast,
+  Box,
+  Center,
+  Stack,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Text,
+  HStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
+  useTab,
+  useMultiStyleConfig,
+} from '@chakra-ui/react';
+import theme from '@/theme';
+import UserRegisterFrom from '@/components/userregisterform';
+import OngRegisterFrom from '@/components/ongregisterform';
 
 export default function NewAccLanding() {
   return (
-    <div className="createBox">
-      <h1 className="newAccTitle">Crear una nueva cuenta.</h1>
-      <h2 className="newAccSubtitle">
-        Necesitamos saber que tipo de usuario eres.
-      </h2>
-      <div className="buttonsBox">
-        <a href="/register/newNGO" className="NGOButton">
-          Soy ONG.
-        </a>
-        <a className="AdoptantButton" href="/register/newUser">
-          Soy adoptante.
-        </a>
-      </div>
-    </div>
+    <Center>
+      <Box
+        bg="bgcard"
+        boxShadow="2xl"
+        borderRadius="3xl"
+        mt="10%"
+        mb="10%"
+        p={10}
+      >
+        <Text align="center" color="black" fontSize="3xl" mt={-6} mb={4}>
+          Crear una nueva cuenta.
+        </Text>
+        <Tabs variant="soft-rounded" colorScheme="brand" align="center" mb={4}>
+          <TabList>
+            <Tab bg={theme.colors.accent} shadow="xl" mr={8}>
+              Usario
+            </Tab>
+            <Tab bg={theme.colors.accent} shadow="xl">
+              Organizacion
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <UserRegisterFrom />
+            </TabPanel>
+            <TabPanel>
+              <OngRegisterFrom />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
+    </Center>
   );
 }

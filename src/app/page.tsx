@@ -5,37 +5,44 @@
 'use client';
 
 // This is the landing
-import React, { useEffect } from 'react';
+import React from 'react';
 import '@/app/landing.css';
+import { Stack, Text } from '@chakra-ui/react';
 import ContactForm from '@/components/contactform';
 import LandingContainter from '@/components/landingcontainter';
-import { askNewPassOnReset } from '~/supabase/helpers';
+import askNewPassOnReset from '~/supabase/helpers';
 
-const Data = [
+interface DataStructure {
+  position: boolean;
+  path: string;
+  subt: string;
+  parag: string;
+}
+const Data: Array<DataStructure> = [
   {
     position: true,
-    path: '/assets/cat&dogs.png',
+    path: '/assets/fonod.jpg',
     subt: 'Quienes somos?',
     parag:
       'Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.',
   },
   {
     position: false,
-    path: '/assets/AdoptionsTutorial.png',
+    path: '/assets/fonod.jpg',
     subt: 'Adopciones',
     parag:
       'Para adoptar un animal, crea una cuenta como usuario y luego ve a la página de ADOPCIONES, luego, haz clic en "Detalles" para ver los datos de un animal.',
   },
   {
     position: true,
-    path: '/assets/ContactFormTutorial.png',
+    path: '/assets/fonod.jpg',
     subt: 'Detalles',
     parag:
       'Una vez en la página de detalles, busca el formulario de contacto y envía un mensaje. La ONG se pondrá en contacto contigo pronto.',
   },
   {
     position: false,
-    path: '/assets/addTutorial.png',
+    path: '/assets/fonod.jpg',
     subt: 'ONG: Agregar',
     parag:
       'Para poner en adopción un animal, debes tener una cuenta de ONG. Una vez creada, podrás agregar animales desde tu página de inicio.',
@@ -43,17 +50,11 @@ const Data = [
 ];
 
 export default function Landing() {
-  useEffect(() => {
-    try {
-      askNewPassOnReset();
-    } catch (err) {
-      // Handle the error
-    }
-  }, []);
-
   return (
-    <div className="content">
-      <h1 className="tittle">Grupo Latinoamericano de Ayuda a Mascotas</h1>
+    <Stack p={4}>
+      <Text fontFamily="heading" fontSize="2xl" align="center" color="black">
+        Grupo Latinoamericano de Ayuda a Mascotas
+      </Text>
       {Data.map((d, idx) => (
         <LandingContainter
           left={d.position}
@@ -63,8 +64,6 @@ export default function Landing() {
           key={idx}
         />
       ))}
-      <h1 className="tittle">Contactanos</h1>
-      <ContactForm />
-    </div>
+    </Stack>
   );
 }

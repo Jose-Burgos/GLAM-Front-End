@@ -1,26 +1,18 @@
-'use Client';
+'use client';
 
-import * as React from 'react';
-import {
-  Stack,
-  Box,
-  Button,
-  Text,
-  Flex,
-  Spacer,
-  HStack,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Stack, Box, Button, Text, Flex, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-interface PetData {
-  id: string;
+interface OngData {
+  id?: string;
   img: string;
   name: string;
-  description: string | null;
+  description?: string | null;
 }
 
-function MobilePetCard(props: PetData) {
+function MobileOngCard(props: OngData) {
   return (
     <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="sm">
       <Flex>
@@ -56,7 +48,7 @@ function MobilePetCard(props: PetData) {
               justifyContent="end"
               fontSize="sm"
             >
-              Adoptame
+              Vistar
             </Button>
           </Link>
         </Stack>
@@ -65,14 +57,14 @@ function MobilePetCard(props: PetData) {
   );
 }
 
-function DesktopPetCard(props: PetData) {
+function DesktopOngCard(props: OngData) {
   return (
     <Box bg="bgcard" shadow="xl" borderBottomRadius="sm">
       <Stack>
         <Box>
           <Box position="relative" width={200} h={200}>
             <Image
-              style={{ borderBottomRightRadius: '1.5rem' }}
+              style={{ borderBottomLeftRadius: '1.5rem' }}
               alt="pet"
               src={props.img}
               fill
@@ -90,7 +82,7 @@ function DesktopPetCard(props: PetData) {
       </Stack>
       <Flex>
         <Spacer />
-        <Link href={`/adoption/${props.id}`}>
+        <Link href={`/ong/${props.id}`}>
           <Button
             bg="accent"
             size="sm"
@@ -102,7 +94,7 @@ function DesktopPetCard(props: PetData) {
             justifyContent="end"
             fontSize="sm"
           >
-            Adoptame
+            Visitar
           </Button>
         </Link>
       </Flex>
@@ -110,11 +102,11 @@ function DesktopPetCard(props: PetData) {
   );
 }
 
-export default function PetCard(props: PetData) {
+export default function OngCard(props: OngData) {
   return (
     <Box>
       <Box display={{ base: 'none', md: 'inline-flex' }}>
-        <DesktopPetCard
+        <DesktopOngCard
           id={props.id}
           img={props.img}
           name={props.name}
@@ -123,7 +115,7 @@ export default function PetCard(props: PetData) {
       </Box>
 
       <Box display={{ base: 'flex', md: 'none' }}>
-        <MobilePetCard
+        <MobileOngCard
           id={props.id}
           img={props.img}
           name={props.name}
