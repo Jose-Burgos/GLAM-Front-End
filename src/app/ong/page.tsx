@@ -47,7 +47,6 @@ export default function OngView() {
           'repeat(2, fr)',
           'repeat(3, 2fr)',
           'repeat(4, 3fr)',
-          'repeat(5, 4fr)',
         ]}
         gap={6}
         padding={10}

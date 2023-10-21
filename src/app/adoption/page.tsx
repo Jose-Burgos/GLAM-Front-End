@@ -27,6 +27,7 @@ export default function AdoptView() {
           'repeat(2, fr)',
           'repeat(3, 3fr)',
           'repeat(4, 4fr)',
+          'repeat(5, 5fr)',
         ]}
         gap={8}
         padding={5}

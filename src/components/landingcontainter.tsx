@@ -97,7 +97,7 @@ function MobileContainer(props: DataFormat) {
 
 export default function LandingContainter(props: DataFormat) {
   return (
-    <>
+    <Center>
       <DesktopContainer
         left={props.left}
         path={props.path}
@@ -109,6 +109,6 @@ export default function LandingContainter(props: DataFormat) {
         subt={props.subt}
         parag={props.parag}
       />
-    </>
+    </Center>
   );
 }

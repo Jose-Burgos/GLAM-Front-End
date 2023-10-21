@@ -6,11 +6,8 @@
 
 // This is the landing
 import React from 'react';
-import '@/app/landing.css';
-import { Stack, Text } from '@chakra-ui/react';
-import ContactForm from '@/components/contactform';
+import { Center, Stack, Text } from '@chakra-ui/react';
 import LandingContainter from '@/components/landingcontainter';
-import askNewPassOnReset from '~/supabase/helpers';
 
 interface DataStructure {
   position: boolean;
@@ -51,19 +48,21 @@ const Data: Array<DataStructure> = [
 
 export default function Landing() {
   return (
-    <Stack p={4}>
-      <Text fontFamily="heading" fontSize="2xl" align="center" color="black">
-        Grupo Latinoamericano de Ayuda a Mascotas
-      </Text>
-      {Data.map((d, idx) => (
-        <LandingContainter
-          left={d.position}
-          path={d.path}
-          subt={d.subt}
-          parag={d.parag}
-          key={idx}
-        />
-      ))}
-    </Stack>
+    <Center>
+      <Stack p={4} w="90vw">
+        <Text fontFamily="heading" fontSize="2xl" align="center" color="black">
+          Grupo Latinoamericano de Ayuda a Mascotas
+        </Text>
+        {Data.map((d, idx) => (
+          <LandingContainter
+            left={d.position}
+            path={d.path}
+            subt={d.subt}
+            parag={d.parag}
+            key={idx}
+          />
+        ))}
+      </Stack>
+    </Center>
   );
 }

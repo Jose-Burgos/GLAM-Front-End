@@ -22,12 +22,12 @@ interface PetData {
 
 function MobilePetCard(props: PetData) {
   return (
-    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="sm">
+    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="md">
       <Flex>
         <Stack direction={['row', 'row']}>
           <Box position="relative" width={100} h={100}>
             <Image
-              style={{ borderBottomRightRadius: '5rem' }}
+              style={{ borderBottomRightRadius: '4rem' }}
               alt="pet"
               src={props.img}
               fill
@@ -67,7 +67,7 @@ function MobilePetCard(props: PetData) {
 
 function DesktopPetCard(props: PetData) {
   return (
-    <Box bg="bgcard" shadow="xl" borderBottomRadius="sm">
+    <Box bg="bgcard" shadow="xl" borderBottomRadius="md">
       <Stack>
         <Box>
           <Box position="relative" width={200} h={200}>

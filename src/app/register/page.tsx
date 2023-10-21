@@ -2,24 +2,14 @@
 
 import React from 'react';
 import {
-  Button,
-  useToast,
   Box,
   Center,
-  Stack,
-  FormControl,
-  FormLabel,
-  Input,
-  Checkbox,
   Text,
-  HStack,
   Tabs,
   TabList,
   TabPanels,
   TabPanel,
   Tab,
-  useTab,
-  useMultiStyleConfig,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import UserRegisterFrom from '@/components/userregisterform';

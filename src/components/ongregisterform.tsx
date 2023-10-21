@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useState } from 'react';
+import React, { FormEvent, use, useState } from 'react';
 import {
   Button,
   useToast,
@@ -24,7 +24,8 @@ export default function OngRegisterFrom() {
   const [password, setPassword] = useState('TestPass');
   const toast = useToast();
 
-  async function onSubmit() {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const aux = { email, password, name, address };
     const log = JSON.stringify(aux);
 
@@ -58,7 +59,7 @@ export default function OngRegisterFrom() {
       toast({
         title: 'Error',
         description: `${err}`,
-        status: 'success',
+        status: 'error',
         duration: 4000,
         isClosable: true,
         variant: 'left-accent',
@@ -70,13 +71,10 @@ export default function OngRegisterFrom() {
   return (
     <Center>
       <Stack>
-        <form id="registerUserForm" onSubmit={onSubmit}>
+        <form id="registerOngForm">
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="text" color="black">
-              Nombre
-            </FormLabel>
+            <FormLabel color="black">Nombre</FormLabel>
             <Input
-              id="text"
               placeholder="Nombre"
               value={name}
               onChange={(e) => {
@@ -90,11 +88,8 @@ export default function OngRegisterFrom() {
           </FormControl>
 
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="text" color="black">
-              Direccion
-            </FormLabel>
+            <FormLabel color="black">Direccion</FormLabel>
             <Input
-              id="text"
               placeholder="Direccion"
               value={address}
               onChange={(e) => {
@@ -107,11 +102,8 @@ export default function OngRegisterFrom() {
             />
           </FormControl>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="email" color="black">
-              E-mail
-            </FormLabel>
+            <FormLabel color="black">E-mail</FormLabel>
             <Input
-              id="email"
               placeholder="E-mail"
               value={email}
               onChange={(e) => {
@@ -123,28 +115,9 @@ export default function OngRegisterFrom() {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password" color="black">
-              Contraseña
-            </FormLabel>
+            <FormLabel color="black">Contraseña</FormLabel>
             <Input
-              id="password"
               placeholder="Contraseña"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              bg="inputbg"
-              shadow="inner"
-              type="password"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="password" color="black">
-              Repetir Contraseña:
-            </FormLabel>
-            <Input
-              id="password"
-              placeholder="Repetir Contraseña"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);

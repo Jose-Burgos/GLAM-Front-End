@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useState } from 'react';
+import React, { FormEvent, use, useState } from 'react';
 import {
   Button,
   useToast,
@@ -26,7 +26,8 @@ export default function UserRegisterFrom() {
   const [password, setPassword] = useState('TestPass');
   const toast = useToast();
 
-  async function onSubmit() {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const aux = { name, surname, user, dni, email, password };
     const log = JSON.stringify(aux);
 
@@ -60,7 +61,7 @@ export default function UserRegisterFrom() {
       toast({
         title: 'Error',
         description: `${err}`,
-        status: 'success',
+        status: 'error',
         duration: 4000,
         isClosable: true,
         variant: 'left-accent',
@@ -74,11 +75,8 @@ export default function UserRegisterFrom() {
       <Stack>
         <form id="registerUserForm" onSubmit={onSubmit}>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="text" color="black">
-              Nombre
-            </FormLabel>
+            <FormLabel color="black">Nombre</FormLabel>
             <Input
-              id="text"
               placeholder="Nombre"
               value={name}
               onChange={(e) => {
@@ -91,11 +89,8 @@ export default function UserRegisterFrom() {
             />
           </FormControl>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="text" color="black">
-              Apellido
-            </FormLabel>
+            <FormLabel color="black">Apellido</FormLabel>
             <Input
-              id="text"
               placeholder="Apellido"
               value={surname}
               onChange={(e) => {
@@ -108,11 +103,8 @@ export default function UserRegisterFrom() {
             />
           </FormControl>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="text" color="black">
-              Usuario
-            </FormLabel>
+            <FormLabel color="black">Usuario</FormLabel>
             <Input
-              id="text"
               placeholder="Nombre de Usuario"
               value={user}
               onChange={(e) => {
@@ -125,11 +117,8 @@ export default function UserRegisterFrom() {
             />
           </FormControl>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="number" color="black">
-              DNI
-            </FormLabel>
+            <FormLabel color="black">DNI</FormLabel>
             <Input
-              id="number"
               placeholder="DNI"
               value={dni}
               onChange={(e) => {
@@ -143,11 +132,8 @@ export default function UserRegisterFrom() {
             />
           </FormControl>
           <FormControl marginBottom={5}>
-            <FormLabel htmlFor="email" color="black">
-              E-mail
-            </FormLabel>
+            <FormLabel color="black">E-mail</FormLabel>
             <Input
-              id="email"
               placeholder="E-mail"
               value={email}
               onChange={(e) => {
@@ -159,28 +145,9 @@ export default function UserRegisterFrom() {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="password" color="black">
-              Contraseña
-            </FormLabel>
+            <FormLabel color="black">Contraseña</FormLabel>
             <Input
-              id="password"
               placeholder="Contraseña"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              bg="inputbg"
-              shadow="inner"
-              type="password"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="password" color="black">
-              Repetir Contraseña:
-            </FormLabel>
-            <Input
-              id="password"
-              placeholder="Repetir Contraseña"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);

@@ -14,12 +14,12 @@ interface OngData {
 
 function MobileOngCard(props: OngData) {
   return (
-    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="sm">
+    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="md">
       <Flex>
         <Stack direction={['row', 'row']}>
           <Box position="relative" width={100} h={100}>
             <Image
-              style={{ borderBottomRightRadius: '5rem' }}
+              style={{ borderTopRightRadius: '4rem' }}
               alt="pet"
               src={props.img}
               fill
@@ -59,7 +59,7 @@ function MobileOngCard(props: OngData) {
 
 function DesktopOngCard(props: OngData) {
   return (
-    <Box bg="bgcard" shadow="xl" borderBottomRadius="sm">
+    <Box bg="bgcard" shadow="xl" borderBottomRadius="md">
       <Stack>
         <Box>
           <Box position="relative" width={200} h={200}>

@@ -2,64 +2,25 @@
 
 import ContactForm from '@/components/contactform';
 import GoogleMapsView from '@/components/googlemaps';
-import { Box, CardMedia, Tab, Tabs, Typography } from '@mui/material';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import './carousel.css';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      {...other}
-      className="tabItem"
-    >
-      {value === index && (
-        <Box sx={{ p: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function BasicTabs() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Ubicacion" className="tab" />
-          <Tab label="Contactanos" className="tab" />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <GoogleMapsView />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <ContactForm />
-      </CustomTabPanel>
-    </Box>
-  );
-}
+import {
+  Box,
+  Center,
+  Stack,
+  Text,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@chakra-ui/react';
+import theme from '@/theme';
 
 function Carousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [
@@ -70,36 +31,66 @@ function Carousel() {
     }),
   ]);
 
-  useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes()); // Access API
-    }
-  }, [emblaApi]);
   return (
     <div className="embla" ref={emblaRef}>
       <div className="embla__container">
-        <div className="embla__slide">
-          <CardMedia
-            sx={{
-              aspectRatio: 2 / 1,
+        <div
+          style={{
+            position: 'relative',
+            width: '110px',
+            height: '300px',
+          }}
+          className="embla__slide"
+        >
+          <Image
+            alt="pet"
+            style={{
+              borderTopLeftRadius: '0.375rem',
+              borderBottomLeftRadius: '0.375rem',
+              aspectRatio: '16/9',
             }}
-            image="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            sizes="(max-width: 768px) 100vw, 700px"
+            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            fill
+            priority
           />
         </div>
-        <div className="embla__slide">
-          <CardMedia
-            sx={{
-              aspectRatio: 2 / 1,
+        <div
+          style={{
+            position: 'relative',
+            width: '110px',
+            height: '300px',
+          }}
+          className="embla__slide"
+        >
+          <Image
+            alt="pet"
+            style={{
+              borderTopLeftRadius: '0.375rem',
+              borderBottomLeftRadius: '0.375rem',
+              aspectRatio: '16/9',
             }}
-            image="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            sizes="(max-width: 768px) 100vw, 700px"
+            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            fill
+            priority
           />
         </div>
-        <div className="embla__slide">
-          <CardMedia
-            sx={{
-              aspectRatio: 2 / 1,
+        <div
+          style={{ position: 'relative', width: '110px', height: '300px' }}
+          className="embla__slide"
+        >
+          <Image
+            alt="pet"
+            style={{
+              borderTopLeftRadius: '0.375rem',
+              borderBottomLeftRadius: '0.375rem',
+              aspectRatio: '16/9',
             }}
-            image="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            sizes="(max-width: 768px) 100vw, 700px"
+            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+            fill
+            priority
           />
         </div>
       </div>
@@ -122,12 +113,64 @@ export default function animalDescription(pparam: props) {
   }, [pparam.params.id, dataService]);
 
   return (
-    <div>
-      <Carousel />
-      <h1 className="data">{data?.name}</h1>
-      <h1 className="data">{data?.age}</h1>
-      <h1 className="data">{data?.breed}</h1>
-      <BasicTabs />
-    </div>
+    <Center>
+      <Stack>
+        <Box bg="bgcard" w="90vw" mt={10} mb={10} shadow="xl" borderRadius="md">
+          <Stack direction={['column', 'column', 'row', 'row']}>
+            <Carousel />
+            <Box
+              borderRadius="md"
+              ml={[0, 0, -2, -2]}
+              mt={[-2, -2, 0, 0]}
+              w={['90vw', '90vw', '60vw']}
+              shadow="inner"
+            >
+              <Text color="black" ml={3} mt={1}>
+                {data?.name}
+              </Text>
+              <Text color="black" ml={3} mt={1}>
+                {data?.age}
+              </Text>
+              <Text color="black" ml={3} mt={1}>
+                {data?.health_rating}
+              </Text>
+              <Text color="black" ml={3} mt={1}>
+                {data?.breed}
+              </Text>
+              <Text color="black" ml={3} mt={1}>
+                {data?.org_id}
+              </Text>
+              <Text color="black" mb={3} ml={3} mt={1}>
+                {data?.sex}
+              </Text>
+            </Box>
+          </Stack>
+        </Box>
+        <Box bg="bgcard" w="90vw" mt={10} mb={10} shadow="xl" borderRadius="md">
+          <Tabs variant="soft-rounded" colorScheme="brand" mb={4} p={3}>
+            <TabList>
+              <Tab bg={theme.colors.accent} shadow="xl" mr={5}>
+                Ubicacion
+              </Tab>
+              <Tab bg={theme.colors.accent} shadow="xl">
+                Contactar
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Center>
+                  <GoogleMapsView />
+                </Center>
+              </TabPanel>
+              <TabPanel>
+                <Center>
+                  <ContactForm />
+                </Center>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
+      </Stack>
+    </Center>
   );
 }
