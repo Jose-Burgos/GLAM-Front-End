@@ -25,6 +25,8 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import theme from '@/theme';
+import HelperFunctions from '~/supabase/helpers';
+import { useRouter } from 'next/navigation';
 
 interface NavItem {
   label: string;
@@ -205,6 +207,12 @@ function MobileNavItem({ label, children, href }: NavItem) {
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const router = useRouter();
+
+  const handleClick = () => {
+    HelperFunctions.logout();
+    router.push('/');
+  };
 
   return (
     <Box shadow="2xl" top={0} position="sticky" zIndex={3}>
@@ -267,6 +275,20 @@ export default function NavBar() {
             }}
           >
             Iniciá sesión
+          </Button>
+          <Button
+            fontSize="sm"
+            fontWeight={500}
+            color="black"
+            bg={theme.colors.accent}
+            href="/login"
+            _hover={{
+              textColor: 'gray',
+              borderColor: theme.colors.accent,
+            }}
+            onClick={handleClick}
+          >
+            Cerrar sesión
           </Button>
         </Stack>
       </Flex>
