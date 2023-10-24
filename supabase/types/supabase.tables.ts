@@ -9,6 +9,8 @@ export type Animal = Table<'animals'> & {
   species: Table<'species'>;
 };
 
+export type Request = Table<'adoption_requests'> 
+
 export type OrgType = 'Organization';
 export type UserType = 'RegularUser';
 export type ProfileType = UserType | OrgType;

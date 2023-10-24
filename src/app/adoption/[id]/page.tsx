@@ -126,22 +126,19 @@ export default function animalDescription(pparam: props) {
               shadow="inner"
             >
               <Text color="black" ml={3} mt={1}>
-                {data?.name}
+                Nombre : {data?.name}
               </Text>
               <Text color="black" ml={3} mt={1}>
-                {data?.age}
+                Edad : {data?.age}
               </Text>
               <Text color="black" ml={3} mt={1}>
-                {data?.health_rating}
+                Índice de Salud : {data?.health_rating}
               </Text>
               <Text color="black" ml={3} mt={1}>
-                {data?.breed}
-              </Text>
-              <Text color="black" ml={3} mt={1}>
-                {data?.org_id}
+                Raza : {data?.breed ? data?.breed : 'Sin raza definida'}
               </Text>
               <Text color="black" mb={3} ml={3} mt={1}>
-                {data?.sex}
+                Sexo : {data?.sex ? 'Macho' : 'Hembra'}
               </Text>
             </Box>
           </Stack>

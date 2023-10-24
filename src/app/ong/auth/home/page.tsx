@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import './patitas.css';
+import TableComponent from '@/components/table';
+import NotificationsHistory from '@/components/notifications';
+import DonationHistory from '@/components/donations';
+import { Flex } from '@chakra-ui/react';
 
 export default function PatitasGlew() {
   const [userID, setUserID] = useState<string>();
@@ -35,9 +39,9 @@ export default function PatitasGlew() {
 
   return (
     <div className="container">
-      <h1>Hola {userName} !</h1>
       <ul>
         {isOrg ? (
+          /*
           <div className="pet-card">
             <h2>Estos son sus animales</h2>
             {animals?.map(
@@ -49,12 +53,26 @@ export default function PatitasGlew() {
                 )
             )}
           </div>
+          */
+         <div className="pet-card">
+          <Flex columnGap={10}>
+          <TableComponent animals={animals} org_id={userID!} />
+          <Flex columnGap={10}>
+            <DonationHistory width="600"></DonationHistory>
+            <NotificationsHistory width="600"></NotificationsHistory>
+          </Flex>
+          </Flex>
+         </div>
         ) : (
           <h1>No eres una Organizacion</h1>
         )}
       </ul>
+    </div>
+  );
+}
 
-      <a href="/ong/auth/addAnimal">
+/*
+<a href="/ong/auth/addAnimal">
         <span style={{ color: 'black' }}>Agregar Animal</span>
       </a>
       <a href="/ong/auth/deleteAnimal">
@@ -63,6 +81,4 @@ export default function PatitasGlew() {
       <a href="/ong/auth/editAnimal">
         <span style={{ color: 'black' }}>Editar Animal</span>
       </a>
-    </div>
-  );
-}
+*/
