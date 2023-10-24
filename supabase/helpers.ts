@@ -279,6 +279,16 @@ const helpers: HelperFunctions = {
   },
 };
 
+getOrganizations: async () => {
+  const { data, error } = await supabase
+    .from('organizations')
+    .select('*, name');
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
 export default helpers;
 
 // Local functions that shouldn't be exported go here
