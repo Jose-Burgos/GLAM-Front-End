@@ -11,7 +11,7 @@ interface TableProps {
 }
 
 
-export default function TableComponent (props: TableProps) {
+export default function AnimalTable (props: TableProps) {
   return(
     <Card marginTop={10} marginBottom={10} width={600} backgroundColor={'orange.100'} maxW="xl" position="relative">
       <CardHeader>Animales</CardHeader>
@@ -26,7 +26,7 @@ export default function TableComponent (props: TableProps) {
         </Thead>
         <Tbody>
           {props.animals.map((animal) => (
-            <Tr rounded={"sm"}>
+            <Tr rounded={"sm"} key={animal.id} >
               <Td>{animal.name}</Td>
               <Td>{animal.age}</Td>
               <Td>{animal.vaccinated ? 'Vacunado' : 'No vacunado'}</Td>
