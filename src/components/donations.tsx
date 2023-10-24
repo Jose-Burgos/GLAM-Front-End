@@ -11,7 +11,7 @@ export default function DonationHistory(props:any){
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
-        <text>Donacion a Organizacion Patitas Glew</text>
+        Donacion a Organizacion Patitas Glew
         </Box>
         <AccordionIcon />
       </AccordionButton>
@@ -30,7 +30,7 @@ export default function DonationHistory(props:any){
     <h2>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
-        <text>Donacion a Organizacion Patitas Glew</text>
+        Donacion a Organizacion Patitas Glew
         </Box>
         <AccordionIcon />
       </AccordionButton>
