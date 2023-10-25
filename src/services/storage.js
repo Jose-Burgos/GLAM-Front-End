@@ -60,7 +60,6 @@ export const uploadFileToBucket = async (bucketId, path, file) => {
   }
 };
 
-// necesito crear upload
 
 // Download file
 export const downloadFileFromBucket = async (bucket, path) => {
@@ -70,42 +69,6 @@ export const downloadFileFromBucket = async (bucket, path) => {
     return data;
   } catch (error) {
     console.error(error);
-  }
-};
-
-/* Get signed url of object from specific bucket */
-export const getSignedUrl = async (bucketId, path) => {
-  try {
-    const { signedURL, error } = await supabase.storage
-      .from(bucketId)
-      .createSignedUrl(path, 80);
-    if (error) throw new Error('No files found');
-    return signedURL;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// el problema que tengo es que estas funciones son para agregar imagenes a los buckets
-// yo quiero crear files para que el usuario las cree y agregar las imagenes a los files
-// que estarian dentro del bucket animales
-
-export const uploadFileToBucket = async (bucketId, path, file) => {
-  // three parameters (the id of the bucket, the path in which you create the file, the file)
-  try {
-    // Use the Supabase storage API to upload the file to the specified bucket and path
-    const { data, error } = await supabase.storage
-      .from(bucketId)
-      .upload(path, file);
-
-    if (error) {
-      throw new Error('Error uploading file: ' + error.message);
-    }
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
   }
 };
 
@@ -142,3 +105,38 @@ export const createEmptyFile = async (bucketId, path, mimeType, size) => {
     throw error;
   }
 };
+
+async function uploadImage(e) {
+    let file = e.target.files[0];
+
+    const { data, error } = await supabase
+        .storage
+        .from('animal-pictures-orgs')
+        .upload(user.id + "/" + uuidv4(), file)
+
+        if(data) {
+            getImages();
+        } else {
+            console.log('Error')        // no me acuerdo como manejamos los errores
+        }
+}
+
+async function getImages() {
+    const { data, error } = await supabase
+        .storage
+        .from('animal-pictures-orgs')
+        .list(user?.id + "/", {
+            limit: 20,
+            offset: 0,
+            sortBy: {column: "name", order: "asc"}          // fijarme de cambiarlo a orden de insercion
+        });
+
+        if(data !== null){
+            setImages(data);
+        } else{
+            console.log(error);
+        }
+}
+
+
+
