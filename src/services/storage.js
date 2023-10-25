@@ -141,6 +141,18 @@ async function getImages() {
 // the url in which the images are stored in are
 // https://bjsqhsdofulofilczfcj.supabase.co/storage/v1/object/public/animal-pictures-orgs/ + user.id + '/' + image.name
 
+async function deleteImage(imageName) {
+  const { error } = await supabase.storage
+    .from('animal-pictures-orgs')
+    .remove([user.id + '/' + imageName]);
+
+  if (error) {
+    alert(error);
+  } else {
+    getImages();
+  }
+}
+
 
 
 
