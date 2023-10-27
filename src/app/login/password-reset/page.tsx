@@ -12,18 +12,19 @@ import {
   FormLabel,
   Input,
   Text,
+  FormErrorMessage
 } from '@chakra-ui/react';
 import theme from '@/theme';
+import validateResetPasswordForm from '@/hooks/validation/validateResetPasswordForm';
+import useValidation from '@/hooks/useValidation';
 
 export default function newUser() {
-  const [email, setEmail] = useState('Test@Email.com');
+  const initialState = { email : ''}
   const toast = useToast();
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateResetPasswordForm,onSubmit);
+  async function onSubmit() {
     try {
-      const data = await HelperFunctions.sendForgotPassEmail(JSON.parse(email));
+      const data = await HelperFunctions.sendForgotPassEmail(values.email);
       toast({
         title: 'Verifique su casilla de emails',
         description: '',
@@ -59,22 +60,22 @@ export default function newUser() {
           <Text align="center" color="black" fontSize="3xl" p={3}>
             Ingrese a su cuenta
           </Text>
-          <form id="reset-password" onSubmit={onSubmit}>
-            <FormControl marginBottom={5}>
+          <form id="reset-password">
+            <FormControl marginBottom={5} isInvalid={errors.email}>
               <FormLabel htmlFor="email" color="black">
                 E-mail
               </FormLabel>
               <Input
-                id="email"
                 placeholder="E-mail"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                id="reset_email"
+                name='email'
+                value={values.email}
+                onChange={handleChange}
                 bg="inputbg"
                 shadow="inner"
                 type="email"
               />
+              {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
             </FormControl>
             <Center>
               <Button
@@ -91,7 +92,7 @@ export default function newUser() {
                   borderColor: theme.colors.accent,
                 }}
                 form="reset-password"
-                onClick={onSubmit}
+                onClick={handleSubmit}
               >
                 Reestablecer
               </Button>

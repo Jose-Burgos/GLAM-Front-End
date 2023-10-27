@@ -32,10 +32,10 @@ export default function NewAccLanding() {
         <Tabs variant="soft-rounded" colorScheme="brand" align="center" mb={4}>
           <TabList>
             <Tab bg={theme.colors.accent} shadow="xl" mr={8}>
-              Usario
+              Usuario
             </Tab>
             <Tab bg={theme.colors.accent} shadow="xl">
-              Organizacion
+              Organización
             </Tab>
           </TabList>
           <TabPanels>

@@ -13,43 +13,53 @@ import {
   Text,
   Textarea,
   VStack,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import theme from '@/theme';
+import validateContactForm from '@/hooks/validation/validateContactForm';
+import useValidation from '@/hooks/useValidation';
 
 export default function ContactForm() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const initialState = {
+    email : '',
+    message : ''
+  }
+  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateContactForm,onSubmit);
+  async function onSubmit(){
+    console.log('Mensaje enviado')  
+  }
+
   return (
     <Stack direction={['column', 'column', 'row', 'row']} mt={10} mb={5}>
       <Box>
         <form id="email-form">
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.email}>
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              id='constact_email'
+              name='email'
+              value={values.email}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={20}
             />
+            {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.message}>
             <Textarea
               borderRadius="md"
               placeholder="Detalle... "
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
+              value={values.message}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               size="xl"
               maxLength={400}
             />
+            {errors.message && <FormErrorMessage>{errors.message}</FormErrorMessage>}
           </FormControl>
           <Button
             as="a"
@@ -66,8 +76,9 @@ export default function ContactForm() {
               borderColor: theme.colors.accent,
             }}
             form="registerUserForm"
+            onClick={handleSubmit}
           >
-            Enivar
+            Enviar
           </Button>
         </form>
       </Box>

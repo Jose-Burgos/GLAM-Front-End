@@ -12,25 +12,35 @@ import {
   Checkbox,
   Text,
   HStack,
+  FormErrorMessage
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import Link from 'next/link';
 import HelperFunctions from '~/supabase/helpers';
+import validateUserRegisterForm from '@/hooks/validation/validateUserRegisterForm';
+import useValidation from '@/hooks/useValidation'
+
 
 export default function UserRegisterFrom() {
-  const [name, setName] = useState('TestName');
-  const [surname, setSurname] = useState('TestSurname');
-  const [user, setUser] = useState('TestUsername');
-  const [dni, setDni] = useState(12345678);
-  const [email, setEmail] = useState('Test@Email.com');
-  const [password, setPassword] = useState('TestPass');
+  // const [user_name, setName] = useState('TestName');
+  // const [lastName, setSurname] = useState('TestSurname');
+  // const [user, setUser] = useState('TestUsername');
+  // const [identification, setDni] = useState(12345678);
+  // const [user_email, setEmail] = useState('Test@Email.com');
+  // const [user_password, setPassword] = useState('TestPass');
   const toast = useToast();
+  const initialState = {
+    firstName : '',
+    lastName : '',
+    username : '',
+    identification : '',
+    email : '',
+    password : ''
+  } 
+  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateUserRegisterForm,onSubmit);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const aux = { name, surname, user, dni, email, password };
-    const log = JSON.stringify(aux);
-
+  async function onSubmit() {
+    const log = JSON.stringify(values);
     try {
       const { data, existingAccount } = await HelperFunctions.userSignUp(
         JSON.parse(log)
@@ -38,7 +48,7 @@ export default function UserRegisterFrom() {
       if (existingAccount) {
         toast({
           title: 'Error',
-          description: 'Ya existe una cuenta asociada al email ingresado.',
+          description: 'Ya existe una cuenta asociada al user_email ingresado.',
           status: 'success',
           duration: 4000,
           isClosable: true,
@@ -49,7 +59,7 @@ export default function UserRegisterFrom() {
         toast({
           title: 'Exito',
           description:
-            'Registro exitoso, revise su casilla electrónica para verificar la dirección de email.',
+            'Registro exitoso, revise su casilla electrónica para verificar la dirección de user_email.',
           status: 'success',
           duration: 4000,
           isClosable: true,
@@ -74,88 +84,94 @@ export default function UserRegisterFrom() {
     <Center>
       <Stack>
         <form id="registerUserForm" onSubmit={onSubmit}>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.firstName}>
             <FormLabel color="black">Nombre</FormLabel>
             <Input
               placeholder="Nombre"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              name='firstName'
+              id='firstName'
+              value={values.firstName}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={20}
             />
+          {errors.firstName && <FormErrorMessage>{errors.firstName}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.lastName}>
             <FormLabel color="black">Apellido</FormLabel>
             <Input
               placeholder="Apellido"
-              value={surname}
-              onChange={(e) => {
-                setSurname(e.target.value);
-              }}
+              name='lastName'
+              id='lastName'
+              value={values.lastName}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={20}
             />
+          {errors.lastName && <FormErrorMessage>{errors.lastName}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.username}>
             <FormLabel color="black">Usuario</FormLabel>
             <Input
               placeholder="Nombre de Usuario"
-              value={user}
-              onChange={(e) => {
-                setUser(e.target.value);
-              }}
+              name='username'
+              id='username'
+              value={values.username}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={12}
             />
+          {errors.username && <FormErrorMessage>{errors.username}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.identification}>
             <FormLabel color="black">DNI</FormLabel>
             <Input
               placeholder="DNI"
-              value={dni}
-              onChange={(e) => {
-                setDni(+e.target.value);
-              }}
+              name='identification'
+              id='identification'
+              value={values.identification}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="number"
               minLength={8}
               maxLength={8}
             />
+          {errors.identification && <FormErrorMessage>{errors.identification}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.email}>
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              name='email'
+              id='user_email'
+              value={values.email}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="email"
             />
+          {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={errors.password}>
             <FormLabel color="black">Contraseña</FormLabel>
             <Input
               placeholder="Contraseña"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              name='password'
+              id='user_password'
+              value={values.password}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="password"
             />
+          {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
           </FormControl>
           <FormControl>
             <HStack mt={2}>
@@ -186,7 +202,7 @@ export default function UserRegisterFrom() {
                 borderColor: theme.colors.accent,
               }}
               form="registerUserForm"
-              onClick={onSubmit}
+              onClick={handleSubmit}
             >
               Crear Cuenta
             </Button>

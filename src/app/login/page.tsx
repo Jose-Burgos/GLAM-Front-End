@@ -18,14 +18,20 @@ import {
   Checkbox,
   Text,
   HStack,
+  FormErrorMessage
 } from '@chakra-ui/react';
+import validateLoginForm from '@/hooks/validation/validateLoginForm';
+import useValidation from '@/hooks/useValidation';
 
 export default function NewUser() {
   const router = useRouter();
   const toast = useToast();
-  const [email, setEmail] = useState('jrmalex_2002@outlook.com');
-  const [password, setPassword] = useState('123456');
   const useEffectExecuted = useRef(false);
+  const initialState = {
+    email : '',
+    password : ''
+  } 
+  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateLoginForm,onSubmit);
 
   const checkSessionAndRedirect = async () => {
     try {
@@ -59,10 +65,8 @@ export default function NewUser() {
     }
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const log = JSON.stringify({ email, password });
-
+  async function onSubmit() {
+    const log = JSON.stringify(values);
     try {
       const { session, type } = await supabase.login(JSON.parse(log));
       if (type === 'RegularUser') {
@@ -130,42 +134,42 @@ export default function NewUser() {
               priority
             />
           </Box>
-          <form id="login-form" onSubmit={onSubmit}>
+          <form id="login-form">
             <Text align="center" color="black" fontSize="3xl" mt={10} mb={-5}>
               Iniciá sesión
             </Text>
             <Box padding={10} borderRadius="3xl">
-              <FormControl marginBottom={5}>
+              <FormControl marginBottom={5} isInvalid={errors.email}>
                 <FormLabel htmlFor="email" color="black">
                   E-mail
                 </FormLabel>
                 <Input
-                  id="email"
                   placeholder="E-mail"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  id="login_email"
+                  name='email'
+                  value={values.email}
+                  onChange={handleChange}
                   bg="inputbg"
                   shadow="inner"
                   type="email"
                 />
+                {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.password}>
                 <FormLabel htmlFor="password" color="black">
                   Contraseña
                 </FormLabel>
                 <Input
-                  id="password"
                   placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
+                  id="login_password"
+                  name='password'
+                  value={values.password}
+                  onChange={handleChange}
                   bg="inputbg"
                   shadow="inner"
                   type="password"
                 />
+                {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
               </FormControl>
               <FormControl>
                 <HStack mt={2}>
@@ -194,7 +198,7 @@ export default function NewUser() {
                     borderColor: theme.colors.accent,
                   }}
                   form="login-form"
-                  onClick={onSubmit}
+                  onClick={handleSubmit}
                 >
                   Iniciá sesión
                 </Button>

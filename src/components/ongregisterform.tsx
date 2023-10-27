@@ -11,24 +11,27 @@ import {
   Input,
   Checkbox,
   Text,
+  FormErrorMessage,
   HStack,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import Link from 'next/link';
 import HelperFunctions from '~/supabase/helpers';
+import validateOngRegisterForm from '@/hooks/validation/validateOngRegisterForm';
+import useValidation from '@/hooks/useValidation';
 
 export default function OngRegisterFrom() {
-  const [name, setName] = useState('Test Org Name');
-  const [address, setAdress] = useState('calle pepito');
-  const [email, setEmail] = useState('Test@Email.com');
-  const [password, setPassword] = useState('TestPass');
+  const initialState = {
+    name : '',
+    address : '',
+    email : '',
+    password : ''
+  } 
   const toast = useToast();
+  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateOngRegisterForm,onSubmit);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const aux = { email, password, name, address };
-    const log = JSON.stringify(aux);
-
+  async function onSubmit() {
+    const log = JSON.stringify(values); 
     try {
       const { data, existingAccount } = await HelperFunctions.orgSignUp(
         JSON.parse(log)
@@ -71,63 +74,66 @@ export default function OngRegisterFrom() {
   return (
     <Center>
       <Stack>
-        <form id="registerOngForm">
-          <FormControl marginBottom={5}>
+        <form id="registerOngForm" >
+          <FormControl marginBottom={5} isInvalid={errors.name}>
             <FormLabel color="black">Nombre</FormLabel>
             <Input
               placeholder="Nombre"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              name='name'
+              id='name'
+              value={values.name}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={20}
             />
+          {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
           </FormControl>
-
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.address}>
             <FormLabel color="black">Direccion</FormLabel>
             <Input
               placeholder="Direccion"
-              value={address}
-              onChange={(e) => {
-                setAdress(e.target.value);
-              }}
+              name='address'
+              id='address'
+              value={values.address}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="text"
               maxLength={50}
             />
+          {errors.address && <FormErrorMessage>{errors.address}</FormErrorMessage>}
           </FormControl>
-          <FormControl marginBottom={5}>
+          <FormControl marginBottom={5} isInvalid={errors.email}>
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              name='email'
+              id='email'
+              value={values.email}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="email"
             />
+          {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid = {errors.password}>
             <FormLabel color="black">Contraseña</FormLabel>
             <Input
               placeholder="Contraseña"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              name='password'
+              id='password'
+              value={values.password}
+              onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="password"
             />
+          {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
           </FormControl>
-          <FormControl>
+          <FormControl isRequired>
             <HStack mt={2}>
               <Checkbox
                 bg="inputbg"
@@ -155,8 +161,8 @@ export default function OngRegisterFrom() {
                 textColor: 'gray',
                 borderColor: theme.colors.accent,
               }}
-              form="registerUserForm"
-              onClick={onSubmit}
+              form="registerOngForm"
+              onClick={handleSubmit}
             >
               Crear Cuenta
             </Button>
