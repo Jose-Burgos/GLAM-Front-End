@@ -12,14 +12,13 @@ import {
   Checkbox,
   Text,
   HStack,
-  FormErrorMessage
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import Link from 'next/link';
 import HelperFunctions from '~/supabase/helpers';
 import validateUserRegisterForm from '@/hooks/validation/validateUserRegisterForm';
-import useValidation from '@/hooks/useValidation'
-
+import useValidation from '@/hooks/useValidation';
 
 export default function UserRegisterFrom() {
   // const [user_name, setName] = useState('TestName');
@@ -30,14 +29,15 @@ export default function UserRegisterFrom() {
   // const [user_password, setPassword] = useState('TestPass');
   const toast = useToast();
   const initialState = {
-    firstName : '',
-    lastName : '',
-    username : '',
-    identification : '',
-    email : '',
-    password : ''
-  } 
-  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateUserRegisterForm,onSubmit);
+    firstName: '',
+    lastName: '',
+    username: '',
+    identification: '',
+    email: '',
+    password: '',
+  };
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateUserRegisterForm, onSubmit);
 
   async function onSubmit() {
     const log = JSON.stringify(values);
@@ -88,8 +88,8 @@ export default function UserRegisterFrom() {
             <FormLabel color="black">Nombre</FormLabel>
             <Input
               placeholder="Nombre"
-              name='firstName'
-              id='firstName'
+              name="firstName"
+              id="firstName"
               value={values.firstName}
               onChange={handleChange}
               bg="inputbg"
@@ -97,14 +97,16 @@ export default function UserRegisterFrom() {
               type="text"
               maxLength={20}
             />
-          {errors.firstName && <FormErrorMessage>{errors.firstName}</FormErrorMessage>}
+            {errors.firstName && (
+              <FormErrorMessage>{errors.firstName}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.lastName}>
             <FormLabel color="black">Apellido</FormLabel>
             <Input
               placeholder="Apellido"
-              name='lastName'
-              id='lastName'
+              name="lastName"
+              id="lastName"
               value={values.lastName}
               onChange={handleChange}
               bg="inputbg"
@@ -112,14 +114,16 @@ export default function UserRegisterFrom() {
               type="text"
               maxLength={20}
             />
-          {errors.lastName && <FormErrorMessage>{errors.lastName}</FormErrorMessage>}
+            {errors.lastName && (
+              <FormErrorMessage>{errors.lastName}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.username}>
             <FormLabel color="black">Usuario</FormLabel>
             <Input
               placeholder="Nombre de Usuario"
-              name='username'
-              id='username'
+              name="username"
+              id="username"
               value={values.username}
               onChange={handleChange}
               bg="inputbg"
@@ -127,14 +131,16 @@ export default function UserRegisterFrom() {
               type="text"
               maxLength={12}
             />
-          {errors.username && <FormErrorMessage>{errors.username}</FormErrorMessage>}
+            {errors.username && (
+              <FormErrorMessage>{errors.username}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.identification}>
             <FormLabel color="black">DNI</FormLabel>
             <Input
               placeholder="DNI"
-              name='identification'
-              id='identification'
+              name="identification"
+              id="identification"
               value={values.identification}
               onChange={handleChange}
               bg="inputbg"
@@ -143,35 +149,41 @@ export default function UserRegisterFrom() {
               minLength={8}
               maxLength={8}
             />
-          {errors.identification && <FormErrorMessage>{errors.identification}</FormErrorMessage>}
+            {errors.identification && (
+              <FormErrorMessage>{errors.identification}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.email}>
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              name='email'
-              id='user_email'
+              name="email"
+              id="user_email"
               value={values.email}
               onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="email"
             />
-          {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl isInvalid={errors.password}>
             <FormLabel color="black">Contraseña</FormLabel>
             <Input
               placeholder="Contraseña"
-              name='password'
-              id='user_password'
+              name="password"
+              id="user_password"
               value={values.password}
               onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="password"
             />
-          {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
+            {errors.password && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl>
             <HStack mt={2}>

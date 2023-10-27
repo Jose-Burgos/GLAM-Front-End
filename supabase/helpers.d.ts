@@ -37,5 +37,4 @@ export interface HelperFunctions {
   cancelAdoptionRequest: (requestId: string) => void;
   reactivateAdoptionRequest: (requestId: string) => void;
   getOrgs: () => Promise<Sb.Org[]>;
-
 }

@@ -21,12 +21,13 @@ import useValidation from '@/hooks/useValidation';
 
 export default function ContactForm() {
   const initialState = {
-    email : '',
-    message : ''
-  }
-  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateContactForm,onSubmit);
-  async function onSubmit(){
-    console.log('Mensaje enviado')  
+    email: '',
+    message: '',
+  };
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateContactForm, onSubmit);
+  async function onSubmit() {
+    console.log('Mensaje enviado');
   }
 
   return (
@@ -37,8 +38,8 @@ export default function ContactForm() {
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              id='constact_email'
-              name='email'
+              id="constact_email"
+              name="email"
               value={values.email}
               onChange={handleChange}
               bg="inputbg"
@@ -46,7 +47,9 @@ export default function ContactForm() {
               type="text"
               maxLength={20}
             />
-            {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.message}>
             <Textarea
@@ -59,7 +62,9 @@ export default function ContactForm() {
               size="xl"
               maxLength={400}
             />
-            {errors.message && <FormErrorMessage>{errors.message}</FormErrorMessage>}
+            {errors.message && (
+              <FormErrorMessage>{errors.message}</FormErrorMessage>
+            )}
           </FormControl>
           <Button
             as="a"

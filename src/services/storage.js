@@ -60,7 +60,6 @@ export const uploadFileToBucket = async (bucketId, path, file) => {
   }
 };
 
-
 // Download file
 export const downloadFileFromBucket = async (bucket, path) => {
   try {
@@ -107,35 +106,33 @@ export const createEmptyFile = async (bucketId, path, mimeType, size) => {
 };
 
 async function uploadImage(e) {
-    let file = e.target.files[0];
+  let file = e.target.files[0];
 
-    const { data, error } = await supabase
-        .storage
-        .from('animal-pictures-orgs')
-        .upload(user.id + "/" + uuidv4(), file)
+  const { data, error } = await supabase.storage
+    .from('animal-pictures-orgs')
+    .upload(user.id + '/' + uuidv4(), file);
 
-        if(data) {
-            getImages();
-        } else {
-            console.log('Error')        // no me acuerdo como manejamos los errores
-        }
+  if (data) {
+    getImages();
+  } else {
+    console.log('Error'); // no me acuerdo como manejamos los errores
+  }
 }
 
 async function getImages() {
-    const { data, error } = await supabase
-        .storage
-        .from('animal-pictures-orgs')
-        .list(user?.id + "/", {
-            limit: 20,
-            offset: 0,
-            sortBy: {column: "name", order: "asc"}          // fijarme de cambiarlo a orden de insercion
-        });
+  const { data, error } = await supabase.storage
+    .from('animal-pictures-orgs')
+    .list(user?.id + '/', {
+      limit: 20,
+      offset: 0,
+      sortBy: { column: 'name', order: 'asc' }, // fijarme de cambiarlo a orden de insercion
+    });
 
-        if(data !== null){
-            setImages(data);
-        } else{
-            console.log(error);
-        }
+  if (data !== null) {
+    setImages(data);
+  } else {
+    console.log(error);
+  }
 }
 
 // the url in which the images are stored in are
@@ -152,8 +149,3 @@ async function deleteImage(imageName) {
     getImages();
   }
 }
-
-
-
-
-

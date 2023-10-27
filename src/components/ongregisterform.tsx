@@ -22,16 +22,17 @@ import useValidation from '@/hooks/useValidation';
 
 export default function OngRegisterFrom() {
   const initialState = {
-    name : '',
-    address : '',
-    email : '',
-    password : ''
-  } 
+    name: '',
+    address: '',
+    email: '',
+    password: '',
+  };
   const toast = useToast();
-  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateOngRegisterForm,onSubmit);
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateOngRegisterForm, onSubmit);
 
   async function onSubmit() {
-    const log = JSON.stringify(values); 
+    const log = JSON.stringify(values);
     try {
       const { data, existingAccount } = await HelperFunctions.orgSignUp(
         JSON.parse(log)
@@ -74,13 +75,13 @@ export default function OngRegisterFrom() {
   return (
     <Center>
       <Stack>
-        <form id="registerOngForm" >
+        <form id="registerOngForm">
           <FormControl marginBottom={5} isInvalid={errors.name}>
             <FormLabel color="black">Nombre</FormLabel>
             <Input
               placeholder="Nombre"
-              name='name'
-              id='name'
+              name="name"
+              id="name"
               value={values.name}
               onChange={handleChange}
               bg="inputbg"
@@ -88,14 +89,14 @@ export default function OngRegisterFrom() {
               type="text"
               maxLength={20}
             />
-          {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
+            {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.address}>
             <FormLabel color="black">Direccion</FormLabel>
             <Input
               placeholder="Direccion"
-              name='address'
-              id='address'
+              name="address"
+              id="address"
               value={values.address}
               onChange={handleChange}
               bg="inputbg"
@@ -103,35 +104,41 @@ export default function OngRegisterFrom() {
               type="text"
               maxLength={50}
             />
-          {errors.address && <FormErrorMessage>{errors.address}</FormErrorMessage>}
+            {errors.address && (
+              <FormErrorMessage>{errors.address}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.email}>
             <FormLabel color="black">E-mail</FormLabel>
             <Input
               placeholder="E-mail"
-              name='email'
-              id='email'
+              name="email"
+              id="email"
               value={values.email}
               onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="email"
             />
-          {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
-          <FormControl isInvalid = {errors.password}>
+          <FormControl isInvalid={errors.password}>
             <FormLabel color="black">Contraseña</FormLabel>
             <Input
               placeholder="Contraseña"
-              name='password'
-              id='password'
+              name="password"
+              id="password"
               value={values.password}
               onChange={handleChange}
               bg="inputbg"
               shadow="inner"
               type="password"
             />
-          {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
+            {errors.password && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl isRequired>
             <HStack mt={2}>

@@ -18,7 +18,7 @@ import {
   Checkbox,
   Text,
   HStack,
-  FormErrorMessage
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import validateLoginForm from '@/hooks/validation/validateLoginForm';
 import useValidation from '@/hooks/useValidation';
@@ -28,10 +28,11 @@ export default function NewUser() {
   const toast = useToast();
   const useEffectExecuted = useRef(false);
   const initialState = {
-    email : '',
-    password : ''
-  } 
-  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateLoginForm,onSubmit);
+    email: '',
+    password: '',
+  };
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateLoginForm, onSubmit);
 
   const checkSessionAndRedirect = async () => {
     try {
@@ -103,7 +104,7 @@ export default function NewUser() {
         position: 'top-left',
       });
     }
-  };
+  }
 
   useEffect(() => {
     if (!useEffectExecuted.current) {
@@ -146,14 +147,16 @@ export default function NewUser() {
                 <Input
                   placeholder="E-mail"
                   id="login_email"
-                  name='email'
+                  name="email"
                   value={values.email}
                   onChange={handleChange}
                   bg="inputbg"
                   shadow="inner"
                   type="email"
                 />
-                {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+                {errors.email && (
+                  <FormErrorMessage>{errors.email}</FormErrorMessage>
+                )}
               </FormControl>
               <FormControl isInvalid={errors.password}>
                 <FormLabel htmlFor="password" color="black">
@@ -162,14 +165,16 @@ export default function NewUser() {
                 <Input
                   placeholder="Contraseña"
                   id="login_password"
-                  name='password'
+                  name="password"
                   value={values.password}
                   onChange={handleChange}
                   bg="inputbg"
                   shadow="inner"
                   type="password"
                 />
-                {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
+                {errors.password && (
+                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                )}
               </FormControl>
               <FormControl>
                 <HStack mt={2}>

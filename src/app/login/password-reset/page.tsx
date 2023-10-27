@@ -12,16 +12,17 @@ import {
   FormLabel,
   Input,
   Text,
-  FormErrorMessage
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import validateResetPasswordForm from '@/hooks/validation/validateResetPasswordForm';
 import useValidation from '@/hooks/useValidation';
 
 export default function newUser() {
-  const initialState = { email : ''}
+  const initialState = { email: '' };
   const toast = useToast();
-  const {values,errors,submitForm,handleSubmit,handleChange} = useValidation(initialState,validateResetPasswordForm,onSubmit);
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateResetPasswordForm, onSubmit);
   async function onSubmit() {
     try {
       const data = await HelperFunctions.sendForgotPassEmail(values.email);
@@ -68,14 +69,16 @@ export default function newUser() {
               <Input
                 placeholder="E-mail"
                 id="reset_email"
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={handleChange}
                 bg="inputbg"
                 shadow="inner"
                 type="email"
               />
-              {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+              {errors.email && (
+                <FormErrorMessage>{errors.email}</FormErrorMessage>
+              )}
             </FormControl>
             <Center>
               <Button

@@ -1,7 +1,8 @@
 import { Database } from './supabase';
 
 export type TableName = keyof Database['public']['Tables'];
-export type TableColumn<T extends TableName> = keyof Database['public']['Tables'][T]['Row'];
+export type TableColumn<T extends TableName> =
+  keyof Database['public']['Tables'][T]['Row'];
 
 export type Table<T extends TableName> = Database['public']['Tables'][T]['Row'];
 
@@ -9,7 +10,7 @@ export type Animal = Table<'animals'> & {
   species: Table<'species'>;
 };
 
-export type Request = Table<'adoption_requests'> 
+export type Request = Table<'adoption_requests'>;
 
 export type OrgType = 'Organization';
 export type UserType = 'RegularUser';

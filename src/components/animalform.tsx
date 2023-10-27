@@ -159,7 +159,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
               aria-required
             >
               <FormControlLabel
-                value={true}
+                value
                 control={<Radio required />}
                 label="Masculino"
               />

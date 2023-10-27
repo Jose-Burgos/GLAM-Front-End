@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Footer from '@/components/footer';
 import NavBarType from '@/components/navbartype';
 import { Providers } from './providers';
+import MapComponent from '@/components/MapComponent';
 
 export const metadata: Metadata = {
   title: 'GLAM',

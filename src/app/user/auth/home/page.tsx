@@ -10,7 +10,6 @@ import DonationHistory from '@/components/donations';
 import NotificationsHistory from '@/components/notifications';
 import { Flex } from '@chakra-ui/react';
 
-
 export default function animalInfo() {
   const [data, setData] = useState<Animal[]>();
   // const [userID, setUserID] = useState<string>();
@@ -31,14 +30,14 @@ export default function animalInfo() {
   return (
     <div>
       <Flex>
-        {data?.filter(animal => animal.adopted === true).map((animal) => (
-        <AnimalCard key={animal.id} {...animal} />))}
-      <Flex columnGap={10}>
-        <DonationHistory width="600"></DonationHistory>
-        <NotificationsHistory width="600"></NotificationsHistory>
+        {data
+          ?.filter((animal) => animal.adopted === true)
+          .map((animal) => <AnimalCard key={animal.id} {...animal} />)}
+        <Flex columnGap={10}>
+          <DonationHistory width="600"></DonationHistory>
+          <NotificationsHistory width="600"></NotificationsHistory>
+        </Flex>
       </Flex>
-      </Flex>
-
     </div>
   );
 }
@@ -46,4 +45,4 @@ export default function animalInfo() {
 /*
       {data?.filter(animal => adopctions?.filter(request => animal.id === request.animal_id )).map((animal) => (
       <AnimalCard key={animal.id} {...animal} />))}
-*/ 
+*/
