@@ -57,3 +57,5 @@ export enum RequestStates {
 }
 
 export type AdoptionRequest = Table<'adoption_requests'>;
+
+export type SpeciesData = Table<'species'>;

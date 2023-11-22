@@ -277,17 +277,28 @@ const helpers: HelperFunctions = {
       .update({ state_id: Sb.RequestStates.pending })
       .eq('id', requestId);
   },
+
+  getOrganizations: async () => {
+    const { data, error } = await supabase
+      .from('organizations')
+      .select('*, name');
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  },
+
+  getSpecies: async () => {
+    const { data, error } = await supabase
+      .from('species')
+      .select('id, name');
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  },
 };
 
-getOrganizations: async () => {
-  const { data, error } = await supabase
-    .from('organizations')
-    .select('*, name');
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-};
 
 export default helpers;
 

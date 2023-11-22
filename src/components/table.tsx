@@ -54,7 +54,7 @@ export default function AnimalTable(props: TableProps) {
         </Table>
         <Link href={`/ong/auth/addAnimal`}>
           <IconButton
-            isDisabled
+            // isDisabled
             marginLeft={10}
             marginTop={10}
             position="absolute"

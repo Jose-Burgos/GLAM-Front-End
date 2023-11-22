@@ -16,8 +16,11 @@ const useValidation = (initialState: any, validate: any, func: any) => {
   }, [errors]);
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    saveValues({ ...values, [name]: value });
+    if (e && e.target) {
+      // console.log(e);
+      const { name, value } = e.target;
+      saveValues({ ...values, [name]: value });
+    }
   };
 
   const handleSubmit = (e: any) => {

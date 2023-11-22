@@ -277,6 +277,7 @@ export default function NavBar() {
             Iniciá sesión
           </Button>
           <Button
+            as="a"
             fontSize="sm"
             fontWeight={500}
             color="black"

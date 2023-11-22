@@ -28,6 +28,7 @@
     "mapbox-gl": "^2.14.1",
     "next": "^13.5.4",
     "react": "18.2.0",
+    "react-datepicker": "^4.23.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.11"
   },
@@ -35,6 +36,7 @@
     "@supabase/postgrest-js": "^1.8.4",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
+    "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
