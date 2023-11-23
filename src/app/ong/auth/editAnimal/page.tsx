@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { supabase } from '@/../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables';
-import { getAnimals, getCurrentUser } from '~/supabase/helpers';
+import supabase from '~/supabase/helpers';
 import AnimalForm from '@/components/animalform';
 import './editAnimal.css';
 
@@ -17,11 +16,9 @@ export default function EditAnimal() {
   useEffect(() => {
     (async () => {
       // Get user info
-      const { type } = await getCurrentUser();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUserID(user?.id);
+      const { type } = await supabase.getCurrentUser();
+      const user = await supabase.getCurrentUserId()
+      setUserID(user)
       if (type === 'Organization') {
         setIsOrg(true);
       }
@@ -31,7 +28,7 @@ export default function EditAnimal() {
 
   async function fetchAnimals() {
     try {
-      const animalsArray = await getAnimals();
+      const animalsArray = await supabase.getAnimals();
       setAnimals(animalsArray);
     } catch (error) {
       console.error('Error fetching animals:', error);

@@ -37,7 +37,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   const [species,setSpecies]  = useState({} as SpeciesData[]);
   const [formData, setFormData] = useState(props.animal as Animal);
   const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(formData, validateOngRegisterForm, onSubmit);
-  const [sliderValue, setSliderValue] = useState(50)
+
 
   const labelStyles = {
     mt: '2',
@@ -54,9 +54,10 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
     })();
   }, []);
   
-  useEffect(() => {
-    console.log(values)
-  },[values])
+  // useEffect(() => {
+  //   console.log(values)
+  //   console.log(props.animal)
+  // },[values])
 
 
   async function onSubmit() {
@@ -75,12 +76,12 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
         <Stack>
           <form id='addAnimal'>
             {/* Species */}
-            <FormControl marginBottom={5} isInvalid={errors.species}>
+            <FormControl marginBottom={5} isInvalid={errors.species_id}>
               <FormLabel color="black">Especie</FormLabel>
               <Select 
               placeholder='Selecciona una especie' 
               onChange={handleChange} 
-              value={values.species} 
+              value={values.species_id} 
               name='species_id'
               id='species_id'
               >
@@ -90,7 +91,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 </option>
               ))}
               </Select>
-              {errors.species && <FormErrorMessage>{errors.species}</FormErrorMessage>}
+              {errors.species_id && <FormErrorMessage>{errors.species_id}</FormErrorMessage>}
             </FormControl>
             {/* Name */}
             <FormControl marginBottom={5} isInvalid={errors.name}>
@@ -154,7 +155,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 type="text"
                 maxLength={20}
               />
-              {errors.species && <FormErrorMessage>{errors.back_length}</FormErrorMessage>}
+              {errors.back_length && <FormErrorMessage>{errors.back_length}</FormErrorMessage>}
             </FormControl>
             {/* Weight */}
             <FormControl marginBottom={5} isInvalid={errors.weight}>
@@ -191,7 +192,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             {/* Sex */}
             <FormControl marginBottom={5} isInvalid={errors.sex}>
               <FormLabel color="black">Sexo</FormLabel>
-              <RadioGroup onChange={(value) => handleChange({ target: { name: 'sex', value } })} value={values.sex}>
+              <RadioGroup onChange={(value) => handleChange({ target: { name: 'sex', value } })} value={values.sex.toString()}>
                 <Stack direction='row'>
                   <Radio value={false.toString()}>Hembra</Radio>
                   <Radio value={true.toString()}>Macho</Radio>
@@ -239,13 +240,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             {/* Vaccinated */}
             <FormControl marginBottom={5} isInvalid={errors.vaccinated}>
               <FormLabel color="black">Vacunas</FormLabel>
-              <RadioGroup onChange={(value) => handleChange({ target: { name: 'vaccinated', value } })} value={values.vaccinated}>
+              <RadioGroup onChange={(value) => handleChange({ target: { name: 'vaccinated', value } })} value={values.vaccinated.toString()}>
                 <Stack direction='row'>
                   <Radio value={true.toString()}>Si</Radio>
                   <Radio value={false.toString()}>No</Radio>
                 </Stack>  
               </RadioGroup>
-              {errors.sex && <FormErrorMessage>{errors.sex}</FormErrorMessage>}
+              {errors.vaccinated && <FormErrorMessage>{errors.vaccinated}</FormErrorMessage>}
             </FormControl>
             {/* Send */}
             <Center>
