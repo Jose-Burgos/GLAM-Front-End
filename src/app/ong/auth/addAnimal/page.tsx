@@ -4,7 +4,7 @@ import './addAnimal.css';
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function AddAnimal() {
-  const opcionesFormato = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
   const initialAnimal = {
     adopted: false,
     age: 0,

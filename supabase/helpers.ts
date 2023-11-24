@@ -40,7 +40,7 @@ const helpers: HelperFunctions = {
     if (error) {
       throw new Error(error.message);
     } else {
-      console.log(data);
+      // console.log(data);
       return data[0];
     }
   },
