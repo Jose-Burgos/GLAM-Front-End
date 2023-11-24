@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import OngCard from '@/components/ongcard';
-import { Center, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Grid, GridItem } from '@chakra-ui/react';
 import HelperFunctions from '~/supabase/helpers';
 
 const ongData = [
@@ -40,23 +40,40 @@ export default function OngView() {
   // }, []);
 
   return (
-    <Center>
-      <Grid
-        templateColumns={[
-          'repeat(1, fr)',
-          'repeat(2, fr)',
-          'repeat(3, 2fr)',
-          'repeat(4, 3fr)',
-        ]}
-        gap={6}
-        padding={10}
+    <Flex position="relative" mb="40px">
+      <Flex
+        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
+        mt={{ sm: '5%', md: '10%', lg: '80px' }}
+        w="100wh"
+        maxW="1044px"
+        mx="auto"
+        mb="30px"
+        pt={{ sm: '100px', md: '0px' }}
       >
-        {ongData?.map((card, idx) => (
-          <GridItem key={idx}>
-            <OngCard id={card.id} img={card.url} name={card.name} />
-          </GridItem>
-        ))}
-      </Grid>
-    </Center>
+        <Flex justifyContent="start" style={{ userSelect: 'none' }}>
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            w="100%"
+            background="transparent"
+          >
+            <Grid
+              gap={8}
+              templateColumns={{
+                sm: 'repeat(1, 1fr)',
+                md: 'repeat(1, 1fr)',
+                lg: 'repeat(4, 1fr)',
+              }}
+            >
+              {ongData?.map((card, idx) => (
+                <GridItem key={idx}>
+                  <OngCard id={card.id} img={card.url} name={card.name} />
+                </GridItem>
+              ))}
+            </Grid>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 }

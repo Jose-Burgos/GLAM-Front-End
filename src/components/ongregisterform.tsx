@@ -13,6 +13,7 @@ import {
   Text,
   FormErrorMessage,
   HStack,
+  Switch,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import Link from 'next/link';
@@ -72,121 +73,127 @@ export default function OngRegisterFrom() {
     }
   }
 
-  return (
-    <Center>
-      <Stack>
-        <form id="registerOngForm">
-          <FormControl marginBottom={5} isInvalid={errors.name}>
-            <FormLabel color="black">Nombre</FormLabel>
-            <Input
-              placeholder="Nombre"
-              name="name"
-              id="name"
-              value={values.name}
-              onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
-              type="text"
-              maxLength={20}
-            />
-            {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
-          </FormControl>
-          <FormControl marginBottom={5} isInvalid={errors.address}>
-            <FormLabel color="black">Direccion</FormLabel>
-            <Input
-              placeholder="Direccion"
-              name="address"
-              id="address"
-              value={values.address}
-              onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
-              type="text"
-              maxLength={50}
-            />
-            {errors.address && (
-              <FormErrorMessage>{errors.address}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl marginBottom={5} isInvalid={errors.email}>
-            <FormLabel color="black">E-mail</FormLabel>
-            <Input
-              placeholder="E-mail"
-              name="email"
-              id="email"
-              value={values.email}
-              onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
-              type="email"
-            />
-            {errors.email && (
-              <FormErrorMessage>{errors.email}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isInvalid={errors.password}>
-            <FormLabel color="black">Contraseña</FormLabel>
-            <Input
-              placeholder="Contraseña"
-              name="password"
-              id="password"
-              value={values.password}
-              onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
-              type="password"
-            />
-            {errors.password && (
-              <FormErrorMessage>{errors.password}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl isRequired>
-            <HStack mt={2}>
-              <Checkbox
-                bg="inputbg"
-                color="black"
-                borderColor="rgba(0,0,0,0.2)"
-              />
-              <FormLabel mt={2} color="black">
-                Acepto los terminos y condicones.
-              </FormLabel>
-            </HStack>
-          </FormControl>
+  // TODO: Add inpout for code area
+  // TODO: Add inputs for donation data
 
-          <Center>
-            <Button
-              as="a"
-              fontSize="sm"
-              fontWeight={500}
-              w={200}
-              mt={5}
-              mb={-3}
-              color="black"
-              bg={theme.colors.accent}
-              href="/login"
-              _hover={{
-                textColor: 'gray',
-                borderColor: theme.colors.accent,
-              }}
-              form="registerOngForm"
-              onClick={handleSubmit}
-            >
-              Crear Cuenta
-            </Button>
-          </Center>
-        </form>
-        <Stack
-          mt={10}
-          mb={-10}
-          w="inherit"
-          align="start"
-          direction={['column', 'column', 'row', 'row']}
+  return (
+    <Stack>
+      <form id="registerOngForm">
+        <FormControl marginBottom={5} isInvalid={errors.name}>
+          <FormLabel>Nombre</FormLabel>
+          <Input
+            placeholder="Nombre"
+            name="name"
+            id="name"
+            value={values.name}
+            onChange={handleChange}
+            type="text"
+            maxLength={20}
+            mb="24px"
+            borderRadius="15px"
+            fontSize="sm"
+            size="lg"
+          />
+          {errors.name && (
+            <FormErrorMessage mt="-15px" mb="10px" ml="10px">
+              {errors.name}
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl marginBottom={5} isInvalid={errors.address}>
+          <FormLabel>Direccion</FormLabel>
+          <Input
+            placeholder="Direccion"
+            name="address"
+            id="address"
+            value={values.address}
+            onChange={handleChange}
+            type="text"
+            maxLength={50}
+            mb="24px"
+            borderRadius="15px"
+            fontSize="sm"
+            size="lg"
+          />
+          {errors.address && (
+            <FormErrorMessage mt="-15px" mb="10px" ml="10px">
+              {errors.address}
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl marginBottom={5} isInvalid={errors.email}>
+          <FormLabel>E-mail</FormLabel>
+          <Input
+            placeholder="E-mail"
+            name="email"
+            id="email"
+            value={values.email}
+            onChange={handleChange}
+            type="email"
+            mb="24px"
+            borderRadius="15px"
+            fontSize="sm"
+            size="lg"
+          />
+          {errors.email && (
+            <FormErrorMessage mt="-15px" mb="10px" ml="10px">
+              {errors.email}
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={errors.password}>
+          <FormLabel>Contraseña</FormLabel>
+          <Input
+            placeholder="Contraseña"
+            name="password"
+            id="password"
+            value={values.password}
+            onChange={handleChange}
+            type="password"
+            mb="24px"
+            borderRadius="15px"
+            fontSize="sm"
+            size="lg"
+          />
+          {errors.password && (
+            <FormErrorMessage mt="-15px" mb="10px" ml="10px">
+              {errors.password}
+            </FormErrorMessage>
+          )}
+        </FormControl>
+
+        <FormControl display="flex" alignItems="center">
+          <Switch
+            id="remember-login-ong-register"
+            colorScheme="teal"
+            me="10px"
+          />
+          <FormLabel htmlFor="remember-login" mb="0" ms="1" fontWeight="normal">
+            Recuerdame
+          </FormLabel>
+        </FormControl>
+
+        <Button
+          as="a"
+          fontSize="15px"
+          type="submit"
+          bg="teal.300"
+          w="100%"
+          h="45"
+          color="white"
+          mt="20px"
+          _hover={{
+            bg: 'teal.200',
+          }}
+          _active={{
+            bg: 'teal.400',
+          }}
+          form="registerOngForm"
+          onClick={handleSubmit}
         >
-          <Link href="/login">
-            <Text color="black">Ya tengo cuenta</Text>
-          </Link>
-        </Stack>
-      </Stack>
-    </Center>
+          Crear Cuenta
+        </Button>
+      </form>
+    </Stack>
   );
 }

@@ -1,302 +1,201 @@
 'use client';
 
-import React from 'react';
 import {
   Box,
-  Flex,
-  Text,
-  IconButton,
   Button,
-  Stack,
-  Collapse,
-  Icon,
+  Flex,
+  HStack,
+  Heading,
   Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
+  Text,
+  Icon,
   useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
+  useColorMode,
 } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import React from 'react';
 import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
-import theme from '@/theme';
-import HelperFunctions from '~/supabase/helpers';
-import { useRouter } from 'next/navigation';
+  AdoptionLogo,
+  HomeLogo,
+  OngLogo,
+  LogInLogo,
+} from '@/assets/icons/icons';
+import PropTypes from 'prop-types';
+import NextLink from 'next/link';
+import SidebarResponsive from './sidebarResonsive';
 
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
-
-const Nav_Items: Array<NavItem> = [
-  {
-    label: 'Inicio',
-    href: '/',
-  },
-  {
-    label: 'Adopciones',
-    href: '/adoption',
-  },
-  {
-    label: 'Organizaciones',
-    href: '/ong',
-  },
-];
-
-function DesktopNav() {
-  const linkColor = useColorModeValue('black', 'black');
-  const popoverContentBgColor = useColorModeValue('black', 'black');
-
-  return (
-    <Stack direction="row" spacing={4} my="auto">
-      {Nav_Items.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger="hover" placement="bottom-start">
-            <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? '#'}
-                fontSize="md"
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: 'none',
-                  color: theme.colors.accent,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow="xl"
-                bg={popoverContentBgColor}
-                p={4}
-                rounded="xl"
-                minW="sm"
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
-    </Stack>
+export default function NavBar(props: any) {
+  const [open, setOpen] = React.useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
+  const { logo, logoText, secondary, ...rest } = props;
+  const activeRoute = (routeName: any) => {
+    return window.location.href.indexOf(routeName) > -1;
+  };
+  const navbarIcon = useColorModeValue('gray.700', 'gray.200');
+  const mainText = useColorModeValue('gray.700', 'gray.200');
+  const navbarBg = useColorModeValue(
+    'linear-gradient(112.83deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.8) 110.84%)',
+    'linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)'
   );
-}
+  const navbarBorder = useColorModeValue(
+    '1.5px solid #FFFFFF',
+    '1.5px solid rgba(255, 255, 255, 0.31)'
+  );
+  const navbarShadow = useColorModeValue(
+    '0px 7px 23px rgba(0, 0, 0, 0.05)',
+    'none'
+  );
+  const navbarFilter = useColorModeValue(
+    'none',
+    'drop-shadow(0px 7px 23px rgba(0, 0, 0, 0.05))'
+  );
+  const navbarBackdrop = 'blur(21px)';
+  const bgButton = useColorModeValue(
+    'linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)',
+    'gray.800'
+  );
+  const colorButton = 'white';
 
-function DesktopSubNav({ label, href, subLabel }: NavItem) {
-  return (
+  const brand = (
     <Link
-      href={href}
-      role="group"
-      display="block"
-      p={2}
-      rounded="md"
-      _hover={{
-        bg: useColorModeValue(theme.colors.accent, theme.colors.accent),
-      }}
+      href="/"
+      display="flex"
+      lineHeight="100%"
+      fontWeight="bold"
+      justifyContent="center"
+      alignItems="center"
+      color={mainText}
     >
-      <Stack direction="row" align="center">
-        <Box>
-          <Text
-            transition="all .3s ease"
-            _groupHover={{ color: theme.colors.accent }}
-            fontWeight={500}
-          >
-            {label}
-          </Text>
-          <Text fontSize="sm">{subLabel}</Text>
-        </Box>
-        <Flex
-          transition="all .3s ease"
-          transform="translateX(-10px)"
-          opacity={0}
-          _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-          justify="flex-end"
-          align="center"
-          flex={1}
-        >
-          <Icon color={theme.colors.accent} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
-      </Stack>
+      <Heading fontSize="25px" mt="3px">
+        GLAM
+      </Heading>
     </Link>
   );
-}
-
-function MobileNav() {
+  const linksAuth = (
+    <HStack display={{ sm: 'none', lg: 'flex' }}>
+      <NextLink href="/">
+        <Button
+          fontSize="sm"
+          ms="0px"
+          px="0px"
+          me={{ sm: '2px', md: '16px' }}
+          color={navbarIcon}
+          variant="transparent-with-icon"
+          leftIcon={
+            <HomeLogo color={navbarIcon} w="24px" h="24px" me="0px" mb={2} />
+          }
+        >
+          <Text fontSize="md">Inicio</Text>
+        </Button>
+      </NextLink>
+      <NextLink href="/adoption">
+        <Button
+          fontSize="sm"
+          ms="0px"
+          px="0px"
+          me={{ sm: '2px', md: '16px' }}
+          color={navbarIcon}
+          variant="transparent-with-icon"
+          leftIcon={
+            <AdoptionLogo
+              color={navbarIcon}
+              w="20px"
+              h="20px"
+              me="0px"
+              mb={2}
+            />
+          }
+        >
+          <Text fontSize="md">Adopciones</Text>
+        </Button>
+      </NextLink>
+      <NextLink href="/ong">
+        <Button
+          fontSize="sm"
+          ms="0px"
+          px="0px"
+          me={{ sm: '2px', md: '16px' }}
+          color={navbarIcon}
+          variant="transparent-with-icon"
+          leftIcon={
+            <OngLogo color={navbarIcon} w="26px" h="26px" me="0px" mb={2} />
+          }
+        >
+          <Text fontSize="md">Organizaciones</Text>
+        </Button>
+      </NextLink>
+    </HStack>
+  );
   return (
-    <Stack
-      bg={useColorModeValue(theme.colors.secondary, theme.colors.secondary)}
-      p={4}
-      display={{ md: 'none' }}
-      justifyContent="center"
-      justify="center"
-      align="center"
+    <Flex
+      position="fixed"
+      top="16px"
+      left="50%"
+      transform="translate(-50%, 0px)"
+      background={navbarBg}
+      border={navbarBorder}
+      boxShadow={navbarShadow}
+      filter={navbarFilter}
+      backdropFilter={navbarBackdrop}
+      borderRadius="15px"
+      px="16px"
+      py="22px"
+      mx="auto"
+      width="1044px"
+      maxW="90%"
+      zIndex={100}
+      alignItems="center"
     >
-      {Nav_Items.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
-    </Stack>
-  );
-}
-
-function MobileNavItem({ label, children, href }: NavItem) {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        href={href ?? '#'}
-        justify="space-between"
-        align="center"
-        _hover={{
-          textDecoration: 'none',
-          color: '#DFDF9E',
-        }}
-      >
-        <Text fontWeight={600} color={useColorModeValue('black', 'black')}>
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition="all .25s ease-in-out"
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={10}
-            h={10}
+      <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
+        {brand}
+        <Box
+          ms={{ base: 'auto', lg: '0px' }}
+          display={{ base: 'flex', lg: 'none' }}
+        >
+          <SidebarResponsive
+            logoText={props.logoText}
+            secondary={props.secondary}
+            {...rest}
           />
-        )}
+        </Box>
+        {linksAuth}
+        <Link href="/login">
+          <Button
+            bg={bgButton}
+            color={colorButton}
+            fontSize="xs"
+            variant="no-hover"
+            borderRadius="35px"
+            px="30px"
+            display={{
+              sm: 'none',
+              lg: 'flex',
+            }}
+            leftIcon={<LogInLogo w="24px" h="24px" me="0px" />}
+          >
+            <Text fontSize="md">Iniciar Sesion</Text>
+          </Button>
+        </Link>
+        <Icon
+          as={colorMode === 'dark' ? MoonIcon : SunIcon}
+          me={{ sm: '2px', md: '16px' }}
+          display={{
+            sm: 'none',
+            lg: 'flex',
+          }}
+          ml={-20}
+          mt={2.5}
+          onClick={toggleColorMode}
+        />
       </Flex>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle="solid"
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align="start"
-        >
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
-    </Stack>
+    </Flex>
   );
 }
 
-export default function NavBar() {
-  const { isOpen, onToggle } = useDisclosure();
-  const router = useRouter();
-
-  const handleClick = () => {
-    HelperFunctions.logout();
-    router.push('/');
-  };
-
-  return (
-    <Box shadow="2xl" top={0} position="sticky" zIndex={3}>
-      <Flex
-        bg={useColorModeValue(theme.colors.secondary, theme.colors.secondary)}
-        color={useColorModeValue('white', 'white')}
-        minH="60px"
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle="solid"
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align="center"
-      >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant="ghost"
-            aria-label="Toggle Navigation"
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text fontFamily="Irish Grover" fontSize="3xl" color="black">
-            <Link
-              _hover={{ textDecoration: 'none', cursor: 'default' }}
-              href="/"
-            >
-              GLAM
-            </Link>
-          </Text>
-
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
-        </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          direction="row"
-          spacing={4}
-        >
-          <Button
-            as="a"
-            fontSize="sm"
-            fontWeight={500}
-            color="black"
-            bg={theme.colors.accent}
-            href="/login"
-            _hover={{
-              textColor: 'gray',
-              borderColor: theme.colors.accent,
-            }}
-          >
-            Iniciá sesión
-          </Button>
-          <Button
-            as="a"
-            fontSize="sm"
-            fontWeight={500}
-            color="black"
-            bg={theme.colors.accent}
-            href="/login"
-            _hover={{
-              textColor: 'gray',
-              borderColor: theme.colors.accent,
-            }}
-            onClick={handleClick}
-          >
-            Cerrar sesión
-          </Button>
-        </Stack>
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
-  );
-}
+NavBar.propTypes = {
+  color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger']),
+  brandText: PropTypes.string,
+};

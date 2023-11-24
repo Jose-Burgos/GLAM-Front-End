@@ -8,10 +8,12 @@ import {
   Text,
   Flex,
   Spacer,
-  HStack,
+  useColorModeValue,
 } from '@chakra-ui/react';
+import { AdoptLogo } from '@/assets/icons/icons';
 import Link from 'next/link';
 import Image from 'next/image';
+import { relative } from 'path';
 
 interface PetData {
   id: string;
@@ -21,42 +23,39 @@ interface PetData {
 }
 
 function MobilePetCard(props: PetData) {
+  const bgColor = useColorModeValue('white', 'gray.700');
   return (
-    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="md">
+    <Box me="-1%" w="85vw" bg={bgColor} shadow="xl" borderBottomRadius="15px">
       <Flex>
         <Stack direction={['row', 'row']}>
           <Box position="relative" width={100} h={100}>
             <Image
-              style={{ borderBottomRightRadius: '4rem' }}
+              style={{
+                borderTopRightRadius: '2.5rem',
+                borderTopLeftRadius: '15px',
+                borderBottomLeftRadius: '15px',
+              }}
               alt="pet"
               src={props.img}
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 700px"
+              sizes="(min-width: 768px) 100vw, 700px"
             />
           </Box>
-          <Box ml={2} mt={2}>
-            <Stack direction={['column', 'column', 'column', 'column']}>
-              <Text color="black">{props.name}</Text>
-              <Text color="black">{props.description}</Text>
-            </Stack>
-          </Box>
+          <Stack
+            display="flex"
+            mt={2}
+            direction={['column', 'column', 'column', 'column']}
+          >
+            <Text>{props.name}</Text>
+          </Stack>
         </Stack>
         <Spacer />
         <Stack>
           <Spacer />
           <Link href={`/adoption/${props.id}`}>
-            <Button
-              bg="accent"
-              size="sm"
-              mr={2}
-              mb={2}
-              padding={2}
-              alignItems="end"
-              justifyContent="end"
-              fontSize="sm"
-            >
-              Adoptame
+            <Button bg="teal.300" size="md" mr={2} mb={2}>
+              <AdoptLogo w="28px" h="28px" />
             </Button>
           </Link>
         </Stack>
@@ -66,13 +65,23 @@ function MobilePetCard(props: PetData) {
 }
 
 function DesktopPetCard(props: PetData) {
+  const bgColor = useColorModeValue('white', 'gray.700');
   return (
-    <Box bg="bgcard" shadow="xl" borderBottomRadius="md">
+    <Box
+      bg={bgColor}
+      shadow="xl"
+      borderBottomRadius="15px"
+      borderTopRadius="15px"
+    >
       <Stack>
         <Box>
           <Box position="relative" width={200} h={200}>
             <Image
-              style={{ borderBottomRightRadius: '1.5rem' }}
+              style={{
+                borderBottomRightRadius: '1.5rem',
+                borderTopRightRadius: '15px',
+                borderTopLeftRadius: '15px',
+              }}
               alt="pet"
               src={props.img}
               fill
@@ -82,8 +91,8 @@ function DesktopPetCard(props: PetData) {
           </Box>
           <Box ml={2} mt={2}>
             <Stack direction={['column', 'column', 'column', 'column']}>
-              <Text color="black">{props.name}</Text>
-              <Text color="black">{props.description}</Text>
+              <Text>{props.name}</Text>
+              <Text>{props.description}</Text>
             </Stack>
           </Box>
         </Box>
@@ -91,17 +100,7 @@ function DesktopPetCard(props: PetData) {
       <Flex>
         <Spacer />
         <Link href={`/adoption/${props.id}`}>
-          <Button
-            bg="accent"
-            size="sm"
-            mt={5}
-            mb={2}
-            mr={2}
-            padding={2}
-            alignItems="end"
-            justifyContent="end"
-            fontSize="sm"
-          >
+          <Button bg="teal.300" size="md" mt={5} mb={2} mr={2} fontSize="sm">
             Adoptame
           </Button>
         </Link>
@@ -113,7 +112,7 @@ function DesktopPetCard(props: PetData) {
 export default function PetCard(props: PetData) {
   return (
     <Box>
-      <Box display={{ base: 'none', md: 'inline-flex' }}>
+      <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
         <DesktopPetCard
           id={props.id}
           img={props.img}
@@ -122,7 +121,14 @@ export default function PetCard(props: PetData) {
         />
       </Box>
 
-      <Box display={{ base: 'flex', md: 'none' }}>
+      <Box
+        display={{
+          sm: 'flex',
+          md: 'flex',
+          lg: 'none',
+          xl: 'none',
+        }}
+      >
         <MobilePetCard
           id={props.id}
           img={props.img}

@@ -1,9 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Stack, Box, Button, Text, Flex, Spacer } from '@chakra-ui/react';
+import {
+  Stack,
+  Box,
+  Button,
+  Text,
+  Flex,
+  Spacer,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { VisitOngLogo } from '@/assets/icons/icons';
 
 interface OngData {
   id?: string;
@@ -13,13 +22,18 @@ interface OngData {
 }
 
 function MobileOngCard(props: OngData) {
+  const bgColor = useColorModeValue('white', 'gray.700');
   return (
-    <Box me="-1%" w="85vw" bg="bgcard" shadow="xl" borderBottomRadius="md">
+    <Box me="-1%" w="85vw" shadow="xl" bg={bgColor} borderRadius="15px">
       <Flex>
         <Stack direction={['row', 'row']}>
           <Box position="relative" width={100} h={100}>
             <Image
-              style={{ borderTopRightRadius: '4rem' }}
+              style={{
+                borderTopRightRadius: '2.5rem',
+                borderTopLeftRadius: '15px',
+                borderBottomLeftRadius: '15px',
+              }}
               alt="pet"
               src={props.img}
               fill
@@ -29,8 +43,8 @@ function MobileOngCard(props: OngData) {
           </Box>
           <Box ml={2} mt={2}>
             <Stack direction={['column', 'column', 'column', 'column']}>
-              <Text color="black">{props.name}</Text>
-              <Text color="black">{props.description}</Text>
+              <Text>{props.name}</Text>
+              <Text>{props.description}</Text>
             </Stack>
           </Box>
         </Stack>
@@ -38,17 +52,8 @@ function MobileOngCard(props: OngData) {
         <Stack>
           <Spacer />
           <Link href={`/adoption/${props.id}`}>
-            <Button
-              bg="accent"
-              size="sm"
-              mr={2}
-              mb={2}
-              padding={2}
-              alignItems="end"
-              justifyContent="end"
-              fontSize="sm"
-            >
-              Vistar
+            <Button bg="teal.300" size="md" mr={2} mb={2}>
+              <VisitOngLogo w="35px" h="35px" />
             </Button>
           </Link>
         </Stack>
@@ -58,13 +63,18 @@ function MobileOngCard(props: OngData) {
 }
 
 function DesktopOngCard(props: OngData) {
+  const bgColor = useColorModeValue('white', 'gray.700');
   return (
-    <Box bg="bgcard" shadow="xl" borderBottomRadius="md">
+    <Box shadow="xl" borderRadius="15px" bg={bgColor}>
       <Stack>
         <Box>
           <Box position="relative" width={200} h={200}>
             <Image
-              style={{ borderBottomLeftRadius: '1.5rem' }}
+              style={{
+                borderBottomLeftRadius: '1.5rem',
+                borderTopRightRadius: '15px',
+                borderTopLeftRadius: '15px',
+              }}
               alt="pet"
               src={props.img}
               fill
@@ -74,8 +84,8 @@ function DesktopOngCard(props: OngData) {
           </Box>
           <Box ml={2} mt={2}>
             <Stack direction={['column', 'column', 'column', 'column']}>
-              <Text color="black">{props.name}</Text>
-              <Text color="black">{props.description}</Text>
+              <Text>{props.name}</Text>
+              <Text>{props.description}</Text>
             </Stack>
           </Box>
         </Box>
@@ -83,17 +93,7 @@ function DesktopOngCard(props: OngData) {
       <Flex>
         <Spacer />
         <Link href={`/ong/${props.id}`}>
-          <Button
-            bg="accent"
-            size="sm"
-            mt={5}
-            mb={2}
-            mr={2}
-            padding={2}
-            alignItems="end"
-            justifyContent="end"
-            fontSize="sm"
-          >
+          <Button bg="teal.300" size="md" mt={5} mb={2} mr={2} fontSize="sm">
             Visitar
           </Button>
         </Link>
@@ -105,7 +105,7 @@ function DesktopOngCard(props: OngData) {
 export default function OngCard(props: OngData) {
   return (
     <Box>
-      <Box display={{ base: 'none', md: 'inline-flex' }}>
+      <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
         <DesktopOngCard
           id={props.id}
           img={props.img}
@@ -114,7 +114,14 @@ export default function OngCard(props: OngData) {
         />
       </Box>
 
-      <Box display={{ base: 'flex', md: 'none' }}>
+      <Box
+        display={{
+          sm: 'flex',
+          md: 'flex',
+          lg: 'none',
+          xl: 'none',
+        }}
+      >
         <MobileOngCard
           id={props.id}
           img={props.img}

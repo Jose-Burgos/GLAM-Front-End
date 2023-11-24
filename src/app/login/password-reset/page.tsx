@@ -3,22 +3,23 @@
 import React, { FormEvent, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import {
+  Flex,
   Button,
   useToast,
   Box,
-  Center,
-  VStack,
   FormControl,
   FormLabel,
   Input,
   Text,
   FormErrorMessage,
+  useColorModeValue,
+  Heading,
 } from '@chakra-ui/react';
-import theme from '@/theme';
+import logInImg1 from '../../../assets/images/signInImage1.png';
 import validateResetPasswordForm from '@/hooks/validation/validateResetPasswordForm';
 import useValidation from '@/hooks/useValidation';
 
-export default function newUser() {
+export default function RecoverPassword() {
   const initialState = { email: '' };
   const toast = useToast();
   const { values, errors, submitForm, handleSubmit, handleChange } =
@@ -48,61 +49,123 @@ export default function newUser() {
     }
   }
 
+  const titleColor = useColorModeValue('teal.300', 'teal.200');
+  const textColor = useColorModeValue('gray.400', 'white');
+
   return (
-    <Center style={{ height: '79vh', overflowY: 'hidden' }} mt="5%" mb="5%">
-      <Box
-        bg="bgcard"
-        boxShadow="2xl"
-        borderRadius="3xl"
-        p={10}
-        w={['80%', '80%', '60%', '40%']}
+    <Flex position="relative" mb="40px">
+      <Flex
+        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
+        w="100%"
+        maxW="1044px"
+        mx="auto"
+        justifyContent="space-between"
+        mb="30px"
+        pt={{ sm: '100px', md: '0px' }}
       >
-        <VStack>
-          <Text align="center" color="black" fontSize="3xl" p={3}>
-            Ingrese a su cuenta
-          </Text>
-          <form id="reset-password">
-            <FormControl marginBottom={5} isInvalid={errors.email}>
-              <FormLabel htmlFor="email" color="black">
-                E-mail
-              </FormLabel>
-              <Input
-                placeholder="E-mail"
-                id="reset_email"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
-                type="email"
-              />
-              {errors.email && (
-                <FormErrorMessage>{errors.email}</FormErrorMessage>
-              )}
-            </FormControl>
-            <Center>
-              <Button
-                as="a"
-                fontSize="sm"
-                fontWeight={500}
-                w={200}
-                mt={2}
-                color="black"
-                bg={theme.colors.accent}
-                href="/login"
-                _hover={{
-                  textColor: 'gray',
-                  borderColor: theme.colors.accent,
-                }}
-                form="reset-password"
-                onClick={handleSubmit}
+        <Flex
+          alignItems="center"
+          justifyContent="start"
+          style={{ userSelect: 'none' }}
+          w={{ base: '100%', md: '50%', lg: '42%' }}
+        >
+          <Flex
+            direction="column"
+            w="100%"
+            background="transparent"
+            p="48px"
+            mt={{ md: '150px', lg: '80px' }}
+          >
+            <Heading color={titleColor} fontSize="32px" mb="10px">
+              Recuperar contraseña
+            </Heading>
+            <form id="reset-password">
+              <Text
+                mb="36px"
+                ms="4px"
+                color={textColor}
+                fontWeight="bold"
+                fontSize="14px"
               >
-                Reestablecer
-              </Button>
-            </Center>
-          </form>
-        </VStack>
-      </Box>
-    </Center>
+                Ingrese email para recuperar su contraseña
+              </Text>
+              <FormControl isInvalid={errors.email || errors.password}>
+                <FormLabel
+                  htmlFor="email"
+                  ms="4px"
+                  fontSize="sm"
+                  fontWeight="normal"
+                >
+                  E-mail
+                </FormLabel>
+                <Input
+                  id="reset_email"
+                  borderRadius="15px"
+                  name="email"
+                  mb="24px"
+                  fontSize="sm"
+                  type="email"
+                  placeholder="ejemplo@gmai.com"
+                  value={values.email}
+                  onChange={handleChange}
+                  size="lg"
+                />
+                {errors.email && (
+                  <FormErrorMessage mt="-15px" mb="10px" ml="10px">
+                    {errors.email}
+                  </FormErrorMessage>
+                )}
+
+                <Button
+                  fontSize="15px"
+                  type="submit"
+                  bg="teal.300"
+                  w="100%"
+                  h="45"
+                  mb="20px"
+                  color="white"
+                  mt="20px"
+                  _hover={{
+                    bg: 'teal.200',
+                  }}
+                  _active={{
+                    bg: 'teal.400',
+                  }}
+                  form="reset-password"
+                  onClick={handleSubmit}
+                >
+                  Reestablecer
+                </Button>
+              </FormControl>
+            </form>
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              maxW="100%"
+              mt="0px"
+            />
+          </Flex>
+        </Flex>
+        <Box
+          display={{ base: 'none', md: 'block' }}
+          overflowX="hidden"
+          h="100%"
+          w="40vw"
+          position="absolute"
+          right="0px"
+        >
+          <Box
+            bgImage={`url(${logInImg1.src})`}
+            w="100%"
+            h="100%"
+            bgSize="cover"
+            bgPosition="50%"
+            position="absolute"
+            borderBottomLeftRadius="20px"
+          />
+        </Box>
+      </Flex>
+    </Flex>
   );
 }

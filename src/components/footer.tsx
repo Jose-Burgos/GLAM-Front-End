@@ -2,55 +2,74 @@
 
 import React from 'react';
 import {
-  Box,
-  chakra,
-  Container,
-  Link,
-  Stack,
+  Flex,
+  List,
+  ListItem,
   Text,
-  Image,
+  Link,
   useColorModeValue,
-  VisuallyHidden,
 } from '@chakra-ui/react';
-import theme from '@/theme';
 
 export default function Footer() {
+  const linkTeal = useColorModeValue('teal.400', 'red.200');
   return (
-    <Box
-      boxShadow="xl"
-      bg={useColorModeValue(theme.colors.secondary, theme.colors.secondary)}
-      color={useColorModeValue('black', 'black')}
+    <Flex
+      flexDirection={{
+        base: 'column',
+        xl: 'row',
+      }}
+      alignItems={{
+        base: 'center',
+        xl: 'start',
+      }}
+      justifyContent="space-between"
+      px="30px"
+      pb="20px"
+      mt="5%"
     >
-      <Container
-        as={Stack}
-        maxW="6xl"
-        py={4}
-        spacing={4}
-        justify="center"
-        align="center"
+      <Text
+        color="gray.400"
+        textAlign={{
+          base: 'center',
+          xl: 'start',
+        }}
+        mb={{ base: '20px', xl: '0px' }}
       >
-        <Text fontSize="3xl" fontFamily="Irish Grover">
-          GLAM
-        </Text>
-      </Container>
-
-      <Box
-        borderTopWidth={1}
-        borderStyle="solid"
-        borderColor={useColorModeValue('gray.200', 'gray.700')}
-      >
-        <Container
-          as={Stack}
-          maxW="6xl"
-          py={4}
-          direction={{ base: 'column', md: 'row' }}
-          spacing={4}
-          justify={{ base: 'center', md: 'center' }}
-          align={{ base: 'center', md: 'center' }}
+        &copy; {new Date().getUTCFullYear()},{' '}
+        <Text as="span">GLAM. Todos los derechos reservados</Text>
+      </Text>
+      <List display="flex">
+        <ListItem
+          me={{
+            base: '20px',
+            md: '44px',
+          }}
         >
-          <Text>© 2023 GLAM. Todos los derechos reservados</Text>
-        </Container>
-      </Box>
-    </Box>
+          <Link color={linkTeal} href="/" target="_blank">
+            Inicio
+          </Link>
+        </ListItem>
+        <ListItem
+          me={{
+            base: '20px',
+            md: '44px',
+          }}
+        >
+          <Link color={linkTeal} href="/adoption" target="_blank">
+            Adopciones
+          </Link>
+        </ListItem>
+        <ListItem
+          me={{
+            base: '20px',
+            md: '44px',
+          }}
+        >
+          <Link color={linkTeal} href="/ong" target="_blank">
+            Organizaciones
+          </Link>
+        </ListItem>
+      </List>
+    </Flex>
   );
 }
