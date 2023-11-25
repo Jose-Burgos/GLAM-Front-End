@@ -56,7 +56,7 @@ export default function Register() {
         mt="6.5rem"
         mb="30px"
       >
-        <Heading color="white" fontSize="32px" mb="10px">
+        <Heading color="white" fontSize="32px" mb="10px" mt="20px">
           Bienvenido!
         </Heading>
         <Text

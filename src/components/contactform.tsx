@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -12,12 +12,12 @@ import {
   Stack,
   Text,
   Textarea,
-  VStack,
   FormErrorMessage,
+  Flex,
 } from '@chakra-ui/react';
-import theme from '@/theme';
 import validateContactForm from '@/hooks/validation/validateContactForm';
 import useValidation from '@/hooks/useValidation';
+import { Separator } from './separator';
 
 export default function ContactForm() {
   const initialState = {
@@ -31,19 +31,17 @@ export default function ContactForm() {
   }
 
   return (
-    <Stack direction={['column', 'column', 'row', 'row']} mt={10} mb={5}>
+    <Stack direction={['column', 'column', 'column', 'row']} mt={10} mb={5}>
       <Box>
         <form id="email-form">
           <FormControl marginBottom={5} isInvalid={errors.email}>
-            <FormLabel color="black">E-mail</FormLabel>
+            <FormLabel>E-mail</FormLabel>
             <Input
               placeholder="E-mail"
               id="constact_email"
               name="email"
               value={values.email}
               onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
               type="text"
               maxLength={20}
             />
@@ -53,12 +51,11 @@ export default function ContactForm() {
           </FormControl>
           <FormControl marginBottom={5} isInvalid={errors.message}>
             <Textarea
+              p={3}
               borderRadius="md"
               placeholder="Detalle... "
               value={values.message}
               onChange={handleChange}
-              bg="inputbg"
-              shadow="inner"
               size="xl"
               maxLength={400}
             />
@@ -70,16 +67,9 @@ export default function ContactForm() {
             as="a"
             fontSize="sm"
             fontWeight={500}
-            w={200}
-            mt={5}
             mb={-3}
-            color="black"
-            bg={theme.colors.accent}
+            bg="teal.300"
             href="/login"
-            _hover={{
-              textColor: 'gray',
-              borderColor: theme.colors.accent,
-            }}
             form="registerUserForm"
             onClick={handleSubmit}
           >
@@ -88,19 +78,20 @@ export default function ContactForm() {
         </form>
       </Box>
       <Box p={6} h="auto" display={{ base: 'none', md: 'flex' }}>
-        <Divider
-          orientation="vertical"
-          borderWidth="2px"
-          borderColor="black"
-          borderRadius="50px"
+        <Flex
+          display={{ sm: 'none', md: 'flex', lg: 'flex', xl: 'flex' }}
+          h="100%"
+          w="1px"
+          bg="linear-gradient(0deg, rgba(224, 225, 226, 0) 0%, #E0E1E2 49.52%, rgba(224, 225, 226, 0) 100%)"
         />
       </Box>
       <Box p={6} display={{ base: 'flex', md: 'none' }}>
-        <Divider borderWidth="2px" borderColor="black" borderRadius="50px" />
+        <Separator />
       </Box>
       <Center>
-        <Text color="black">
-          Nos puedes contactar por wpp al numero: xxx-xxxxxxx
+        <Text>
+          Nos puedes contactar por wpp al numero:{' '}
+          <Text fontWeight="bold">xxx-xxxxxxx</Text>
         </Text>
       </Center>
     </Stack>

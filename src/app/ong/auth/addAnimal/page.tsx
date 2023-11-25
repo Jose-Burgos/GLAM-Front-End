@@ -16,13 +16,16 @@ export default function AddAnimal() {
     rescue_date: new Date().toISOString(),
     sex: false,
     species_id: 0,
-    vaccinated : false,
+    vaccinated: false,
     weight: 0,
   };
   return (
     <>
       <h1 className="title">Agregar Animal</h1>
-      <AnimalForm animal = {initialAnimal as Animal} submitBtnText="Agregar Animal" />
+      <AnimalForm
+        animal={initialAnimal as Animal}
+        submitBtnText="Agregar Animal"
+      />
     </>
   );
 }

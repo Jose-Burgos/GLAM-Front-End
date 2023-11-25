@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEvent, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import supabase from '~/supabase/helpers';
 import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
@@ -219,7 +219,6 @@ export default function Login() {
                 </FormControl>
                 <Button
                   fontSize="15px"
-                  type="submit"
                   bg="teal.300"
                   w="100%"
                   h="45"

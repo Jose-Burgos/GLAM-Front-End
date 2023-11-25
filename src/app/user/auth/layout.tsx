@@ -1,9 +1,9 @@
 'use client';
 
-import Loading from '@/components/loading';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
+import { Spinner } from '@chakra-ui/react';
 
 export default function RootLayout({
   children,
@@ -30,5 +30,5 @@ export default function RootLayout({
   if (success) {
     return <main>{children}</main>;
   }
-  return <Loading />;
+  return <Spinner thickness="8px" speed="0.65s" color="teal.300" size="xl" />;
 }

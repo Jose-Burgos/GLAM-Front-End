@@ -2,9 +2,9 @@ import React from 'react';
 import '@/app/global.css';
 import type { Metadata } from 'next';
 import Footer from '@/components/footer';
-import NavBarType from '@/components/navbartype';
 import { Providers } from './providers';
-import MapComponent from '@/components/MapComponent';
+import { AuthProvider } from '@/hooks/authContext';
+import NavBar from '@/components/navbar';
 
 export const metadata: Metadata = {
   title: 'GLAM',
@@ -20,9 +20,11 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <NavBarType />
-          {children}
-          <Footer />
+          <AuthProvider>
+            <NavBar />
+            {children}
+            <Footer />
+          </AuthProvider>
         </Providers>
       </body>
     </html>

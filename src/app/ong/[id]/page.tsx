@@ -18,10 +18,20 @@ import {
   TabPanel,
   Grid,
   GridItem,
+  Spinner,
+  Flex,
+  useColorModeValue,
+  Button,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import PetCard from '@/components/petcard';
-import Loading from '@/components/loading';
+import {
+  AdoptLogo,
+  ContactLogo,
+  LocationLogo,
+  PhoneLogo,
+} from '@/assets/icons/icons';
+import { Separator } from '@/components/separator';
 
 interface IdInterface {
   id: string;
@@ -30,6 +40,7 @@ interface IdInterface {
 export default function OngInfo(props: IdInterface) {
   const [cardData, setCardData] = useState<Animal[]>();
   const [success, setSuccess] = useState<boolean>(false);
+  const bgColor = useColorModeValue('white', 'gray.700');
 
   useEffect(() => {
     (async () => {
@@ -40,110 +51,200 @@ export default function OngInfo(props: IdInterface) {
   }, []);
 
   return (
-    <Center>
-      <Stack>
-        <Box bg="bgcard" w="90vw" mt={10} mb={5} shadow="xl" borderRadius="md">
-          <Stack direction={['column', 'column', 'row', 'row']}>
-            <Box
-              style={{
-                position: 'relative',
-                width: '250px',
-                height: '300px',
-              }}
+    <Flex
+      position="relative"
+      w="100%"
+      maxW="1044px"
+      mx="auto"
+      pt={{ sm: '100px', md: '0px' }}
+    >
+      <Flex
+        alignItems="center"
+        justifyContent="start"
+        style={{ userSelect: 'none' }}
+        w="100%"
+      >
+        <Flex
+          direction="column"
+          w="100%"
+          background="transparent"
+          p="48px"
+          mt={{ md: '150px', lg: '80px' }}
+        >
+          <Box
+            bg={bgColor}
+            w="100%"
+            mt={10}
+            mb={10}
+            shadow="xl"
+            borderRadius="15px"
+          >
+            <Stack
+              direction={{ sm: 'column', md: 'row', lg: 'row', xl: 'row' }}
             >
-              <Image
-                alt="pet"
+              <Box
                 style={{
-                  borderTopLeftRadius: '0.375rem',
-                  borderBottomLeftRadius: '0.375rem',
-                  aspectRatio: '16/9',
+                  position: 'relative',
+                  width: '100%',
+                  height: '30vh',
                 }}
-                sizes="(max-width: 768px) 100vw, 700px"
-                src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/79b5f558303657.5a09eafeaf888.jpg"
-                fill
-                priority
-              />
-            </Box>
-            <Box
-              borderRadius="md"
-              ml={[0, 0, -2, -2]}
-              mt={[-2, -2, 0, 0]}
-              w={['90vw', '90vw', '60vw']}
-              shadow="inner"
-            >
-              <Text color="black" ml={3} mt={5}>
-                Nombre Ong
-              </Text>
-              <Text color="black" ml={3} mt={5}>
-                Direccion Ong
-              </Text>
-              <Text color="black" ml={3} mt={5}>
-                Numero de telefono - Gmail
-              </Text>
-              <Text color="black" ml={3} mt={5}>
-                Descripcion
-              </Text>
-            </Box>
-          </Stack>
-        </Box>
-        <Box bg="bgcard" w="90vw" mt={10} mb={10} shadow="xl" borderRadius="md">
-          <Tabs variant="soft-rounded" colorScheme="brand" mb={4} p={3}>
-            <TabList>
-              <Tab bg={theme.colors.accent} shadow="xl" mr={5}>
-                Ubicacion
-              </Tab>
-              <Tab bg={theme.colors.accent} shadow="xl" mr={5}>
-                Contactar
-              </Tab>
-              <Tab bg={theme.colors.accent} shadow="xl">
-                Animales
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Center>
-                  <GoogleMapsView />
-                </Center>
-              </TabPanel>
-              <TabPanel>
-                <Center>
-                  <ContactForm />
-                </Center>
-              </TabPanel>
-              <TabPanel>
-                <Center>
-                  <Grid
-                    templateColumns={[
-                      'repeat(1, fr)',
-                      'repeat(2, fr)',
-                      'repeat(3, 3fr)',
-                      'repeat(4, 4fr)',
-                      'repeat(5, 5fr)',
-                    ]}
-                    gap={8}
-                    padding={5}
-                  >
-                    {success ? (
-                      cardData?.map((card, idx) => (
-                        <GridItem key={idx}>
-                          <PetCard
-                            id={card.id}
-                            img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-                            name={card.name}
-                            description={card.breed}
-                          />
-                        </GridItem>
-                      ))
-                    ) : (
-                      <Loading />
-                    )}
-                  </Grid>
-                </Center>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
-      </Stack>
-    </Center>
+              >
+                <Image
+                  alt="pet"
+                  style={{
+                    borderRadius: '15px',
+                    aspectRatio: '16/9',
+                  }}
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/79b5f558303657.5a09eafeaf888.jpg"
+                  fill
+                  priority
+                />
+              </Box>
+              <Flex
+                bg="transparent"
+                borderRadius="15px"
+                w="100%"
+                p={2}
+                justifyContent="center"
+              >
+                <Stack>
+                  <Text ml={3} mt={2}>
+                    Nombre Ong
+                  </Text>
+                  <Text ml={3} mt={5}>
+                    Direccion Ong
+                  </Text>
+                  <Text ml={3} mt={5}>
+                    Numero de telefono - Gmail
+                  </Text>
+                  <Text ml={3} mt={5} mb={2}>
+                    Descripcion
+                  </Text>
+                </Stack>
+                <Button size="md" bg="teal.300" ml="auto" mt="auto">
+                  <PhoneLogo w="35px" h="35px" />
+                </Button>
+              </Flex>
+            </Stack>
+          </Box>
+          <Box mb={10} p={2}>
+            <Tabs variant="soft-rounded" colorScheme="brand" mb={4} p={3}>
+              <TabList>
+                <Flex justifyContent="center" alignItems="center" w="100%">
+                  <Tab shadow="xl" mr={5} display={{ sm: 'none', md: 'flex' }}>
+                    Ubicacion
+                  </Tab>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
+                    <LocationLogo w="40px" h="40px" />
+                  </Tab>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'none', md: 'flex' }}>
+                    Contactar
+                  </Tab>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
+                    <ContactLogo w="40px" h="40px" />
+                  </Tab>
+                  <Tab shadow="xl" display={{ sm: 'none', md: 'flex' }}>
+                    Animales
+                  </Tab>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
+                    <AdoptLogo w="40px" h="40px" />
+                  </Tab>
+                </Flex>
+              </TabList>
+              <Separator mt={4} />
+              <TabPanels>
+                <TabPanel>
+                  <Center>
+                    <GoogleMapsView />
+                  </Center>
+                </TabPanel>
+                <TabPanel>
+                  <Center>
+                    <GoogleMapsView />
+                  </Center>
+                </TabPanel>
+                <TabPanel>
+                  <Center>
+                    <ContactForm />
+                  </Center>
+                </TabPanel>
+                <TabPanel>
+                  <Center>
+                    <ContactForm />
+                  </Center>
+                </TabPanel>
+                <TabPanel>
+                  <Center>
+                    <Grid
+                      mt={5}
+                      templateColumns={{
+                        sm: 'repeat(1, 1fr)',
+                        md: 'repeat(1, 1fr)',
+                        lg: 'repeat(3, 1fr)',
+                      }}
+                      gap={8}
+                    >
+                      {success ? (
+                        cardData?.map((card, idx) => (
+                          <GridItem key={idx}>
+                            <PetCard
+                              id={card.id}
+                              img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+                              name={card.name}
+                              description={card.breed}
+                            />
+                          </GridItem>
+                        ))
+                      ) : (
+                        <Spinner
+                          thickness="8px"
+                          speed="0.65s"
+                          color="teal.300"
+                          size="xl"
+                        />
+                      )}
+                    </Grid>
+                  </Center>
+                </TabPanel>
+                <TabPanel>
+                  <Center>
+                    <Grid
+                      mt={5}
+                      templateColumns={{
+                        sm: 'repeat(1, 1fr)',
+                        md: 'repeat(1, 1fr)',
+                        lg: 'repeat(3, 1fr)',
+                      }}
+                      gap={8}
+                    >
+                      {success ? (
+                        cardData?.map((card, idx) => (
+                          <GridItem key={idx}>
+                            <PetCard
+                              id={card.id}
+                              img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+                              name={card.name}
+                              description={card.breed}
+                            />
+                          </GridItem>
+                        ))
+                      ) : (
+                        <Spinner
+                          thickness="8px"
+                          speed="0.65s"
+                          color="teal.300"
+                          size="xl"
+                        />
+                      )}
+                    </Grid>
+                  </Center>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 }

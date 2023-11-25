@@ -9,9 +9,11 @@ import {
   Heading,
   Stack,
   Text,
+  Button,
+  ButtonGroup,
 } from '@chakra-ui/react';
-import { Button, ButtonGroup } from '@chakra-ui/react';
 import { px } from 'framer-motion';
+import React from 'react';
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function AnimalCard(props: Animal) {
@@ -21,7 +23,7 @@ export default function AnimalCard(props: Animal) {
         maxW="sm"
         marginBottom={20}
         marginTop={10}
-        backgroundColor={'orange.100'}
+        backgroundColor="orange.100"
       >
         <CardHeader fontSize="2xl">Mis adopciones</CardHeader>
         <CardBody>

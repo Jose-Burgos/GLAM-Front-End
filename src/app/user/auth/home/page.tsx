@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import 'react-dom';
-import { Animal } from '~/supabase/types/supabase.tables';
-import { Request } from '~/supabase/types/supabase.tables';
+import { Animal, Request } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import AnimalCard from '@/components/animalCard';
 import DonationHistory from '@/components/donations';
 import NotificationsHistory from '@/components/notifications';
 import { Flex } from '@chakra-ui/react';
+import AdminSidebar from '@/components/adminSidebar';
 
 export default function animalInfo() {
   const [data, setData] = useState<Animal[]>();
@@ -27,19 +27,7 @@ export default function animalInfo() {
 
   // getUserAdoptionRequests te devuelve solo las requests del usuario...
   // const adopctions = requests?.filter(request => request.user_id === userID);
-  return (
-    <div>
-      <Flex>
-        {data
-          ?.filter((animal) => animal.adopted === true)
-          .map((animal) => <AnimalCard key={animal.id} {...animal} />)}
-        <Flex columnGap={10}>
-          <DonationHistory width="600"></DonationHistory>
-          <NotificationsHistory width="600"></NotificationsHistory>
-        </Flex>
-      </Flex>
-    </div>
-  );
+  return <h1>Soon</h1>;
 }
 
 /*

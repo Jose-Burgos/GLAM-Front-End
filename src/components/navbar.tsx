@@ -11,29 +11,40 @@ import {
   Icon,
   useColorModeValue,
   useColorMode,
+  Stack,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   AdoptionLogo,
   HomeLogo,
   OngLogo,
   LogInLogo,
+  LogOutLogo,
+  DashboardLogo,
 } from '@/assets/icons/icons';
 import PropTypes from 'prop-types';
 import NextLink from 'next/link';
 import SidebarResponsive from './sidebarResonsive';
+import AuthContext from '@/hooks/authContext';
+import HelperFunctions from '~/supabase/helpers';
 
 export default function NavBar(props: any) {
-  const [open, setOpen] = React.useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
-  const handleDrawerToggle = () => {
-    setOpen(!open);
+  const { logIn, isLoggedIn, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut();
   };
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await HelperFunctions.getSession();
+      if (session) {
+        logIn();
+      }
+    };
+    checkSession();
+  }, [logIn]);
   const { logo, logoText, secondary, ...rest } = props;
-  const activeRoute = (routeName: any) => {
-    return window.location.href.indexOf(routeName) > -1;
-  };
   const navbarIcon = useColorModeValue('gray.700', 'gray.200');
   const mainText = useColorModeValue('gray.700', 'gray.200');
   const navbarBg = useColorModeValue(
@@ -127,6 +138,29 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
+      {isLoggedIn && (
+        <NextLink href="/user/auth/home">
+          <Button
+            fontSize="sm"
+            ms="0px"
+            px="0px"
+            me={{ sm: '2px', md: '16px' }}
+            color={navbarIcon}
+            variant="transparent-with-icon"
+            leftIcon={
+              <DashboardLogo
+                color={navbarIcon}
+                w="30px"
+                h="30px"
+                me="0px"
+                mb={1}
+              />
+            }
+          >
+            <Text fontSize="md">Dashboard</Text>
+          </Button>
+        </NextLink>
+      )}
     </HStack>
   );
   return (
@@ -162,34 +196,58 @@ export default function NavBar(props: any) {
           />
         </Box>
         {linksAuth}
-        <Link href="/login">
-          <Button
-            bg={bgButton}
-            color={colorButton}
-            fontSize="xs"
-            variant="no-hover"
-            borderRadius="35px"
-            px="30px"
+        <HStack spacing={5}>
+          {!isLoggedIn && (
+            <Link href="/login">
+              <Button
+                bg={bgButton}
+                color={colorButton}
+                fontSize="xs"
+                variant="no-hover"
+                borderRadius="35px"
+                px="15px"
+                display={{
+                  sm: 'none',
+                  lg: 'flex',
+                }}
+                leftIcon={<LogInLogo w="24px" h="24px" me="0px" />}
+              >
+                <Text fontSize="md">Iniciar Sesion</Text>
+              </Button>
+            </Link>
+          )}
+          {isLoggedIn && (
+            <Button
+              bg={bgButton}
+              color={colorButton}
+              fontSize="xs"
+              variant="no-hover"
+              borderRadius="35px"
+              px="15px"
+              display={{
+                sm: 'none',
+                lg: 'flex',
+              }}
+              leftIcon={<LogOutLogo w="24px" h="24px" me="0px" />}
+              onClick={handleLogOut}
+            >
+              <NextLink href="/">
+                <Text fontSize="md">Cerrar Sesion</Text>
+              </NextLink>
+            </Button>
+          )}
+          <Icon
+            as={colorMode === 'dark' ? MoonIcon : SunIcon}
+            me={{ sm: '2px', md: '16px' }}
             display={{
               sm: 'none',
               lg: 'flex',
             }}
-            leftIcon={<LogInLogo w="24px" h="24px" me="0px" />}
-          >
-            <Text fontSize="md">Iniciar Sesion</Text>
-          </Button>
-        </Link>
-        <Icon
-          as={colorMode === 'dark' ? MoonIcon : SunIcon}
-          me={{ sm: '2px', md: '16px' }}
-          display={{
-            sm: 'none',
-            lg: 'flex',
-          }}
-          ml={-20}
-          mt={2.5}
-          onClick={toggleColorMode}
-        />
+            justifyContent="center"
+            alignItems="center"
+            onClick={toggleColorMode}
+          />
+        </HStack>
       </Flex>
     </Flex>
   );

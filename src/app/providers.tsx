@@ -8,7 +8,9 @@ import theme from '@/theme';
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
-      <ChakraProvider theme={theme}>{children}</ChakraProvider>
+      <ChakraProvider resetCSS theme={theme}>
+        {children}
+      </ChakraProvider>
     </CacheProvider>
   );
 }

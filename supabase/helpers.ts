@@ -289,16 +289,13 @@ const helpers: HelperFunctions = {
   },
 
   getSpecies: async () => {
-    const { data, error } = await supabase
-      .from('species')
-      .select('id, name');
+    const { data, error } = await supabase.from('species').select('id, name');
     if (error) {
       throw new Error(error.message);
     }
     return data;
   },
 };
-
 
 export default helpers;
 
