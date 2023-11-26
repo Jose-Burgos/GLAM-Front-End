@@ -43,7 +43,7 @@ export default function OngView() {
     <Flex position="relative" mb="40px">
       <Flex
         h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-        mt={{ sm: '5%', md: '10%', lg: '80px' }}
+        mt={{ sm: '5%', md: '10%', lg: '10%' }}
         w="100wh"
         maxW="1044px"
         mx="auto"

@@ -21,13 +21,13 @@ export default function AdoptView() {
   return (
     <Flex position="relative" mb="40px">
       <Flex
-        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-        mt={{ sm: '5%', md: '10%', lg: '80px' }}
-        w="100wh"
-        maxW="1044px"
-        mx="auto"
-        mb="30px"
-        pt={{ sm: '100px', md: '0px' }}
+       h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
+       mt={{ sm: '5%', md: '10%', lg: '10%' }}
+       w="100wh"
+       maxW="1044px"
+       mx="auto"
+       mb="30px"
+       pt={{ sm: '100px', md: '0px' }}
       >
         <Flex justifyContent="start" style={{ userSelect: 'none' }}>
           <Flex

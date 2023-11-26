@@ -56,7 +56,7 @@ export default function OngInfo(props: IdInterface) {
       w="100%"
       maxW="1044px"
       mx="auto"
-      pt={{ sm: '100px', md: '0px' }}
+      pt={{ sm: '10%', md: '5%' }}
     >
       <Flex
         alignItems="center"
@@ -69,7 +69,7 @@ export default function OngInfo(props: IdInterface) {
           w="100%"
           background="transparent"
           p="48px"
-          mt={{ md: '150px', lg: '80px' }}
+          
         >
           <Box
             bg={bgColor}

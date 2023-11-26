@@ -45,6 +45,7 @@ function Carousel() {
             position: 'relative',
             width: '20vw',
             height: '30vh',
+        
           }}
           className="embla__slide"
         >
@@ -53,6 +54,7 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
+           
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -65,6 +67,7 @@ function Carousel() {
             position: 'relative',
             width: '20vw',
             height: '30vh',
+        
           }}
           className="embla__slide"
         >
@@ -73,6 +76,7 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
+         
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -89,6 +93,7 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
+              maxWidth: '400px'
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -98,6 +103,7 @@ function Carousel() {
         </div>
       </div>
     </div>
+
   );
 }
 
@@ -122,7 +128,7 @@ export default function animalDescription(pparam: props) {
       w="100%"
       maxW="1044px"
       mx="auto"
-      pt={{ sm: '100px', md: '0px' }}
+      pt={{ sm: '10%', md: '5%' }}
     >
       <Flex
         alignItems="center"
@@ -135,7 +141,7 @@ export default function animalDescription(pparam: props) {
           w="100%"
           background="transparent"
           p="48px"
-          mt={{ md: '150px', lg: '80px' }}
+          
         >
           <Box
             bg={bgColor}
