@@ -2,6 +2,7 @@ import * as Sb from '~/supabase/types/supabase.tables';
 import { PostgrestResponse, User } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 import { HelperFunctions } from './helpers.d';
+import { v4 as uuidv4 } from 'uuid';
 
 const helpers: HelperFunctions = {
   // Tendría que agregar pagination a esto probablemente. Y filtering.
@@ -294,6 +295,48 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     }
     return data;
+  },
+
+  getImages : async () => {
+    const userId = await helpers.getCurrentUserId();
+    const { data, error } = await supabase
+      .storage
+      .from('animal-pictures-orgs')
+      .list(userId);
+      if(error) {
+          throw new Error(error);
+      } else{
+          return data.map(element => ({
+          url:"https://bjsqhsdofulofilczfcj.supabase.co/storage/v1/object/public/animal-pictures-orgs/" + userId + '/' + element.name,
+          name: userId + '/' + element.name,
+          }));
+      }
+  },
+
+  deleteImage : async (imageName) => {
+    const userId = await helpers.getCurrentUserId();
+    const { error } = await supabase
+      .storage
+      .from('animal-pictures-orgs')
+      .remove([userId + '/' + imageName]);
+      if(error){
+        throw new Error(error);
+     }
+  },
+
+  uploadImage : async (file) => {
+    // let file = e.target.files[0];
+
+    const { data, error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .upload(getCurrentUserId() + '/' + uuidv4(), file);
+
+    if (data) {                                             // if we got an image
+      getImages();                                          // refresh images
+    } else {
+      throw new Error(error);
+    }
+
   },
 };
 
