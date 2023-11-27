@@ -22,7 +22,7 @@ export default function AdoptView() {
     <Flex position="relative" mb="40px">
       <Flex
        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-       mt={{ sm: '5%', md: '10%', lg: '10%' }}
+       mt={{ sm: '5%', md: '25%', lg: '10%' }}
        w="100wh"
        maxW="1044px"
        mx="auto"

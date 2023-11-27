@@ -25,13 +25,13 @@ interface PetData {
 function MobilePetCard(props: PetData) {
   const bgColor = useColorModeValue('white', 'gray.700');
   return (
-    <Box me="-1%" w="85vw" bg={bgColor} shadow="xl" borderBottomRadius="15px">
+    <Box me="-1%" w="85vw" bg={bgColor} shadow="xl" borderRadius="15px">
       <Flex>
         <Stack direction={['row', 'row']}>
           <Box position="relative" width={100} h={100}>
             <Image
               style={{
-                borderTopRightRadius: '2.5rem',
+                borderBottomRightRadius: '15px',
                 borderTopLeftRadius: '15px',
                 borderBottomLeftRadius: '15px',
               }}
@@ -78,7 +78,7 @@ function DesktopPetCard(props: PetData) {
           <Box position="relative" width={200} h={200}>
             <Image
               style={{
-                borderBottomRightRadius: '1.5rem',
+                borderBottomRightRadius: '15px',
                 borderTopRightRadius: '15px',
                 borderTopLeftRadius: '15px',
               }}

@@ -5,6 +5,7 @@ import Footer from '@/components/footer';
 import { Providers } from './providers';
 import { AuthProvider } from '@/hooks/authContext';
 import NavBar from '@/components/navbar';
+import { Flex } from '@chakra-ui/react';
 
 export const metadata: Metadata = {
   title: 'GLAM',
@@ -22,7 +23,9 @@ export default async function RootLayout({
         <Providers>
           <AuthProvider>
             <NavBar />
+            <Flex pos="relative" direction="column" h="auto">
             {children}
+            </Flex>
             <Footer />
           </AuthProvider>
         </Providers>

@@ -30,7 +30,7 @@ function MobileOngCard(props: OngData) {
           <Box position="relative" width={100} h={100}>
             <Image
               style={{
-                borderTopRightRadius: '2.5rem',
+                borderBottomRightRadius: '15px',
                 borderTopLeftRadius: '15px',
                 borderBottomLeftRadius: '15px',
               }}
@@ -71,7 +71,7 @@ function DesktopOngCard(props: OngData) {
           <Box position="relative" width={200} h={200}>
             <Image
               style={{
-                borderBottomLeftRadius: '1.5rem',
+                borderBottomRightRadius: '15px',
                 borderTopRightRadius: '15px',
                 borderTopLeftRadius: '15px',
               }}
