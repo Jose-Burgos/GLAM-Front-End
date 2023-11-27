@@ -1,6 +1,6 @@
 // todos los servicios para packets y objetos
 
-import { supabase } from '../api/config';
+import { supabase } from './supabaseClient';
 
 // List all buckets from supabase (servicio para listar buckets)
 export const listBuckets = async () => {

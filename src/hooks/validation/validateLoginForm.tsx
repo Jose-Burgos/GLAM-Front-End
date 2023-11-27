@@ -1,5 +1,5 @@
 export default function validateLoginForm(values: any) {
-  let errors: any = {};
+  const errors: any = {};
   // Validate email
   if (!values.email) {
     errors.email = 'El email es obligatorio';

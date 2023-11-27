@@ -1,5 +1,5 @@
 export default function validateOngRegisterForm(values: any) {
-  let errors: any = {};
+  const errors: any = {};
 
   // Validate ONG name
   if (!values.name) {

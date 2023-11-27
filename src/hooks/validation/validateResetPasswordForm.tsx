@@ -1,5 +1,5 @@
 export default function validatePasswordResetForm(values: any) {
-  let errors: any = {};
+  const errors: any = {};
   // Validate email
   if (!values.email) {
     errors.email = 'Debes introducir un email válido';
