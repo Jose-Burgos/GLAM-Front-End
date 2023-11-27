@@ -8,6 +8,7 @@ interface AuthContextProps {
   isLoggedIn: boolean;
   logOut: () => void;
   logIn: () => void;
+  type: string;
 }
 
 interface AuthProviderProps {
@@ -18,17 +19,22 @@ const AuthContext = React.createContext<AuthContextProps>({
   isLoggedIn: false,
   logOut: () => {},
   logIn: () => {},
+  type: '',
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [type, setType] = useState('');
   const router = useRouter();
 
   useEffect(() => {
     const checkIfLoggedIn = async () => {
       const session = await HelperFunctions.getSession();
-      const loggedIn = !!session;
-      setIsLoggedIn(loggedIn);
+      if (session?.user.user_metadata.profile_type === 'Organization') {
+        setType('ong');
+      } else {
+        setType('user');
+      }
     };
     checkIfLoggedIn();
   }, []);
@@ -44,7 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ logIn, isLoggedIn, logOut }}>
+    <AuthContext.Provider value={{ logIn, isLoggedIn, logOut, type }}>
       {children}
     </AuthContext.Provider>
   );

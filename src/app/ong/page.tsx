@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import OngCard from '@/components/ongcard';
-import { Flex, Grid, GridItem } from '@chakra-ui/react';
+import { CircularProgress, Flex, Grid, GridItem } from '@chakra-ui/react';
 import HelperFunctions from '~/supabase/helpers';
 
 const ongData = [
@@ -29,7 +29,7 @@ const ongData = [
 
 export default function OngView() {
   // const [ongData, setOngData] = useState<[]>();
-  // const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(true);
   //
   // useEffect(() => {
   //  (async () => {
@@ -40,14 +40,13 @@ export default function OngView() {
   // }, []);
 
   return (
-    <Flex position="relative" mb="40px">
+    <Flex position="relative" mb="10%">
       <Flex
         h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-        mt={{ sm: '5%', md: '25%', lg: '10%' }}
+        mt={{ sm: '5%', md: '15%', lg: '10%', xl: '5%' }}
         w="100wh"
         maxW="1044px"
         mx="auto"
-        mb="30px"
         pt={{ sm: '100px', md: '0px' }}
       >
         <Flex justifyContent="start" style={{ userSelect: 'none' }}>
@@ -65,11 +64,15 @@ export default function OngView() {
                 lg: 'repeat(4, 1fr)',
               }}
             >
-              {ongData?.map((card, idx) => (
-                <GridItem key={idx}>
-                  <OngCard id={card.id} img={card.url} name={card.name} />
-                </GridItem>
-              ))}
+              {success ? (
+                ongData?.map((card, idx) => (
+                  <GridItem key={idx}>
+                    <OngCard id={card.id} img={card.url} name={card.name} />
+                  </GridItem>
+                ))
+              ) : (
+                <CircularProgress isIndeterminate color="teal.300" />
+              )}
             </Grid>
           </Flex>
         </Flex>

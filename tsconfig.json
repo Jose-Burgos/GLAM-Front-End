@@ -29,7 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/patitas/page.jsx",
-    "src/app/updateAnimal/page.jsx"
+    "src/app/ong/auth/updateAnimal/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

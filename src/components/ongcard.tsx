@@ -104,8 +104,11 @@ function DesktopOngCard(props: OngData) {
 
 export default function OngCard(props: OngData) {
   return (
-    <Box>
-      <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
+    <Box borderRadius="15px">
+      <Box
+        borderRadius="15px"
+        display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}
+      >
         <DesktopOngCard
           id={props.id}
           img={props.img}

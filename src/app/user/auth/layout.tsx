@@ -3,7 +3,9 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
-import { Spinner } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
+import { AuthProvider } from '@/hooks/authContext';
+import NavBar from '@/components/navbar';
 
 export default function RootLayout({
   children,
@@ -13,6 +15,7 @@ export default function RootLayout({
   const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
   const auth = HelperFunctions;
+
   useEffect(() => {
     (async () => {
       const user = await auth.getSession();
@@ -28,7 +31,14 @@ export default function RootLayout({
   }, [router, auth]);
 
   if (success) {
-    return <main>{children}</main>;
+    return (
+      <AuthProvider>
+        <NavBar />
+        <Flex pos="relative" direction="column" h="auto">
+          {children}
+        </Flex>
+      </AuthProvider>
+    );
   }
   return <Spinner thickness="8px" speed="0.65s" color="teal.300" size="xl" />;
 }

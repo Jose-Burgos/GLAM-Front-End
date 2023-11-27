@@ -45,7 +45,6 @@ function Carousel() {
             position: 'relative',
             width: '20vw',
             height: '30vh',
-        
           }}
           className="embla__slide"
         >
@@ -54,7 +53,6 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
-           
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -67,7 +65,6 @@ function Carousel() {
             position: 'relative',
             width: '20vw',
             height: '30vh',
-        
           }}
           className="embla__slide"
         >
@@ -76,7 +73,6 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
-         
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -93,7 +89,7 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
-              maxWidth: '400px'
+              maxWidth: '400px',
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -103,7 +99,6 @@ function Carousel() {
         </div>
       </div>
     </div>
-
   );
 }
 
@@ -136,13 +131,7 @@ export default function animalDescription(pparam: props) {
         style={{ userSelect: 'none' }}
         w={{ base: '100%', md: '100%', lg: '100%' }}
       >
-        <Flex
-          direction="column"
-          w="100%"
-          background="transparent"
-          p="48px"
-          
-        >
+        <Flex direction="column" w="100%" background="transparent" p="48px">
           <Box
             bg={bgColor}
             w="100%"

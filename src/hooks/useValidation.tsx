@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import AuthContext from '@/hooks/authContext';
+import React, { useState, useEffect } from 'react';
 
 const useValidation = (initialState: any, validate: any, func: any) => {
   const [values, saveValues] = useState(initialState);
   const [errors, saveErrors] = useState({} as any);
   const [submitForm, saveSubmitForm] = useState(false);
-  const { logIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (submitForm) {
@@ -30,7 +28,6 @@ const useValidation = (initialState: any, validate: any, func: any) => {
     const validationErrors = validate(values);
     saveErrors(validationErrors);
     saveSubmitForm(true);
-    logIn();
   };
 
   return {

@@ -5,6 +5,7 @@ import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import { Flex, CircularProgress, Grid, GridItem } from '@chakra-ui/react';
 import PetCard from '@/components/petcard';
+import NavBar from '@/components/navbar';
 
 export default function AdoptView() {
   const [cardData, setCardData] = useState<Animal[]>();
@@ -19,15 +20,14 @@ export default function AdoptView() {
   }, []);
 
   return (
-    <Flex position="relative" mb="40px">
+    <Flex position="relative" mb="10%">
       <Flex
-       h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-       mt={{ sm: '5%', md: '25%', lg: '10%' }}
-       w="100wh"
-       maxW="1044px"
-       mx="auto"
-       mb="30px"
-       pt={{ sm: '100px', md: '0px' }}
+        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
+        mt={{ sm: '5%', md: '15%', lg: '10%', xl: '8%' }}
+        w="100wh"
+        maxW="1044px"
+        mx="auto"
+        pt={{ sm: '100px', md: '0px' }}
       >
         <Flex justifyContent="start" style={{ userSelect: 'none' }}>
           <Flex

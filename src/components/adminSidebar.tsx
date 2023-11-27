@@ -41,7 +41,7 @@ interface Routes {
   icon: any;
 }
 
-export default function SidebarResponsive(props: any) {
+export default function AdminSidebarResponsive(props: any) {
   const location = usePathname();
   const { colorMode, toggleColorMode } = useColorMode();
   const [state, setState] = React.useState({});
@@ -228,7 +228,7 @@ export default function SidebarResponsive(props: any) {
           boxSize="initial"
           justifyContent="flex-start"
           alignItems="center"
-          bg={activeBg}
+          bg="transparent"
           mb={{
             xl: '12px',
           }}
@@ -379,89 +379,37 @@ export default function SidebarResponsive(props: any) {
   if (props.secondary === true) {
     hamburgerColor = 'white';
   }
-  const brand = (
-    <Box pt="35px" mb="8px">
-      <Link
-        href="/"
-        target="_blank"
-        display="flex"
-        lineHeight="100%"
-        mb="30px"
-        fontWeight="bold"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="11px"
-      >
-        <Heading fontSize="25px" mt="3px">
-          GLAM
-        </Heading>
-      </Link>
-      <Separator />
-    </Box>
-  );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef<SVGSVGElement>(null);
   return (
     <Flex
-      display={{ sm: 'flex', xl: 'none' }}
+      display={{ sm: 'none', lg: 'flex', xl: 'flex' }}
       ref={mainPanel}
       alignItems="center"
     >
-      <HamburgerIcon
-        color={hamburgerColor}
-        w="18px"
-        h="18px"
-        ref={btnRef}
-        onClick={onOpen}
-      />
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement="left"
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent
-          w="250px"
-          maxW="250px"
-          ms={{
-            sm: '16px',
-          }}
-          my={{
-            sm: '16px',
-          }}
-          borderRadius="20px"
-        >
-          <DrawerCloseButton
-            _focus={{ boxShadow: 'none' }}
-            _hover={{ boxShadow: 'none' }}
-          />
-          <DrawerBody maxW="250px" px="1rem">
-            <Box maxW="100%" h="50vh">
-              <Box>{brand}</Box>
-              <Stack direction="column" mb="40px">
-                <Box>{links}</Box>
-              </Stack>
-              <Separator />
-              <Stack direction="column" mb="40px">
-                <Box>{authlinks}</Box>
-                <IconBox>
-                  <Icon
-                    mt={15}
-                    as={colorMode === 'dark' ? MoonIcon : SunIcon}
-                    display={{
-                      sm: 'flex',
-                      lg: 'none',
-                    }}
-                    onClick={toggleColorMode}
-                  />
-                </IconBox>
-              </Stack>
-            </Box>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <Box w="250px" maxW="250px" borderRadius="20px">
+        <Box maxW="250px" px="1rem">
+          <Box maxW="100%" h="50vh">
+            <Stack direction="column" mb="40px">
+              <Box>{links}</Box>
+            </Stack>
+            <Separator />
+            <Stack direction="column" mb="40px">
+              <Box background="transparent">{authlinks}</Box>
+              <IconBox>
+                <Icon
+                  mt={15}
+                  as={colorMode === 'dark' ? MoonIcon : SunIcon}
+                  display={{
+                    sm: 'flex',
+                    lg: 'none',
+                  }}
+                  onClick={toggleColorMode}
+                />
+              </IconBox>
+            </Stack>
+          </Box>
+        </Box>
+      </Box>
     </Flex>
   );
 }

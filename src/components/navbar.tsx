@@ -31,7 +31,7 @@ import HelperFunctions from '~/supabase/helpers';
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { logIn, isLoggedIn, logOut } = useContext(AuthContext);
+  const { logIn, isLoggedIn, logOut, type } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut();
   };
@@ -43,7 +43,7 @@ export default function NavBar(props: any) {
       }
     };
     checkSession();
-  }, [logIn]);
+  }, [logIn, isLoggedIn]);
   const { logo, logoText, secondary, ...rest } = props;
   const navbarIcon = useColorModeValue('gray.700', 'gray.200');
   const mainText = useColorModeValue('gray.700', 'gray.200');
@@ -139,7 +139,7 @@ export default function NavBar(props: any) {
         </Button>
       </NextLink>
       {isLoggedIn && (
-        <NextLink href="/user/auth/home">
+        <NextLink href={`/${type}/auth/home`}>
           <Button
             fontSize="sm"
             ms="0px"
@@ -252,8 +252,3 @@ export default function NavBar(props: any) {
     </Flex>
   );
 }
-
-NavBar.propTypes = {
-  color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger']),
-  brandText: PropTypes.string,
-};

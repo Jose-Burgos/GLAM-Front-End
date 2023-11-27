@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import supabase from '~/supabase/helpers';
 import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
@@ -24,10 +24,12 @@ import {
 import validateLoginForm from '@/hooks/validation/validateLoginForm';
 import useValidation from '@/hooks/useValidation';
 import logInImg1 from '@/assets/images/signInImage1.png';
+import AuthContext from '@/hooks/authContext';
 
 export default function Login() {
   const router = useRouter();
   const toast = useToast();
+  const { logIn } = useContext(AuthContext);
   const useEffectExecuted = useRef(false);
   const initialState = {
     email: '',
@@ -40,6 +42,7 @@ export default function Login() {
     try {
       const session = await supabase.getSession();
       if (session) {
+        logIn();
         toast({
           title: 'Atencion',
           description: 'Ya ingreso a la cuenta',

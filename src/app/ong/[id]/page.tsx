@@ -64,13 +64,7 @@ export default function OngInfo(props: IdInterface) {
         style={{ userSelect: 'none' }}
         w="100%"
       >
-        <Flex
-          direction="column"
-          w="100%"
-          background="transparent"
-          p="48px"
-          
-        >
+        <Flex direction="column" w="100%" background="transparent" p="48px">
           <Box
             bg={bgColor}
             w="100%"

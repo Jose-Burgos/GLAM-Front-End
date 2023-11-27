@@ -22,9 +22,8 @@ export default async function RootLayout({
       <body>
         <Providers>
           <AuthProvider>
-            <NavBar />
             <Flex pos="relative" direction="column" h="auto">
-            {children}
+              {children}
             </Flex>
             <Footer />
           </AuthProvider>

@@ -6,15 +6,30 @@
 
 // This is the landing
 import React, { useEffect, useState } from 'react';
-import { Box, CircularProgress, Flex, Grid, GridItem, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  CircularProgress,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Image from 'next/image';
 import IconBox from '@/assets/icons/iconBox';
-import { AboutUsLogo, AdoptLogo, DonateLogo, OngLogo } from '@/assets/icons/icons';
+import {
+  AboutUsLogo,
+  AdoptLogo,
+  DonateLogo,
+  OngLogo,
+} from '@/assets/icons/icons';
 import { Separator } from '@/components/separator';
 import PetCard from '@/components/petcard';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import OngCard from '@/components/ongcard';
+import NavBar from '@/components/navbar';
 
 const ongData = [
   {
@@ -54,156 +69,137 @@ export default function Landing() {
   const bgColor = useColorModeValue('white', 'gray.700');
   const bgIcons = useColorModeValue('white', 'teal.200');
   return (
-    <Flex pos="relative" mb="20%" >
-      <Flex
-        mt={{ sm: '5%', md: '15%', lg: '15%' }}
-        w="100wh"
-        mx="auto"
-        pt={{ sm: '100px', md: '0px' }}
-        direction="column"
-      >
-        <Flex justifyContent="start" style={{ userSelect: 'none' }}>
-          <Flex
-            justifyContent="center"
-            w="100%"
-            background="transparent"
-          >
-            <Grid
-              gap={8}
-              templateColumns={{
-                sm: 'repeat(1, 1fr)',
-                md: 'repeat(2, 2fr)',
-                lg: 'repeat(2, 1fr)',
-                xl: 'repeat(4, 1fr)',
-              }}
-            >
+    <>
+      <NavBar />
+      <Flex pos="relative" mb="10%">
+        <Flex
+          mt={{ sm: '5%', md: '15%', lg: '15%', xl: '10%' }}
+          w="100wh"
+          mx="auto"
+          pt={{ sm: '100px', md: '0px' }}
+          direction="column"
+        >
+          <Flex justifyContent="start" style={{ userSelect: 'none' }}>
+            <Flex justifyContent="center" w="100%" background="transparent">
+              <Grid
+                gap={8}
+                templateColumns={{
+                  sm: 'repeat(1, 1fr)',
+                  md: 'repeat(2, 2fr)',
+                  lg: 'repeat(2, 1fr)',
+                  xl: 'repeat(4, 1fr)',
+                }}
+              >
                 <GridItem>
-                <Flex   
-                  direction="column"
-                  position="relative" width={250} h={390}
-                  background="transparent"
-                  borderRadius="15px"
-                  alignItems="center"
-                  p="40px"
-                  bg={bgColor}
-                  boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)">
-                      <IconBox w="80px" p={2} bg={bgIcons}><AboutUsLogo w="60px" h="60px"/></IconBox>
+                  <Flex
+                    direction="column"
+                    position="relative"
+                    width={250}
+                    h={390}
+                    background="transparent"
+                    borderRadius="15px"
+                    alignItems="center"
+                    p="40px"
+                    bg={bgColor}
+                    boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+                  >
+                    <IconBox w="80px" p={2} bg={bgIcons}>
+                      <AboutUsLogo w="60px" h="60px" />
+                    </IconBox>
                     <Box>
                       <Text fontSize="md" align="center" p={-4} mt={4}>
-                      Somos una organización sin fines de lucro, con el objetivo de que todos los animales maltratados o en situación de calle tengan la posibilidad de encontrar un nuevo hogar.
+                        Somos una organización sin fines de lucro, con el
+                        objetivo de que todos los animales maltratados o en
+                        situación de calle tengan la posibilidad de encontrar un
+                        nuevo hogar.
                       </Text>
                     </Box>
                   </Flex>
                 </GridItem>
-                <GridItem >
-                <Flex   
-                direction="column"
-                alignItems="center"
-                position="relative" width={250} h={390}
-                  background="transparent"
-                  borderRadius="15px"
-                  p="40px"
-                  bg={bgColor}
-                  boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)">
-                    <IconBox  w="80px" p={2} bg={bgIcons}><AdoptLogo w="60px" h="60px"/></IconBox>
-                    <Box>
-                      <Text fontSize="md" align="center" p={-4} mt={4}>
-                      Para adoptar un animal, crea una cuenta como usuario y luego ve a la página de ADOPCIONES, luego, haz clic en &quot;Detalles&quot; para ver los datos de un animal.
-                      </Text>
-                    </Box>
-                  </Flex>
-                </GridItem>
-                <GridItem >
-                  <Flex 
-                  direction="column"
-                  alignItems="center"
-                  position="relative" width={250} h={390}
+                <GridItem>
+                  <Flex
+                    direction="column"
+                    alignItems="center"
+                    position="relative"
+                    width={250}
+                    h={390}
                     background="transparent"
                     borderRadius="15px"
                     p="40px"
                     bg={bgColor}
-                    boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)">
-                       <IconBox w="80px" p={2} bg={bgIcons}><OngLogo w="60px" h="60px"/></IconBox>
+                    boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+                  >
+                    <IconBox w="80px" p={2} bg={bgIcons}>
+                      <AdoptLogo w="60px" h="60px" />
+                    </IconBox>
                     <Box>
                       <Text fontSize="md" align="center" p={-4} mt={4}>
-                      Una vez en la página de detalles, busca el formulario de contacto y envía un mensaje. La ONG se pondrá en contacto contigo pronto.
-                      </Text>
-                    </Box>
-                    </Flex>
-                  </GridItem>
-                <GridItem >
-                <Flex   
-                direction="column"
-                alignItems="center"
-                position="relative" width={250} h={390}
-                  background="transparent"
-                  borderRadius="15px"
-                  p="40px"
-                  bg={bgColor}
-                  boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)">
-                     <IconBox w="80px" p={2} bg={bgIcons}><DonateLogo w="60px" h="60px"/></IconBox>
-                  <Box>
-                      <Text fontSize="md" align="center" p={-4} mt={4}>
-                      Para poner en adopción un animal, debes tener una cuenta de ONG. Una vez creada, podrás agregar animales desde tu página de inicio.
+                        Para adoptar un animal, crea una cuenta como usuario y
+                        luego ve a la página de ADOPCIONES, luego, haz clic en
+                        &quot;Detalles&quot; para ver los datos de un animal.
                       </Text>
                     </Box>
                   </Flex>
                 </GridItem>
-            </Grid>
-          </Flex>
-        </Flex>
-      <Box mt="5%" >
-              <Heading color={titleColor}>Mascotas</Heading>
-              <Separator mt="8px" />
-              <Flex position="relative" mb="10%">
-                <Flex
-                  h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-                  mt={{ sm: '-10%', md: '12%', lg: '5%' }}
-                  w="100wh"
-                  maxW="1044px"
-                  mx="auto"
-                  pt={{ sm: '100px', md: '0px' }}
+                <GridItem>
+                  <Flex
+                    direction="column"
+                    alignItems="center"
+                    position="relative"
+                    width={250}
+                    h={390}
+                    background="transparent"
+                    borderRadius="15px"
+                    p="40px"
+                    bg={bgColor}
+                    boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
                   >
-                  <Flex justifyContent="start" style={{ userSelect: 'none' }}>
-                    <Flex
-                      alignItems="center"
-                      justifyContent="center"
-                      w="100%"
-                      background="transparent"
-                    >
-              <Grid
-              gap={8}
-              templateColumns={{
-                sm: 'repeat(1, 1fr)',
-                md: 'repeat(1, 1fr)',
-                lg: 'repeat(4, 1fr)',
-              }}
-            >
-              {success ? (
-                cardData?.map((card, idx) => (
-                  <GridItem key={idx}>
-                    <PetCard
-                      id={card.id}
-                      img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-                      name={card.name}
-                      description={card.breed}
-                    />
-                  </GridItem>
-                ))
-              ) : (
-                <CircularProgress isIndeterminate color="teal.300" />
-              )}
-            </Grid>
+                    <IconBox w="80px" p={2} bg={bgIcons}>
+                      <OngLogo w="60px" h="60px" />
+                    </IconBox>
+                    <Box>
+                      <Text fontSize="md" align="center" p={-4} mt={4}>
+                        Una vez en la página de detalles, busca el formulario de
+                        contacto y envía un mensaje. La ONG se pondrá en
+                        contacto contigo pronto.
+                      </Text>
+                    </Box>
+                  </Flex>
+                </GridItem>
+                <GridItem>
+                  <Flex
+                    direction="column"
+                    alignItems="center"
+                    position="relative"
+                    width={250}
+                    h={390}
+                    background="transparent"
+                    borderRadius="15px"
+                    p="40px"
+                    bg={bgColor}
+                    boxShadow="0 20px 27px 0 rgb(0 0 0 / 5%)"
+                  >
+                    <IconBox w="80px" p={2} bg={bgIcons}>
+                      <DonateLogo w="60px" h="60px" />
+                    </IconBox>
+                    <Box>
+                      <Text fontSize="md" align="center" p={-4} mt={4}>
+                        Para poner en adopción un animal, debes tener una cuenta
+                        de ONG. Una vez creada, podrás agregar animales desde tu
+                        página de inicio.
+                      </Text>
+                    </Box>
+                  </Flex>
+                </GridItem>
+              </Grid>
             </Flex>
-            </Flex>
-            </Flex>
-            </Flex>
-            <Box mt="5%">
-              <Heading color={titleColor}>Organizaciones</Heading>
-              <Separator mt="8px" />
-              <Flex position="relative">
+          </Flex>
+          <Box mt="5%">
+            <Heading color={titleColor}>Mascotas</Heading>
+            <Separator mt="8px" />
+            <Flex position="relative" mb="10%">
               <Flex
-                mt={{ sm: '-10%', md: '5%', lg: '5%' }}
+                mt={{ sm: '-10%', md: '12%', lg: '5%', xl: '5%' }}
                 w="100wh"
                 maxW="1044px"
                 mx="auto"
@@ -211,6 +207,7 @@ export default function Landing() {
               >
                 <Flex justifyContent="start" style={{ userSelect: 'none' }}>
                   <Flex
+                    alignItems="center"
                     justifyContent="center"
                     w="100%"
                     background="transparent"
@@ -223,19 +220,68 @@ export default function Landing() {
                         lg: 'repeat(4, 1fr)',
                       }}
                     >
-                      {ongData?.map((card, idx) => (
-                        <GridItem key={idx}>
-                          <OngCard id={card.id} img={card.url} name={card.name} />
-                        </GridItem>
-                      ))}
+                      {success ? (
+                        cardData?.map((card, idx) => (
+                          <GridItem key={idx}>
+                            <PetCard
+                              id={card.id}
+                              img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
+                              name={card.name}
+                              description={card.breed}
+                            />
+                          </GridItem>
+                        ))
+                      ) : (
+                        <CircularProgress isIndeterminate color="teal.300" />
+                      )}
                     </Grid>
                   </Flex>
                 </Flex>
               </Flex>
             </Flex>
+            <Box mt="5%">
+              <Heading color={titleColor}>Organizaciones</Heading>
+              <Separator mt="8px" />
+              <Flex position="relative">
+                <Flex
+                  mt={{ sm: '-10%', md: '5%', lg: '5%' }}
+                  w="100wh"
+                  maxW="1044px"
+                  mx="auto"
+                  pt={{ sm: '100px', md: '0px' }}
+                >
+                  <Flex justifyContent="start" style={{ userSelect: 'none' }}>
+                    <Flex
+                      justifyContent="center"
+                      w="100%"
+                      background="transparent"
+                    >
+                      <Grid
+                        gap={8}
+                        templateColumns={{
+                          sm: 'repeat(1, 1fr)',
+                          md: 'repeat(1, 1fr)',
+                          lg: 'repeat(4, 1fr)',
+                        }}
+                      >
+                        {ongData?.map((card, idx) => (
+                          <GridItem key={idx}>
+                            <OngCard
+                              id={card.id}
+                              img={card.url}
+                              name={card.name}
+                            />
+                          </GridItem>
+                        ))}
+                      </Grid>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Flex>
             </Box>
           </Box>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { getAnimals } from '~/supabase/helpers';
-import { supabase } from '../../../supabase/supabaseClient';
+import { supabase } from '../../../../../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function updateAnimal() {
