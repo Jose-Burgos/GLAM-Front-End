@@ -16,8 +16,7 @@ export default function validateUserRegisterForm(values: any) {
   // Validate DNI
   if (!values.identification) {
     errors.identification = 'El DNI es obligatorio';
-  } else if (
-    !/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/i.test(values.identification)
+  } else if (!/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/i.test(values.identification)
   ) {
     errors.identification = 'DNI no valido';
   }

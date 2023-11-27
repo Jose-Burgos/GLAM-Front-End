@@ -8,7 +8,7 @@ const helpers: HelperFunctions = {
   getAnimals: async () => {
     const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
       .from('animals')
-      .select('*, species (name)');
+      .select('*');
     if (error) {
       throw new Error(error.message);
     }
@@ -25,7 +25,7 @@ const helpers: HelperFunctions = {
     }
   },
 
-  upsertAnimal: async (animal) => {
+  upsertAnimal: async (animal : Sb.Animal) => {
     const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
@@ -40,7 +40,7 @@ const helpers: HelperFunctions = {
     if (error) {
       throw new Error(error.message);
     } else {
-      console.log(data);
+      // console.log(data);
       return data[0];
     }
   },
