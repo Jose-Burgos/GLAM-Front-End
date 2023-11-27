@@ -30,7 +30,11 @@ import {
   OngLogo,
   LogInLogo,
   SignUpLogo,
+  DashboardLogo,
+  LogOutLogo,
 } from '@/assets/icons/icons';
+import AuthContext from '@/hooks/authContext';
+import HelperFunctions from '~/supabase/helpers';
 
 interface Routes {
   path: string;
@@ -56,6 +60,29 @@ const routes: Array<Routes> = [
   },
 ];
 
+const loggedRoutes: Array<Routes> = [
+  {
+    path: '/',
+    name: 'Inicio',
+    icon: <HomeLogo w="24px" h="24px" me="0px" />,
+  },
+  {
+    path: '/adoption',
+    name: 'Adopciones',
+    icon: <AdoptionLogo w="20px" h="20px" me="0px" />,
+  },
+  {
+    path: '/ong',
+    name: 'Organizaciones',
+    icon: <OngLogo w="26px" h="26px" me="0px" />,
+  },
+  {
+    path: '/user/auth/home',
+    name: 'Dashboard',
+    icon: <DashboardLogo w="26px" h="26px" me="0px" />,
+  },
+];
+
 const authRoutes: Array<Routes> = [
   {
     path: '/login',
@@ -69,6 +96,7 @@ const authRoutes: Array<Routes> = [
   },
 ];
 
+
 export default function SidebarResponsive(props: any) {
   const location = usePathname();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -77,6 +105,9 @@ export default function SidebarResponsive(props: any) {
   const activeRoute = (routeName: any) => {
     return location === routeName ? 'active' : '';
   };
+  const { isLoggedIn, logOut } = React.useContext(AuthContext);
+
+  const dataSet = isLoggedIn ? loggedRoutes : routes;
 
   const createLinks = () => {
     const activeBg = useColorModeValue('white', 'gray.700');
@@ -84,7 +115,7 @@ export default function SidebarResponsive(props: any) {
     const activeColor = useColorModeValue('gray.700', 'white');
     const inactiveColor = useColorModeValue('gray.400', 'gray.400');
 
-    return routes.map((prop: any, key: any) => {
+    return dataSet.map((prop: any, key: any) => {
       if (prop.redirect) {
         return null;
       }
@@ -193,6 +224,53 @@ export default function SidebarResponsive(props: any) {
     const activeColor = useColorModeValue('gray.700', 'white');
     const inactiveColor = useColorModeValue('gray.400', 'gray.400');
 
+    if (isLoggedIn) {
+      return (<Button
+        boxSize="initial"
+        justifyContent="flex-start"
+        alignItems="center"
+        bg={activeBg}
+        mb={{
+          xl: '12px',
+        }}
+        mx={{
+          xl: 'auto',
+        }}
+        ps={{
+          sm: '10px',
+          xl: '16px',
+        }}
+        py="12px"
+        borderRadius="15px"
+        w="100%"
+        _active={{
+          bg: 'inherit',
+          transform: 'none',
+          borderColor: 'transparent',
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}
+        onClick={() => {logOut()}}
+      >
+        <Flex>
+            <IconBox
+              bg="teal.300"
+              color="white"
+              h="30px"
+              w="30px"
+              me="12px"
+            >
+              <LogOutLogo/>
+            </IconBox>
+        
+          <Text color={activeColor} my="auto" fontSize="sm">
+            Cerrar Sesion
+          </Text>
+        </Flex>
+      </Button>);
+    }
+
     return authRoutes.map((prop: any, key: any) => {
       if (prop.redirect) {
         return null;
@@ -200,101 +278,102 @@ export default function SidebarResponsive(props: any) {
       if (prop.category) {
         return <div key={prop.name}>{createAuthLinks()}</div>;
       }
-      return (
-        <NextLink href={prop.path} key={prop.name}>
-          {activeRoute(prop.path) === 'active' ? (
-            <Button
-              boxSize="initial"
-              justifyContent="flex-start"
-              alignItems="center"
-              bg={activeBg}
-              mb={{
-                xl: '12px',
-              }}
-              mx={{
-                xl: 'auto',
-              }}
-              ps={{
-                sm: '10px',
-                xl: '16px',
-              }}
-              py="12px"
-              borderRadius="15px"
-              w="100%"
-              _active={{
-                bg: 'inherit',
-                transform: 'none',
-                borderColor: 'transparent',
-              }}
-              _focus={{
-                boxShadow: 'none',
-              }}
-            >
-              <Flex>
-                {typeof prop.icon === 'string' ? (
-                  <Icon>{prop.icon}</Icon>
-                ) : (
-                  <IconBox
-                    bg="teal.300"
-                    color="white"
-                    h="30px"
-                    w="30px"
-                    me="12px"
-                  >
-                    {prop.icon}
-                  </IconBox>
-                )}
-                <Text color={activeColor} my="auto" fontSize="sm">
-                  {prop.name}
-                </Text>
-              </Flex>
-            </Button>
-          ) : (
-            <Button
-              boxSize="initial"
-              justifyContent="flex-start"
-              alignItems="center"
-              bg="transparent"
-              mb={{
-                xl: '12px',
-              }}
-              mx={{
-                xl: 'auto',
-              }}
-              py="12px"
-              ps={{
-                sm: '10px',
-                xl: '16px',
-              }}
-              borderRadius="15px"
-              w="100%"
-              _active={{
-                bg: 'inherit',
-                transform: 'none',
-                borderColor: 'transparent',
-              }}
-              _focus={{
-                boxShadow: 'none',
-              }}
-            >
-              <Flex>
-                {typeof prop.icon === 'string' ? (
-                  <Icon>{prop.icon}</Icon>
-                ) : (
-                  <IconBox color="white" h="30px" w="30px" me="12px">
-                    {prop.icon}
-                  </IconBox>
-                )}
-                <Text color={activeColor} my="auto" fontSize="sm">
-                  {prop.name}
-                </Text>
-              </Flex>
-            </Button>
-          )}
-        </NextLink>
-      );
+      
+        return (
+          <NextLink href={prop.path} key={prop.name}>
+            {activeRoute(prop.path) === 'active' ? (
+              <Button
+                boxSize="initial"
+                justifyContent="flex-start"
+                alignItems="center"
+                bg={activeBg}
+                mb={{
+                  xl: '12px',
+                }}
+                mx={{
+                  xl: 'auto',
+                }}
+                ps={{
+                  sm: '10px',
+                  xl: '16px',
+                }}
+                py="12px"
+                borderRadius="15px"
+                w="100%"
+                _active={{
+                  bg: 'inherit',
+                  transform: 'none',
+                  borderColor: 'transparent',
+                }}
+                _focus={{
+                  boxShadow: 'none',
+                }}
+              >
+                <Flex>
+                  {typeof prop.icon === 'string' ? (
+                    <Icon>{prop.icon}</Icon>
+                  ) : (
+                    <IconBox
+                      bg="teal.300"
+                      color="white"
+                      h="30px"
+                      w="30px"
+                      me="12px"
+                    >
+                      {prop.icon}
+                    </IconBox>
+                  )}
+                  <Text color={activeColor} my="auto" fontSize="sm">
+                    {prop.name}
+                  </Text>
+                </Flex>
+              </Button>
+            ) : (
+              <Button
+                boxSize="initial"
+                justifyContent="flex-start"
+                alignItems="center"
+                bg="transparent"
+                mb={{
+                  xl: '12px',
+                }}
+                mx={{
+                  xl: 'auto',
+                }}
+                py="12px"
+                ps={{
+                  sm: '10px',
+                  xl: '16px',
+                }}
+                borderRadius="15px"
+                w="100%"
+                _active={{
+                  bg: 'inherit',
+                  transform: 'none',
+                  borderColor: 'transparent',
+                }}
+                _focus={{
+                  boxShadow: 'none',
+                }}
+              >
+                <Flex>
+                  {typeof prop.icon === 'string' ? (
+                    <Icon>{prop.icon}</Icon>
+                  ) : (
+                    <IconBox color="white" h="30px" w="30px" me="12px">
+                      {prop.icon}
+                    </IconBox>
+                  )}
+                  <Text color={activeColor} my="auto" fontSize="sm">
+                    {prop.name}
+                  </Text>
+                </Flex>
+              </Button>
+            )}
+          </NextLink>
+        );
     });
-  };
+    }
 
   const { logoText, ...rest } = props;
 
