@@ -31,7 +31,6 @@ import { Animal } from '~/supabase/types/supabase.tables';
 import NextLink from 'next/link';
 import AnimalForm from '@/components/animalform';
 import supabase from '~/supabase/helpers';
-import { useNavigate, Link as ReactLink } from 'react-router-dom';
 
 // Define interfaces for component props
 interface TableProps {
@@ -105,7 +104,7 @@ export default function AnimalTable(props: TableProps) {
       marginTop={10}
       marginBottom={10}
       width={600}
-      backgroundColor={'orange.100'}
+      backgroundColor="orange.100"
       maxW="xl"
       position="relative"
     >
@@ -113,16 +112,16 @@ export default function AnimalTable(props: TableProps) {
       <TableContainer>
         <Table variant="striped" colorScheme="orange.200">
           <Thead>
-            <Tr rounded={'sm'}>
+            <Tr rounded="sm">
               <Td>Nombre</Td>
               <Td>Edad</Td>
               <Td>Vacunado</Td>
-              <Td></Td>
+              <Td />
             </Tr>
           </Thead>
           <Tbody>
             {props.animals.map((animal) => (
-              <Tr rounded={'sm'} key={animal.id}>
+              <Tr rounded="sm" key={animal.id}>
                 <Td>{animal.name}</Td>
                 <Td>{animal.age}</Td>
                 <Td>{animal.vaccinated ? 'Si' : 'No'}</Td>
@@ -138,7 +137,7 @@ export default function AnimalTable(props: TableProps) {
                           color="black"
                           aria-label="Mas Opciones"
                           size="sm"
-                        ></MenuButton>
+                         />
                         <MenuList>
                           <MenuItem onClick={() => editAnimal(animal.id)}>Editar</MenuItem>
                           <MenuItem onClick={() => { setOpenStates({ ...openStates, [animal.id]: true }); }}>Eliminar</MenuItem>
@@ -175,7 +174,7 @@ export default function AnimalTable(props: TableProps) {
             ))}
           </Tbody>
         </Table>
-        <Link href={`/ong/auth/addAnimal`}>
+        <Link href="/ong/auth/addAnimal">
           <IconButton
             marginLeft={10}
             marginTop={10}

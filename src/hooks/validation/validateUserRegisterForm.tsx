@@ -1,5 +1,5 @@
 export default function validateUserRegisterForm(values: any) {
-  let errors: any = {};
+  const errors: any = {};
 
   // Validate first name
   if (!values.firstName) {

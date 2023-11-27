@@ -7,8 +7,8 @@ import {
   Box,
   CardBody,
   CardHeader,
-} from '@chakra-ui/react';
-import { Card } from '@chakra-ui/react';
+ Card } from '@chakra-ui/react';
+import React from 'react';
 
 export default function NotificationsHistory(props: any) {
   return (
@@ -16,7 +16,7 @@ export default function NotificationsHistory(props: any) {
       width={props.width}
       marginBottom={400}
       marginTop={10}
-      backgroundColor={'orange.100'}
+      backgroundColor="orange.100"
     >
       <CardHeader fontSize="2xl">Historial de notificaciones</CardHeader>
       <CardBody>
