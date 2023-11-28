@@ -48,7 +48,7 @@ export default function UserDashboard() {
   useEffect(() => {
     (async () => {
       const data = await supabase.getInKindDonations()   
-      console.log(data)
+      // console.log(data)
     })();
 }, []);
 

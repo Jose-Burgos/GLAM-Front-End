@@ -342,7 +342,7 @@ const helpers: HelperFunctions = {
 
   getInKindDonations : async () => {
     const id = await helpers.getCurrentUserId();
-    console.log(id);
+    // console.log(id);
     const { data, error } = await supabase.from('in_kind_donations').select("*").eq('ong',id as String);
     if (error) {
       throw new Error(error.message); 
