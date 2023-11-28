@@ -6,6 +6,7 @@ import { Session, PostgrestResponse } from '@supabase/supabase-js';
 
 export interface HelperFunctions {
   getAnimals: () => Promise<Sb.Animal[]>;
+  getOrgAnimals: () => Promise<Sb.Animal[]>;
   deleteAnimal: (animalID: String) => Promise<void>;
   upsertAnimal: (animal: Sb.Animal) => Promise<void>;
   getAnimalById: (id: string) => Promise<Animal>;
@@ -39,6 +40,6 @@ export interface HelperFunctions {
   getOrganizations: () => Promise<Sb.Org[]>;
   getSpecies: () => Promise<Sb.SpeciesData[]>;
   getImages: () => Promise<any>;        // hay que cambiar el tipo de dato que devuelve
-  deleteImage: () => Promise<any>;
-  uploadImage: () => Promise<any>;
+  deleteImage: (imageId: string) => Promise<void>;
+  uploadImage: (file: any) => Promise<any>;
 }
