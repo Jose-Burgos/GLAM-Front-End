@@ -58,6 +58,7 @@ export default function ContactForm() {
               onChange={handleChange}
               size="xl"
               maxLength={400}
+              name = 'message'
             />
             {errors.message && (
               <FormErrorMessage>{errors.message}</FormErrorMessage>
