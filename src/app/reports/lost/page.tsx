@@ -19,7 +19,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 
-import { Animal, SpeciesData } from '~/supabase/types/supabase.tables';
+import { SpeciesData } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import validateLostPetForm from '@/hooks/validation/validateLostPetForm';
 import useValidation from '@/hooks/useValidation';
@@ -111,7 +111,7 @@ export default function LostPetReportView() {
         <VStack spacing={5}>
           <Heading mb={2}>Reporte de Mascotas Perdidas</Heading>
           <Box width="md" p={8} boxShadow="md" borderRadius="md" bg="white">
-            <form id="addAnimal">
+            <form id="lostAnimalForm">
               {/* Type of Animal */}
               <FormControl marginBottom={5} isInvalid={errors.species_id}>
                 <FormLabel color="black">Tipo de animal</FormLabel>
@@ -189,7 +189,7 @@ export default function LostPetReportView() {
                   mt={8}
                   colorScheme="teal"
                   type="submit"
-                  form="addAnimal"
+                  form="lostAnimalForm"
                   onClick={handleSubmit}
                 >
                   Enviar Reporte

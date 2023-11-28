@@ -22,6 +22,10 @@ import {
   SliderThumb,
   SliderMark,
   Box,
+  ChakraProvider,
+  CSSReset,
+  VStack,
+  Heading,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import { Animal, SpeciesData } from '~/supabase/types/supabase.tables';
@@ -83,7 +87,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
       toast({
         title: 'Operación exitosa',
         description:
-          props.submitBtnText === 'Add Animal'
+          props.submitBtnText === 'Agregar Animal'
             ? 'Animal agregado exitosamente'
             : 'Animal editado exitosamente',
         status: 'success',
@@ -113,9 +117,23 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
   // Render the form
   return (
-    <Center>
+    <ChakraProvider>
+      <CSSReset />
       {orgId != null && (
-        <Stack>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+        background="gray.100"
+        mt={120} 
+      >
+        <VStack spacing={5}>
+          <Heading mb={2}>{ props.submitBtnText==='Agregar Animal'
+            ? 'Agregar Animal'
+            : 'Editar Animal'}
+          </Heading>
+          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg="white">
           <form id='addAnimal'>
             {/* Species selection */}
             <FormControl marginBottom={5} isInvalid={errors.species_id}>
@@ -316,18 +334,9 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             {/* Submit Button */}
             <Center>
               <Button
-                as="a"
-                fontSize="sm"
-                fontWeight={500}
-                w={200}
-                mt={5}
-                mb={-3}
-                color="black"
-                bg={theme.colors.accent}
-                _hover={{
-                  textColor: 'gray',
-                  borderColor: theme.colors.accent,
-                }}
+                mt={8}
+                colorScheme="teal"
+                type="submit"
                 form="addAnimal"
                 onClick={handleSubmit}
               >
@@ -335,9 +344,11 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
               </Button>
             </Center>
           </form>
-        </Stack>
+          </Box>
+        </VStack>
+      </Box>
       )}
-    </Center>
+    </ChakraProvider>
   );
 }
 
