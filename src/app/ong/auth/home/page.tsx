@@ -44,6 +44,16 @@ import AdminSidebarResponsive from '@/components/adminSidebar';
 
 export default function UserDashboard() {
   const bgCard = useColorModeValue('white', 'gray.700');
+  
+  useEffect(() => {
+    (async () => {
+      const data = await supabase.getInKindDonations()   
+      console.log(data)
+    })();
+}, []);
+
+
+
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
@@ -78,7 +88,8 @@ export default function UserDashboard() {
             gap="24px"
           >
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
+              Notificaciones
+
             </Box>
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
               Mundo

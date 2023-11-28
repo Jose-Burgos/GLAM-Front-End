@@ -36,11 +36,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   const [orgId, setOrgId] = useState<string>();
   const [species, setSpecies] = useState({} as SpeciesData[]);
   const [formData, setFormData] = useState(props.animal as Animal);
-  const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(
-    formData,
-    validateOngRegisterForm,
-    onSubmit
-  );
+  const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(formData, validateOngRegisterForm, onSubmit);
 
   // Styles for labels
   const labelStyles = {

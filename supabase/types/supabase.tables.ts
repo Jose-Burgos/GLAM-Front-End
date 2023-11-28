@@ -59,3 +59,14 @@ export enum RequestStates {
 export type AdoptionRequest = Table<'adoption_requests'>;
 
 export type SpeciesData = Table<'species'>;
+
+export type Org = Table<'organizations'>;
+
+export interface InKindDonation {
+  ong : string;
+  type : string;
+  description : string;
+  quantity : number;
+  availability : string;
+  user : string;
+}

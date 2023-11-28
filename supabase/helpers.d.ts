@@ -38,7 +38,9 @@ export interface HelperFunctions {
   reactivateAdoptionRequest: (requestId: string) => void;
   getOrganizations: () => Promise<Sb.Org[]>;
   getSpecies: () => Promise<Sb.SpeciesData[]>;
-  getImages: () => Promise<any>;        // hay que cambiar el tipo de dato que devuelve
-  deleteImage: () => Promise<any>;
-  uploadImage: () => Promise<any>;
+  // getImages: () => Promise<any>;        // hay que cambiar el tipo de dato que devuelve
+  deleteImage: (imageName) => Promise<any>;
+  uploadImage: (imageName) => Promise<any>;
+  submitInKindDonation: (donationdata : Sb.InKindDonation) => Promise<void>;
+  getInKindDonations: () => Promise<Sb.InKindDonation[]>
 }
