@@ -40,6 +40,13 @@ export interface HelperFunctions {
   getOrganizations: () => Promise<Sb.Org[]>;
   getSpecies: () => Promise<Sb.SpeciesData[]>;
   getImages: () => Promise<any>;        // hay que cambiar el tipo de dato que devuelve
-  deleteImage: (imageId: string) => Promise<void>;
-  uploadImage: (file: any) => Promise<any>;
+  getAllUserImages: () => Promise<any>;
+  getImagesByAnimalId: async () => Promise<any>;
+  getProfilePictureByAnimnalId: async () => Promise<any>;
+  deleteImage: (animalId: string, imageId: string) => Promise<void>;
+  deleteProfilePic: (animalId: string) => Promise<any>;
+  uploadImage: (file: any, animalId: string) => Promise<any>;
+
+
+
 }

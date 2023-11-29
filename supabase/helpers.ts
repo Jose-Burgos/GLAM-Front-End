@@ -308,43 +308,119 @@ const helpers: HelperFunctions = {
     return data;
   },
 
-  getImages: async () => {
+   getImages: async () => {
+        const userId = await helpers.getCurrentUserId();
+            const path = `${userId}/pics`;
+            const { data, error } = await supabase.storage
+                .from('animal-pictures-orgs')
+                .list(path);
+                  if (error) {
+                    throw new Error(error.message);
+                  } else {
+                    return data.map((animals) => helpers.getImagesByAnimalId(animals.name)
+                    );
+                  }
+
+   },
+
+   getAllUserImages: async() => {
+    const userId = await helpers.getCurrentUserId();
+    const path = `${userId}/pics`;
+    const { data, error } = await supabase.storage
+        .from('animal-pictures-orgs')
+        .list(path);
+          if (error) {
+            throw new Error(error.message);
+          } else {
+            return data.map((animals) => ({
+              pictures: helpers.getImagesByAnimalId(animals.name),
+              profilePicture: helpers.getProfilePictureByAnimalId(animals.name),
+            }));
+          }
+   },
+
+
+
+  getImagesByAnimalId: async (animalId) => {
+      const userId = await helpers.getCurrentUserId();
+      const path = `${userId}/pics/${animalId}`;
+      const { data, error } = await supabase.storage
+        .from('animal-pictures-orgs')
+        .list(path);
+
+      if (error) {
+              throw new Error(error.message);
+            } else {
+              return data.map((imgData) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/pics/${animalId}/${imgData.name}`
+               );
+            }
+      },
+
+  getProfilePictureByAnimalId: async (animalId) => {
+        const userId = await helpers.getCurrentUserId();
+        const path = `${userId}/profile-pics/${animalId}`;
+        const { data, error } = await supabase.storage
+            .from('animal-pictures-orgs')
+            .list(path);
+        if (error) {
+            throw new Error(error.message);
+            }
+        else {
+            return data.map((imgData) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/profile-pics/${animalId}/${imgData.name}`
+            );
+        }
+  },
+
+  deleteImage: async (animalId, imageId) => {
     const userId = await helpers.getCurrentUserId();
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
-      .list(userId);
-    if (error) {
-      throw new Error(error.message);
-    } else {
-      return data.map((imgData) => ({
-        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/${userId}/${imgData.name}`,
-        path: userId + '/' + imgData.name,
-      }));
-    }
-  },
-
-  deleteImage: async (imageId) => {
-    const userId = await helpers.getCurrentUserId();
-    const { error } = await supabase.storage
-      .from('animal-pictures-orgs')
-      .remove([userId + '/' + imageId]);
+      .remove([`${userId}/pics/${animalId}/${imageId}`]);
     if (error) {
       throw new Error(error.message);
     }
+    else{
+        return helpers.getAllUserImages();
+    }
   },
 
-  uploadImage: async (file) => {
+  deleteProfilePic: async(animalId) => {
+    const userId = await helpers.getCurrentUser();
+     const { error } = await supabase.storage
+          .from('animal-pictures-orgs')
+          .remove([`${userId}/profile-pics/${animalId}`]);              // borro la carpeta del animal incluido la imagen que esta adentro
+        if (error) {
+          throw new Error(error.message);
+        }
+        else{
+            return helpers.getAllUserImages();
+        }
+  },
+
+  uploadImage: async (file, animalId) => {
     // let file = e.target.files[0];
 
     // let f: FileBody;
+    const userId = await helpers.getCurrentUser();
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
-      .upload(helpers.getCurrentUserId() + '/' + uuidv4(), file);
-
+      .upload(`${userId}/pics/${animalId}/${imageId}/${uuidv4()}`, file);
     if (error) {
       throw new Error(error.message);
     } else {
-      return helpers.getImages();
+      return helpers.getAllUserImages();
+    }
+  },
+
+  uploadProfilePicture: async (file, animalId) => {
+    const userId = await helpers.getCurrentUser();
+    const { data, error } = await supabase.storage
+        .from('animal-pictures-orgs')
+        .upload(`${userId}/profile-pics/${animalId}/${imageId}/${uuidv4()}`, file);
+    if (error) {
+        throw new Error(error.message);
+    } else {
+        return helpers.getAllUserImages();
     }
   },
 };
