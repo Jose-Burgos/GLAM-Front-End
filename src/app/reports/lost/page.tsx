@@ -1,4 +1,5 @@
-'use client';
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import {
   ChakraProvider,
@@ -148,7 +149,7 @@ export default function LostPetReportView() {
                   onChange={handleChange}
                   // shadow="inner"
                   type="text"
-                  maxLength={20}
+                  maxLength={50}
                 />
                 {errors.location && (
                   <FormErrorMessage>{errors.location}</FormErrorMessage>
@@ -199,7 +200,7 @@ export default function LostPetReportView() {
               </Center>
 
               <Stack spacing={6}>
-                <Text></Text>
+                <Text />
                 <Text textAlign="center" fontSize="xl">
                   Recuerda que las ONGs no pueden confiscar mascotas.
                 </Text>

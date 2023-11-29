@@ -364,22 +364,37 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                   )}
                 </FormControl>
 
-                {/* Submit Button */}
-                <Center>
-                  <Button
-                    mt={8}
-                    colorScheme="teal"
-                    type="submit"
-                    form="addAnimal"
-                    onClick={handleSubmit}
-                  >
-                    {props.submitBtnText || 'Submit'}
-                  </Button>
-                </Center>
-              </form>
-            </Box>
-          </VStack>
-        </Box>
+            {/* Adopted Radio Group */}
+            <FormControl marginBottom={5} isInvalid={errors.adopted}>
+              <FormLabel >Estado</FormLabel>
+              <RadioGroup
+                onChange={(value) => handleChange({ target: { name: 'adopted', value } })}
+                value={values.adopted.toString()}
+              >
+                <Stack direction='row'>
+                  <Radio value={true.toString()}>No Adoptado</Radio>
+                  <Radio value={false.toString()}>Adoptado</Radio>
+                </Stack>
+              </RadioGroup>
+              {errors.adopted && <FormErrorMessage>{errors.adopted}</FormErrorMessage>}
+            </FormControl>
+
+            {/* Submit Button */}
+            <Center>
+              <Button
+                mt={8}
+                colorScheme="teal"
+                type="submit"
+                form="addAnimal"
+                onClick={handleSubmit}
+              >
+                {props.submitBtnText || 'Submit'}
+              </Button>
+            </Center>
+          </form>
+          </Box>
+        </VStack>
+      </Box>
       )}
     </ChakraProvider>
   );
