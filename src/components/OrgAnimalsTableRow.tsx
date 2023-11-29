@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
-import { OngRoutes } from '~/src/routes'
+import { OngRoutes } from '~/src/routes';
 
 import { Animal } from '~/supabase/types/supabase.tables';
 

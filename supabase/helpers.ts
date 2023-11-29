@@ -308,67 +308,66 @@ const helpers: HelperFunctions = {
     return data;
   },
 
-   getImages: async () => {
-        const userId = await helpers.getCurrentUserId();
-            const path = `${userId}/pics`;
-            const { data, error } = await supabase.storage
-                .from('animal-pictures-orgs')
-                .list(path);
-                  if (error) {
-                    throw new Error(error.message);
-                  } else {
-                    return data.map((animals) => helpers.getImagesByAnimalId(animals.name)
-                    );
-                  }
-
-   },
-
-   getAllUserImages: async() => {
+  getImages: async () => {
     const userId = await helpers.getCurrentUserId();
     const path = `${userId}/pics`;
     const { data, error } = await supabase.storage
-        .from('animal-pictures-orgs')
-        .list(path);
-          if (error) {
-            throw new Error(error.message);
-          } else {
-            return data.map((animals) => ({
-              pictures: helpers.getImagesByAnimalId(animals.name),
-              profilePicture: helpers.getProfilePictureByAnimalId(animals.name),
-            }));
-          }
-   },
+      .from('animal-pictures-orgs')
+      .list(path);
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data.map((animals) => helpers.getImagesByAnimalId(animals.name));
+    }
+  },
 
-
+  getAllUserImages: async () => {
+    const userId = await helpers.getCurrentUserId();
+    const path = `${userId}/pics`;
+    const { data, error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .list(path);
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data.map((animals) => ({
+        pictures: helpers.getImagesByAnimalId(animals.name),
+        profilePicture: helpers.getProfilePictureByAnimalId(animals.name),
+      }));
+    }
+  },
 
   getImagesByAnimalId: async (animalId) => {
-      const userId = await helpers.getCurrentUserId();
-      const path = `${userId}/pics/${animalId}`;
-      const { data, error } = await supabase.storage
-        .from('animal-pictures-orgs')
-        .list(path);
+    const userId = await helpers.getCurrentUserId();
+    const path = `${userId}/pics/${animalId}`;
+    const { data, error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .list(path);
 
-      if (error) {
-              throw new Error(error.message);
-            } else {
-              return data.map((imgData) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/pics/${animalId}/${imgData.name}`
-               );
-            }
-      },
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data.map(
+        (imgData) =>
+          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/pics/${animalId}/${imgData.name}`
+      );
+    }
+  },
 
   getProfilePictureByAnimalId: async (animalId) => {
-        const userId = await helpers.getCurrentUserId();
-        const path = `${userId}/profile-pics/${animalId}`;
-        const { data, error } = await supabase.storage
-            .from('animal-pictures-orgs')
-            .list(path);
-        if (error) {
-            throw new Error(error.message);
-            }
-        else {
-            return data.map((imgData) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/profile-pics/${animalId}/${imgData.name}`
-            );
-        }
+    const userId = await helpers.getCurrentUserId();
+    const path = `${userId}/profile-pics/${animalId}`;
+    const { data, error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .list(path);
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data.map(
+        (imgData) =>
+          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/animal-pictures-orgs/${userId}/profile-pics/${animalId}/${imgData.name}`
+      );
+    }
   },
 
   deleteImage: async (animalId, imageId) => {
@@ -378,23 +377,21 @@ const helpers: HelperFunctions = {
       .remove([`${userId}/pics/${animalId}/${imageId}`]);
     if (error) {
       throw new Error(error.message);
-    }
-    else{
-        return helpers.getAllUserImages();
+    } else {
+      return helpers.getAllUserImages();
     }
   },
 
-  deleteProfilePic: async(animalId) => {
+  deleteProfilePic: async (animalId) => {
     const userId = await helpers.getCurrentUser();
-     const { error } = await supabase.storage
-          .from('animal-pictures-orgs')
-          .remove([`${userId}/profile-pics/${animalId}`]);              // borro la carpeta del animal incluido la imagen que esta adentro
-        if (error) {
-          throw new Error(error.message);
-        }
-        else{
-            return helpers.getAllUserImages();
-        }
+    const { error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .remove([`${userId}/profile-pics/${animalId}`]); // borro la carpeta del animal incluido la imagen que esta adentro
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return helpers.getAllUserImages();
+    }
   },
 
   uploadImage: async (file, animalId) => {
@@ -415,41 +412,46 @@ const helpers: HelperFunctions = {
   uploadProfilePicture: async (file, animalId) => {
     const userId = await helpers.getCurrentUser();
     const { data, error } = await supabase.storage
-        .from('animal-pictures-orgs')
-        .upload(`${userId}/profile-pics/${animalId}/${imageId}/${uuidv4()}`, file);
+      .from('animal-pictures-orgs')
+      .upload(
+        `${userId}/profile-pics/${animalId}/${imageId}/${uuidv4()}`,
+        file
+      );
     if (error) {
-        throw new Error(error.message);
+      throw new Error(error.message);
     } else {
-        return helpers.getAllUserImages();
+      return helpers.getAllUserImages();
     }
   },
-  
-  submitInKindDonation : async (donationData : Sb.InKindDonation) => {
-    const { error } = await supabase.from('in_kind_donations').insert({ 
-        ong: donationData.ong, 
-        type : donationData.type, 
-        description : donationData.description, 
-        quantity : donationData.quantity,
-        availability : donationData.availability,
-        user : donationData.user,
-      })
+
+  submitInKindDonation: async (donationData: Sb.InKindDonation) => {
+    const { error } = await supabase.from('in_kind_donations').insert({
+      ong: donationData.ong,
+      type: donationData.type,
+      description: donationData.description,
+      quantity: donationData.quantity,
+      availability: donationData.availability,
+      user: donationData.user,
+    });
     if (error) {
       throw new Error(error.message);
     }
     return;
   },
 
-  getInKindDonations : async () => {
+  getInKindDonations: async () => {
     const id = await helpers.getCurrentUserId();
     // console.log(id);
-    const { data, error } = await supabase.from('in_kind_donations').select("*").eq('ong',id as String);
+    const { data, error } = await supabase
+      .from('in_kind_donations')
+      .select('*')
+      .eq('ong', id as String);
     if (error) {
-      throw new Error(error.message); 
+      throw new Error(error.message);
     }
     return data;
-  }
+  },
 };
-
 
 export default helpers;
 

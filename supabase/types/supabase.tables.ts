@@ -62,11 +62,11 @@ export type SpeciesData = Table<'species'>;
 
 export type Org = Table<'organizations'>;
 export interface InKindDonation {
-  type : string,
-  ong : string,
-  description : string,
-  quantity : number,
-  condition : string,
-  availability : string,
-  user : string,
+  type: string;
+  ong: string;
+  description: string;
+  quantity: number;
+  condition: string;
+  availability: string;
+  user: string;
 }

@@ -8,11 +8,11 @@ import {
   Text,
   Flex,
   Spacer,
-  useColorModeValue, 
-  Menu, 
+  useColorModeValue,
+  Menu,
   MenuButton,
   MenuList,
-  MenuItem
+  MenuItem,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -68,7 +68,7 @@ function MobileOngCard(props: OngData) {
 
 function DesktopOngCard(props: OngData) {
   const bgColor = useColorModeValue('white', 'gray.700');
-  const handleDonation = (option : string) => {
+  const handleDonation = (option: string) => {
     switch (option) {
       case 'especie':
         // Redirige a la página de donación en especie
@@ -118,12 +118,24 @@ function DesktopOngCard(props: OngData) {
           </Button>
         </Link>
         <Menu>
-          <MenuButton as={Button} bg="teal.300" size="md" mt={5} mb={2} mr={2} fontSize="sm">
+          <MenuButton
+            as={Button}
+            bg="teal.300"
+            size="md"
+            mt={5}
+            mb={2}
+            mr={2}
+            fontSize="sm"
+          >
             Donar
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => handleDonation('especie')}>Donación en Especie</MenuItem>
-            <MenuItem onClick={() => handleDonation('monetaria')}>Donación Monetaria</MenuItem>
+            <MenuItem onClick={() => handleDonation('especie')}>
+              Donación en Especie
+            </MenuItem>
+            <MenuItem onClick={() => handleDonation('monetaria')}>
+              Donación Monetaria
+            </MenuItem>
           </MenuList>
         </Menu>
       </Flex>

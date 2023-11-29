@@ -24,7 +24,7 @@ import {
   LogOutLogo,
 } from '@/assets/icons/icons';
 import AuthContext from '@/hooks/authContext';
-import { OngRoutes } from '~/src/routes'
+import { OngRoutes } from '~/src/routes';
 
 interface Route {
   path: string;

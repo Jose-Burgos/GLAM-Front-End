@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -42,11 +42,8 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   const [species, setSpecies] = useState({} as SpeciesData[]);
   const [formData, setFormData] = useState(props.animal as Animal);
   const { colorMode, toggleColorMode } = useColorMode();
-  const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(
-    formData,
-    validateOngRegisterForm,
-    onSubmit
-  );
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(formData, validateOngRegisterForm, onSubmit);
 
   // Styles for labels
   const labelStyles = {
@@ -122,228 +119,267 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
     <ChakraProvider>
       <CSSReset />
       {orgId != null && (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        background="gray.100"
-        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
-      >
-        <VStack spacing={5}mt={120} >
-          <Heading mb={2}>{ props.submitBtnText==='Agregar Animal'
-            ? 'Agregar Animal'
-            : 'Editar Animal'}
-          </Heading>
-          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg={colorMode === 'light' ? 'white' : 'gray.600'} >
-          <form id='addAnimal'>
-            {/* Species selection */}
-            <FormControl marginBottom={5} isInvalid={errors.species_id}>
-              <FormLabel >Especie</FormLabel>
-              <Select
-                placeholder='Selecciona una especie'
-                onChange={handleChange}
-                value={values.species_id}
-                name='species_id'
-                id='species_id'
-              >
-                {species?.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </Select>
-              {errors.species_id && <FormErrorMessage>{errors.species_id}</FormErrorMessage>}
-            </FormControl>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+          background="gray.100"
+          bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
+        >
+          <VStack spacing={5} mt={120}>
+            <Heading mb={2}>
+              {props.submitBtnText === 'Agregar Animal'
+                ? 'Agregar Animal'
+                : 'Editar Animal'}
+            </Heading>
+            <Box
+              width="md"
+              p={8}
+              boxShadow="md"
+              borderRadius="md"
+              bg={colorMode === 'light' ? 'white' : 'gray.600'}
+            >
+              <form id="addAnimal">
+                {/* Species selection */}
+                <FormControl marginBottom={5} isInvalid={errors.species_id}>
+                  <FormLabel>Especie</FormLabel>
+                  <Select
+                    placeholder="Selecciona una especie"
+                    onChange={handleChange}
+                    value={values.species_id}
+                    name="species_id"
+                    id="species_id"
+                  >
+                    {species?.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </Select>
+                  {errors.species_id && (
+                    <FormErrorMessage>{errors.species_id}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Name input */}
-            <FormControl marginBottom={5} isInvalid={errors.name}>
-              <FormLabel>Nombre</FormLabel>
-              <Input
-                placeholder="Nombre"
-                name="name"
-                id="name"
-                value={values.name}
-                onChange={handleChange}
-                //
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
-            </FormControl>
+                {/* Name input */}
+                <FormControl marginBottom={5} isInvalid={errors.name}>
+                  <FormLabel>Nombre</FormLabel>
+                  <Input
+                    placeholder="Nombre"
+                    name="name"
+                    id="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    //
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.name && (
+                    <FormErrorMessage>{errors.name}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Breed */}
-            <FormControl marginBottom={5} isInvalid={errors.breed}>
-              <FormLabel >Raza</FormLabel>
-              <Input
-                placeholder="Raza"
-                name="breed"
-                id="breed"
-                value={values.breed}
-                onChange={handleChange}
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.breed && (
-                <FormErrorMessage>{errors.breed}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Height */}
-            <FormControl marginBottom={5} isInvalid={errors.height}>
-              <FormLabel >Altura (cm)</FormLabel>
-              <Input
-                placeholder="Altura (cm)"
-                name="height"
-                id="height"
-                value={values.height}
-                onChange={handleChange}
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.height && (
-                <FormErrorMessage>{errors.height}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Back Length */}
-            <FormControl marginBottom={5} isInvalid={errors.back_length}>
-              <FormLabel >Longitud del lomo (cm)</FormLabel>
-              <Input
-                placeholder="Longitud (cm)"
-                name="back_length"
-                id="back_length"
-                value={values.back_length}
-                onChange={handleChange}
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.back_length && <FormErrorMessage>{errors.back_length}</FormErrorMessage>}
-            </FormControl>
-            {/* Weight */}
-            <FormControl marginBottom={5} isInvalid={errors.weight}>
-              <FormLabel >Peso (kg)</FormLabel>
-              <Input
-                placeholder="Peso (kg)"
-                name="weight"
-                id="weight"
-                value={values.weight}
-                onChange={handleChange}
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.weight && (
-                <FormErrorMessage>{errors.weight}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Age */}
-            <FormControl marginBottom={5} isInvalid={errors.age}>
-              <FormLabel >Edad (años)</FormLabel>
-              <Input
-                placeholder="Edad (años)"
-                name="age"
-                id="age"
-                value={values.age}
-                onChange={handleChange}
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.age && <FormErrorMessage>{errors.age}</FormErrorMessage>}
-            </FormControl>
-            {/* Sex */}
-            <FormControl marginBottom={5} isInvalid={errors.sex}>
-              <FormLabel >Sexo</FormLabel>
-              <RadioGroup onChange={(value) => handleChange({ target: { name: 'sex', value } })} value={values.sex.toString()}>
-                <Stack direction='row'>
-                  <Radio value={false.toString()}>Hembra</Radio>
-                  <Radio value={true.toString()}>Macho</Radio>
-                </Stack>
-              </RadioGroup>
-              {errors.sex && <FormErrorMessage>{errors.sex}</FormErrorMessage>}
-            </FormControl>
+                {/* Breed */}
+                <FormControl marginBottom={5} isInvalid={errors.breed}>
+                  <FormLabel>Raza</FormLabel>
+                  <Input
+                    placeholder="Raza"
+                    name="breed"
+                    id="breed"
+                    value={values.breed}
+                    onChange={handleChange}
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.breed && (
+                    <FormErrorMessage>{errors.breed}</FormErrorMessage>
+                  )}
+                </FormControl>
+                {/* Height */}
+                <FormControl marginBottom={5} isInvalid={errors.height}>
+                  <FormLabel>Altura (cm)</FormLabel>
+                  <Input
+                    placeholder="Altura (cm)"
+                    name="height"
+                    id="height"
+                    value={values.height}
+                    onChange={handleChange}
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.height && (
+                    <FormErrorMessage>{errors.height}</FormErrorMessage>
+                  )}
+                </FormControl>
+                {/* Back Length */}
+                <FormControl marginBottom={5} isInvalid={errors.back_length}>
+                  <FormLabel>Longitud del lomo (cm)</FormLabel>
+                  <Input
+                    placeholder="Longitud (cm)"
+                    name="back_length"
+                    id="back_length"
+                    value={values.back_length}
+                    onChange={handleChange}
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.back_length && (
+                    <FormErrorMessage>{errors.back_length}</FormErrorMessage>
+                  )}
+                </FormControl>
+                {/* Weight */}
+                <FormControl marginBottom={5} isInvalid={errors.weight}>
+                  <FormLabel>Peso (kg)</FormLabel>
+                  <Input
+                    placeholder="Peso (kg)"
+                    name="weight"
+                    id="weight"
+                    value={values.weight}
+                    onChange={handleChange}
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.weight && (
+                    <FormErrorMessage>{errors.weight}</FormErrorMessage>
+                  )}
+                </FormControl>
+                {/* Age */}
+                <FormControl marginBottom={5} isInvalid={errors.age}>
+                  <FormLabel>Edad (años)</FormLabel>
+                  <Input
+                    placeholder="Edad (años)"
+                    name="age"
+                    id="age"
+                    value={values.age}
+                    onChange={handleChange}
+                    shadow="inner"
+                    type="text"
+                    maxLength={20}
+                  />
+                  {errors.age && (
+                    <FormErrorMessage>{errors.age}</FormErrorMessage>
+                  )}
+                </FormControl>
+                {/* Sex */}
+                <FormControl marginBottom={5} isInvalid={errors.sex}>
+                  <FormLabel>Sexo</FormLabel>
+                  <RadioGroup
+                    onChange={(value) =>
+                      handleChange({ target: { name: 'sex', value } })
+                    }
+                    value={values.sex.toString()}
+                  >
+                    <Stack direction="row">
+                      <Radio value={false.toString()}>Hembra</Radio>
+                      <Radio value={true.toString()}>Macho</Radio>
+                    </Stack>
+                  </RadioGroup>
+                  {errors.sex && (
+                    <FormErrorMessage>{errors.sex}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Date of Rescue */}
-            <FormControl marginBottom={5} isInvalid={errors.rescue_date}>
-              <FormLabel >Fecha de Rescate</FormLabel>
-              <InputGroup>
-                <DatePicker
-                  selected={values.rescue_date ? new Date(values.rescue_date) : null}
-                  onChange={(date) =>
-                    handleChange({ target: { name: 'rescue_date', value: date?.toISOString() } })
-                  }
-                  dateFormat="dd/MM/yyyy"
-                />
-              </InputGroup>
-              {errors.rescue_date && (
-                <FormErrorMessage>{errors.rescue_date}</FormErrorMessage>
-              )}
-            </FormControl>
+                {/* Date of Rescue */}
+                <FormControl marginBottom={5} isInvalid={errors.rescue_date}>
+                  <FormLabel>Fecha de Rescate</FormLabel>
+                  <InputGroup>
+                    <DatePicker
+                      selected={
+                        values.rescue_date ? new Date(values.rescue_date) : null
+                      }
+                      onChange={(date) =>
+                        handleChange({
+                          target: {
+                            name: 'rescue_date',
+                            value: date?.toISOString(),
+                          },
+                        })
+                      }
+                      dateFormat="dd/MM/yyyy"
+                    />
+                  </InputGroup>
+                  {errors.rescue_date && (
+                    <FormErrorMessage>{errors.rescue_date}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Health Rating Slider */}
-            <FormControl marginBottom={5} isInvalid={errors.health_rating}>
-              <FormLabel >Salud</FormLabel>
-              <Slider
-                colorScheme='gray'
-                aria-label='slider-ex-6'
-                step={10}
-                value={values.health_rating * 10}
-                onChange={(val) => handleChange({ target: { name: 'health_rating', value: val / 10 } })}
-              >
-                {/* Slider marks */}
-                <SliderMark value={25} {...labelStyles}>
-                  25%
-                </SliderMark>
-                <SliderMark value={50} {...labelStyles}>
-                  50%
-                </SliderMark>
-                <SliderMark value={75} {...labelStyles}>
-                  75%
-                </SliderMark>
+                {/* Health Rating Slider */}
+                <FormControl marginBottom={5} isInvalid={errors.health_rating}>
+                  <FormLabel>Salud</FormLabel>
+                  <Slider
+                    colorScheme="gray"
+                    aria-label="slider-ex-6"
+                    step={10}
+                    value={values.health_rating * 10}
+                    onChange={(val) =>
+                      handleChange({
+                        target: { name: 'health_rating', value: val / 10 },
+                      })
+                    }
+                  >
+                    {/* Slider marks */}
+                    <SliderMark value={25} {...labelStyles}>
+                      25%
+                    </SliderMark>
+                    <SliderMark value={50} {...labelStyles}>
+                      50%
+                    </SliderMark>
+                    <SliderMark value={75} {...labelStyles}>
+                      75%
+                    </SliderMark>
 
-                {/* Slider track and thumb */}
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-              {errors.health_rating && <FormErrorMessage>{errors.health_rating}</FormErrorMessage>}
-            </FormControl>
+                    {/* Slider track and thumb */}
+                    <SliderTrack>
+                      <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.health_rating && (
+                    <FormErrorMessage>{errors.health_rating}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Vaccinated Radio Group */}
-            <FormControl marginBottom={5} isInvalid={errors.vaccinated}>
-              <FormLabel >Vacunas</FormLabel>
-              <RadioGroup
-                onChange={(value) => handleChange({ target: { name: 'vaccinated', value } })}
-                value={values.vaccinated.toString()}
-              >
-                <Stack direction='row'>
-                  <Radio value={true.toString()}>Si</Radio>
-                  <Radio value={false.toString()}>No</Radio>
-                </Stack>
-              </RadioGroup>
-              {errors.vaccinated && <FormErrorMessage>{errors.vaccinated}</FormErrorMessage>}
-            </FormControl>
+                {/* Vaccinated Radio Group */}
+                <FormControl marginBottom={5} isInvalid={errors.vaccinated}>
+                  <FormLabel>Vacunas</FormLabel>
+                  <RadioGroup
+                    onChange={(value) =>
+                      handleChange({ target: { name: 'vaccinated', value } })
+                    }
+                    value={values.vaccinated.toString()}
+                  >
+                    <Stack direction="row">
+                      <Radio value={true.toString()}>Si</Radio>
+                      <Radio value={false.toString()}>No</Radio>
+                    </Stack>
+                  </RadioGroup>
+                  {errors.vaccinated && (
+                    <FormErrorMessage>{errors.vaccinated}</FormErrorMessage>
+                  )}
+                </FormControl>
 
-            {/* Submit Button */}
-            <Center>
-              <Button
-                mt={8}
-                colorScheme="teal"
-                type="submit"
-                form="addAnimal"
-                onClick={handleSubmit}
-              >
-                {props.submitBtnText || 'Submit'}
-              </Button>
-            </Center>
-          </form>
-          </Box>
-        </VStack>
-      </Box>
+                {/* Submit Button */}
+                <Center>
+                  <Button
+                    mt={8}
+                    colorScheme="teal"
+                    type="submit"
+                    form="addAnimal"
+                    onClick={handleSubmit}
+                  >
+                    {props.submitBtnText || 'Submit'}
+                  </Button>
+                </Center>
+              </form>
+            </Box>
+          </VStack>
+        </Box>
       )}
     </ChakraProvider>
   );

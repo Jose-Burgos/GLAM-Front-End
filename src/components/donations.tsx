@@ -9,7 +9,8 @@ import {
   CardHeader,
   List,
   ListItem,
- Card } from '@chakra-ui/react';
+  Card,
+} from '@chakra-ui/react';
 import React from 'react';
 
 export default function DonationHistory(props: any) {

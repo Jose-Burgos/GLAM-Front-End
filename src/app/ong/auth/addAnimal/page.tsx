@@ -4,7 +4,6 @@ import React from 'react';
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function AddAnimal() {
-
   const initialAnimal = {
     adopted: false,
     age: 0,
@@ -20,9 +19,9 @@ export default function AddAnimal() {
     weight: 0,
   };
   return (
-      <AnimalForm
-        animal={initialAnimal as Animal}
-        submitBtnText="Agregar Animal"
-      />
+    <AnimalForm
+      animal={initialAnimal as Animal}
+      submitBtnText="Agregar Animal"
+    />
   );
 }

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import {
   ChakraProvider,
@@ -36,13 +36,8 @@ export default function LostPetReportView() {
     details: '',
   };
   const toast = useToast();
-  const {
-    values,
-    errors,
-    submitForm,
-    handleSubmit,
-    handleChange,
-  } = useValidation(initialState, validateLostPetForm, onSubmit);
+  const { values, errors, submitForm, handleSubmit, handleChange } =
+    useValidation(initialState, validateLostPetForm, onSubmit);
 
   // Fetch organization ID and species data on component mount
   useEffect(() => {
@@ -108,21 +103,27 @@ export default function LostPetReportView() {
         alignItems="center"
         minHeight="100vh"
         background="gray.100"
-        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'} 
+        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
       >
-        <VStack spacing={5} mt={120} >
+        <VStack spacing={5} mt={120}>
           <Heading mb={2}>Reporte de Mascotas Perdidas</Heading>
-          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg={colorMode === 'light' ? 'white' : 'gray.600'} >
+          <Box
+            width="md"
+            p={8}
+            boxShadow="md"
+            borderRadius="md"
+            bg={colorMode === 'light' ? 'white' : 'gray.600'}
+          >
             <form id="lostAnimalForm">
               {/* Type of Animal */}
               <FormControl marginBottom={5} isInvalid={errors.species_id}>
                 <FormLabel>Tipo de animal</FormLabel>
                 <Select
-                  placeholder='Selecciona una especie'
+                  placeholder="Selecciona una especie"
                   onChange={handleChange}
                   value={values.species_id}
-                  name='species_id'
-                  id='species_id'
+                  name="species_id"
+                  id="species_id"
                 >
                   {Array.isArray(species) &&
                     species.map((item) => (

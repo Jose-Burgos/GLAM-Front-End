@@ -12,7 +12,7 @@ import {
   useColorModeValue,
   useColorMode,
   Stack,
-  Link as ChakraLink
+  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import React, { useContext, useEffect } from 'react';
@@ -145,7 +145,7 @@ export default function NavBar(props: any) {
         <Button
           fontSize="sm"
           ms="0px"
-          px="0px"  
+          px="0px"
           me={{ sm: '2px', md: '16px' }}
           color={navbarIcon}
           variant="transparent-with-icon"
@@ -156,9 +156,7 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Reporte</Text>
         </Button>
       </NextLink>
-
-// ...
-
+      // ...
       {isLoggedIn && (
         <NextLink href={`/${type}/auth/home`}>
           <Button

@@ -8,7 +8,7 @@ export default function UserDashboard() {
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
         {/* <Flex mt={{ lg: '-50%', xl: '-30%' }}> */}
-          <OrgDashboardSidebar />
+        <OrgDashboardSidebar />
         {/* </Flex> */}
         <Flex
           direction="column"

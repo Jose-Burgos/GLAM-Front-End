@@ -13,34 +13,29 @@ export default function EditAnimal() {
   const [selected, setSelected] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState<Animal>();
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
   useEffect(() => {
     (async () => {
       // Get user info
       const { type } = await supabase.getCurrentUser();
-      const user = await supabase.getCurrentUserId()
+      const user = await supabase.getCurrentUserId();
       const searchParams = new URLSearchParams(window.location.search);
       const id = searchParams.get('id');
       const animal_id = await supabase.getAnimalById(id as string);
-      setSelectedAnimal(animal_id)
-      setSelected(true)
-      setUserID(user)
+      setSelectedAnimal(animal_id);
+      setSelected(true);
+      setUserID(user);
       if (type === 'Organization') {
         setIsOrg(true);
       }
-      
     })();
   }, [userID]);
-
-
 
   return (
     <>
       {selected && (
         <AnimalForm animal={selectedAnimal} submitBtnText="Editar Animal" />
-        ) }
+      )}
     </>
   );
 }
