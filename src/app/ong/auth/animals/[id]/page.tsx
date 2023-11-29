@@ -1,11 +1,12 @@
 'use client';
 
+import { Flex, HStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Animal } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import AnimalForm from '@/components/animalform';
 import './editAnimal.css';
-import { useParams } from 'react-router-dom';
+import OrgDashboardSidebar from '@/components/OrgDashboardSidebar';
 
 interface Params {
   params: {
@@ -14,24 +15,31 @@ interface Params {
 }
 
 export default function EditAnimal({ params }: Params) {
-  const [selected, setSelected] = useState(false);
-  const [selectedAnimal, setSelectedAnimal] = useState<Animal>();
+  const [animal, setSelectedAnimal] = useState<Animal>();
 
   useEffect(() => {}, []);
   useEffect(() => {
     (async () => {
-      const animal_id = await supabase.getAnimalById(params.id);
-      setSelectedAnimal(animal_id);
-      setSelected(true);
+      setSelectedAnimal(await supabase.getAnimalById(params.id));
     })();
   }, []);
 
   return (
-    <div className="container">
-      <h1>Editar Animal</h1>
-      {selected && (
-        <AnimalForm animal={selectedAnimal} submitBtnText="Editar Animal" />
-      )}
-    </div>
+    <Flex p={8} flexDirection="column" justifyContent="center">
+      <HStack>
+        <Flex mt={{ lg: '-50%', xl: '-30%' }}>
+          <OrgDashboardSidebar />
+        </Flex>
+        <Flex
+          direction="column"
+          w="100%"
+          mb={8}
+          px={{ base: 4, md: 8 }}
+          pt={{ base: '120px', md: '14%', lg: '12%' }}
+        >
+          {animal && <AnimalForm animal={animal} submitBtnText="Editar Animal" /> }
+        </Flex>
+      </HStack>
+    </Flex>
   );
 }
