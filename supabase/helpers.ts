@@ -423,7 +423,33 @@ const helpers: HelperFunctions = {
         return helpers.getAllUserImages();
     }
   },
+  
+  submitInKindDonation : async (donationData : Sb.InKindDonation) => {
+    const { error } = await supabase.from('in_kind_donations').insert({ 
+        ong: donationData.ong, 
+        type : donationData.type, 
+        description : donationData.description, 
+        quantity : donationData.quantity,
+        availability : donationData.availability,
+        user : donationData.user,
+      })
+    if (error) {
+      throw new Error(error.message);
+    }
+    return;
+  },
+
+  getInKindDonations : async () => {
+    const id = await helpers.getCurrentUserId();
+    // console.log(id);
+    const { data, error } = await supabase.from('in_kind_donations').select("*").eq('ong',id as String);
+    if (error) {
+      throw new Error(error.message); 
+    }
+    return data;
+  }
 };
+
 
 export default helpers;
 
