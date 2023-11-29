@@ -49,7 +49,7 @@ export default function UserDashboardSidebar() {
       icon: <HomeLogo w="24px" h="24px" me="0px" />,
     },
     {
-      path: UserRoutes.adoptions,
+      path: UserRoutes.adoption,
       name: 'Adopciones',
       icon: <AdoptionLogo w="20px" h="20px" me="0px" />,
     },
