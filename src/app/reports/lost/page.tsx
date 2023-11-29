@@ -17,6 +17,7 @@ import {
   Stack,
   Text,
   useToast,
+  useColorMode,
 } from '@chakra-ui/react';
 
 import { SpeciesData } from '~/supabase/types/supabase.tables';
@@ -27,6 +28,7 @@ import useValidation from '@/hooks/useValidation';
 export default function LostPetReportView() {
   const [species, setSpecies] = useState({} as SpeciesData[]);
   const [speciesLoaded, setSpeciesLoaded] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
   const initialState = {
     species_id: '',
     location: '',
@@ -106,15 +108,15 @@ export default function LostPetReportView() {
         alignItems="center"
         minHeight="100vh"
         background="gray.100"
-        mt={120} 
+        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'} 
       >
-        <VStack spacing={5}>
+        <VStack spacing={5} mt={120} >
           <Heading mb={2}>Reporte de Mascotas Perdidas</Heading>
-          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg="white">
+          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg={colorMode === 'light' ? 'white' : 'gray.600'} >
             <form id="lostAnimalForm">
               {/* Type of Animal */}
               <FormControl marginBottom={5} isInvalid={errors.species_id}>
-                <FormLabel color="black">Tipo de animal</FormLabel>
+                <FormLabel>Tipo de animal</FormLabel>
                 <Select
                   placeholder='Selecciona una especie'
                   onChange={handleChange}
@@ -136,15 +138,14 @@ export default function LostPetReportView() {
 
               {/* Location */}
               <FormControl marginBottom={5} isInvalid={errors.location}>
-                <FormLabel color="black">Ubicacion</FormLabel>
+                <FormLabel>Ubicacion</FormLabel>
                 <Input
                   placeholder="Ubicación"
                   name="location"
                   id="location"
                   value={values.location}
                   onChange={handleChange}
-                  bg="inputbg"
-                  shadow="inner"
+                  // shadow="inner"
                   type="text"
                   maxLength={20}
                 />
@@ -155,7 +156,7 @@ export default function LostPetReportView() {
 
               {/* Animal description */}
               <FormControl marginBottom={5} isInvalid={errors.description}>
-                <FormLabel color="black">Descripción:</FormLabel>
+                <FormLabel>Descripción:</FormLabel>
                 <Textarea
                   value={values.description}
                   onChange={handleChange}
@@ -170,7 +171,7 @@ export default function LostPetReportView() {
 
               {/* More details */}
               <FormControl marginBottom={5} isInvalid={errors.details}>
-                <FormLabel color="black">Más detalles:</FormLabel>
+                <FormLabel>Más detalles:</FormLabel>
                 <Textarea
                   value={values.details}
                   onChange={handleChange}

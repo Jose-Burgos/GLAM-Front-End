@@ -1,6 +1,6 @@
 import AnimalForm from '~/src/components/animalform';
 import React from 'react';
-import './addAnimal.css';
+
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function AddAnimal() {
@@ -20,12 +20,9 @@ export default function AddAnimal() {
     weight: 0,
   };
   return (
-    <>
-      <h1 className="title">Agregar Animal</h1>
       <AnimalForm
         animal={initialAnimal as Animal}
         submitBtnText="Agregar Animal"
       />
-    </>
   );
 }

@@ -37,11 +37,10 @@ export default function EditAnimal() {
 
 
   return (
-    <div className="container">
-      <h1>Editar Animal</h1>
+    <>
       {selected && (
         <AnimalForm animal={selectedAnimal} submitBtnText="Editar Animal" />
-      ) }
-    </div>
+        ) }
+    </>
   );
 }

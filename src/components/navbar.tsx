@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   useColorMode,
   Stack,
+  Link as ChakraLink
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import React, { useContext, useEffect } from 'react';
@@ -22,6 +23,7 @@ import {
   LogInLogo,
   LogOutLogo,
   DashboardLogo,
+  ReportLogo,
 } from '@/assets/icons/icons';
 import PropTypes from 'prop-types';
 import NextLink from 'next/link';
@@ -138,6 +140,25 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
+      // ...
+      <NextLink href="/reports/lost">
+        <Button
+          fontSize="sm"
+          ms="0px"
+          px="0px"  
+          me={{ sm: '2px', md: '16px' }}
+          color={navbarIcon}
+          variant="transparent-with-icon"
+          leftIcon={
+            <ReportLogo color={navbarIcon} w="26px" h="26px" me="0px" mb={2} />
+          }
+        >
+          <Text fontSize="md">Reporte</Text>
+        </Button>
+      </NextLink>
+
+// ...
+
       {isLoggedIn && (
         <NextLink href={`/${type}/auth/home`}>
           <Button

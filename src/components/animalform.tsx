@@ -26,6 +26,7 @@ import {
   CSSReset,
   VStack,
   Heading,
+  useColorMode,
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import { Animal, SpeciesData } from '~/supabase/types/supabase.tables';
@@ -40,6 +41,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   const [orgId, setOrgId] = useState<string>();
   const [species, setSpecies] = useState({} as SpeciesData[]);
   const [formData, setFormData] = useState(props.animal as Animal);
+  const { colorMode, toggleColorMode } = useColorMode();
   const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(
     formData,
     validateOngRegisterForm,
@@ -126,18 +128,18 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
         alignItems="center"
         minHeight="100vh"
         background="gray.100"
-        mt={120} 
+        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
       >
-        <VStack spacing={5}>
+        <VStack spacing={5}mt={120} >
           <Heading mb={2}>{ props.submitBtnText==='Agregar Animal'
             ? 'Agregar Animal'
             : 'Editar Animal'}
           </Heading>
-          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg="white">
+          <Box width="md" p={8} boxShadow="md" borderRadius="md" bg={colorMode === 'light' ? 'white' : 'gray.600'} >
           <form id='addAnimal'>
             {/* Species selection */}
             <FormControl marginBottom={5} isInvalid={errors.species_id}>
-              <FormLabel color="black">Especie</FormLabel>
+              <FormLabel >Especie</FormLabel>
               <Select
                 placeholder='Selecciona una especie'
                 onChange={handleChange}
@@ -156,14 +158,14 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
             {/* Name input */}
             <FormControl marginBottom={5} isInvalid={errors.name}>
-              <FormLabel color="black">Nombre</FormLabel>
+              <FormLabel>Nombre</FormLabel>
               <Input
                 placeholder="Nombre"
                 name="name"
                 id="name"
                 value={values.name}
                 onChange={handleChange}
-                bg="inputbg"
+                //
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -173,14 +175,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
             {/* Breed */}
             <FormControl marginBottom={5} isInvalid={errors.breed}>
-              <FormLabel color="black">Raza</FormLabel>
+              <FormLabel >Raza</FormLabel>
               <Input
                 placeholder="Raza"
                 name="breed"
                 id="breed"
                 value={values.breed}
                 onChange={handleChange}
-                bg="inputbg"
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -191,14 +192,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             </FormControl>
             {/* Height */}
             <FormControl marginBottom={5} isInvalid={errors.height}>
-              <FormLabel color="black">Altura (cm)</FormLabel>
+              <FormLabel >Altura (cm)</FormLabel>
               <Input
                 placeholder="Altura (cm)"
                 name="height"
                 id="height"
                 value={values.height}
                 onChange={handleChange}
-                bg="inputbg"
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -209,14 +209,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             </FormControl>
             {/* Back Length */}
             <FormControl marginBottom={5} isInvalid={errors.back_length}>
-              <FormLabel color="black">Longitud del lomo (cm)</FormLabel>
+              <FormLabel >Longitud del lomo (cm)</FormLabel>
               <Input
                 placeholder="Longitud (cm)"
                 name="back_length"
                 id="back_length"
                 value={values.back_length}
                 onChange={handleChange}
-                bg="inputbg"
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -225,14 +224,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             </FormControl>
             {/* Weight */}
             <FormControl marginBottom={5} isInvalid={errors.weight}>
-              <FormLabel color="black">Peso (kg)</FormLabel>
+              <FormLabel >Peso (kg)</FormLabel>
               <Input
                 placeholder="Peso (kg)"
                 name="weight"
                 id="weight"
                 value={values.weight}
                 onChange={handleChange}
-                bg="inputbg"
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -243,14 +241,13 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             </FormControl>
             {/* Age */}
             <FormControl marginBottom={5} isInvalid={errors.age}>
-              <FormLabel color="black">Edad (años)</FormLabel>
+              <FormLabel >Edad (años)</FormLabel>
               <Input
                 placeholder="Edad (años)"
                 name="age"
                 id="age"
                 value={values.age}
                 onChange={handleChange}
-                bg="inputbg"
                 shadow="inner"
                 type="text"
                 maxLength={20}
@@ -259,7 +256,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
             </FormControl>
             {/* Sex */}
             <FormControl marginBottom={5} isInvalid={errors.sex}>
-              <FormLabel color="black">Sexo</FormLabel>
+              <FormLabel >Sexo</FormLabel>
               <RadioGroup onChange={(value) => handleChange({ target: { name: 'sex', value } })} value={values.sex.toString()}>
                 <Stack direction='row'>
                   <Radio value={false.toString()}>Hembra</Radio>
@@ -271,7 +268,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
             {/* Date of Rescue */}
             <FormControl marginBottom={5} isInvalid={errors.rescue_date}>
-              <FormLabel color="black">Fecha de Rescate</FormLabel>
+              <FormLabel >Fecha de Rescate</FormLabel>
               <InputGroup>
                 <DatePicker
                   selected={values.rescue_date ? new Date(values.rescue_date) : null}
@@ -288,7 +285,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
             {/* Health Rating Slider */}
             <FormControl marginBottom={5} isInvalid={errors.health_rating}>
-              <FormLabel color="black">Salud</FormLabel>
+              <FormLabel >Salud</FormLabel>
               <Slider
                 colorScheme='gray'
                 aria-label='slider-ex-6'
@@ -318,7 +315,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
 
             {/* Vaccinated Radio Group */}
             <FormControl marginBottom={5} isInvalid={errors.vaccinated}>
-              <FormLabel color="black">Vacunas</FormLabel>
+              <FormLabel >Vacunas</FormLabel>
               <RadioGroup
                 onChange={(value) => handleChange({ target: { name: 'vaccinated', value } })}
                 value={values.vaccinated.toString()}
