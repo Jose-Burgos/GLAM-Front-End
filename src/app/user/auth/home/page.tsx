@@ -15,7 +15,7 @@ import {
   SimpleGrid,
   useColorModeValue,
 } from '@chakra-ui/react';
-import AdminSidebarResponsive from '@/components/adminSidebar';
+import OrgDashboardSidebar from '@/components/adminSidebar';
 
 /* export default function animalInfo() {
   const [data, setData] = useState<Animal[]>();
@@ -48,7 +48,7 @@ export default function UserDashboard() {
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
         <Flex mt={{ lg: '-50%', xl: '-30%' }}>
-          <AdminSidebarResponsive />
+          <OrgDashboardSidebar />
         </Flex>
         <Flex
           direction="column"

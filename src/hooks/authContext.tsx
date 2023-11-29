@@ -8,7 +8,7 @@ interface AuthContextProps {
   isLoggedIn: boolean;
   logOut: () => void;
   logIn: () => void;
-  type: string;
+  type: string; // deberían usar algo tipo `type: 'ong' | 'user'` mejor.
 }
 
 interface AuthProviderProps {
