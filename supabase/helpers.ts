@@ -383,16 +383,33 @@ const helpers: HelperFunctions = {
   },
 
   deleteProfilePic: async (animalId) => {
-    const userId = await helpers.getCurrentUser();
-    const { error } = await supabase.storage
+    const userId = await helpers.getCurrentUserId();
+    const { data: images, error } = await supabase.storage
       .from('animal-pictures-orgs')
-      .remove([`${userId}/profile-pics/${animalId}`]); // borro la carpeta del animal incluido la imagen que esta adentro
+      .list(`${userId}/profile-pics/${animalId}`);
+
     if (error) {
       throw new Error(error.message);
-    } else {
-      return helpers.getAllUserImages();
     }
+
+    // Iterate through the list of images and delete each one
+      const deletionPromises = images.map(async (image) => {
+        const { error: deleteError } = await supabase.storage
+          .from('animal-pictures-orgs')
+          .remove([`${userId}/profile-pics/${animalId}/${image.name}`]);
+        if (deleteError) {
+            throw new Error(deleteError);
+        }
+      });
+
+      // Wait for all deletion promises to complete
+      await Promise.all(deletionPromises);
+
+      // After deleting all images, you can return the updated list of user images
+      return helpers.getAllUserImages();
   },
+
+  // .remove([`${userId}/profile-pics/${animalId}`]); // borro la carpeta del animal incluido la imagen que esta adentro
 
   uploadImage: async (file, animalId) => {
     // let file = e.target.files[0];
@@ -411,12 +428,10 @@ const helpers: HelperFunctions = {
 
   uploadProfilePicture: async (file, animalId) => {
     const userId = await helpers.getCurrentUser();
+    deleteProfilePic(animalId);
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
-      .upload(
-        `${userId}/profile-pics/${animalId}/${imageId}/${uuidv4()}`,
-        file
-      );
+      .upload(`${userId}/profile-pics/${animalId}/${imageId}/${uuidv4()}`,file);
     if (error) {
       throw new Error(error.message);
     } else {
