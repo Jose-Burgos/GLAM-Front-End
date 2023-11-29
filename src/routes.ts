@@ -4,3 +4,10 @@ export const OngRoutes = {
   adoptions: ongPath('adoptions'),
   animals: ongPath('animals'),
 };
+
+const userPath = (subPath?: string) => '/user/auth/' + (subPath || '') + '/';
+export const UserRoutes = {
+  dashboard: userPath('home'),
+  adoption: userPath('adoption'),
+  animals: userPath('animals'),
+};

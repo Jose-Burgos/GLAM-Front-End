@@ -11,11 +11,11 @@ const headers = ['Nombre', 'Edad', 'Estado', 'Fecha de Rescate'];
 
 function OrgAnimalsTable() {
   const [animals, setData] = useState<Animal[]>();
-  // const dataService = HelperFunctions;
-  // const bgColor = useColorModeValue('white', 'gray.700');
+  const [profilePics, setProfilePics] = useState<string[]>([]);
   useEffect(() => {
     (async () => {
       setData(await helpers.getOrgAnimals());
+      // setProfilePics(await helpers.getImages());
     })();
   }, []);
   console.log('Animals: ', animals);
@@ -38,8 +38,8 @@ function OrgAnimalsTable() {
         </Tr>
       </Thead>
       <Tbody>
-        {animals?.map((animal) => {
-          return <OrgAnimalsTableRow {...animal} />;
+        {animals?.map((animal, idx) => {
+          return <OrgAnimalsTableRow {...{ animal, profilePic: profilePics[idx] }} />;
         })}
       </Tbody>
     </Table>
