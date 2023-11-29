@@ -28,7 +28,6 @@ import {
   Heading,
   useColorMode,
 } from '@chakra-ui/react';
-import theme from '@/theme';
 import { Animal, SpeciesData } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import '../style/animalform.css';
@@ -38,7 +37,7 @@ import useValidation from '@/hooks/useValidation';
 // Define the AnimalForm component
 function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   // State variables
-  const [orgId, setOrgId] = useState<string>();
+  const [orgId, setOrgId] = useState<string | null>();
   const [species, setSpecies] = useState({} as SpeciesData[]);
   const [formData, setFormData] = useState(props.animal as Animal);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -372,8 +371,8 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 value={values.adopted.toString()}
               >
                 <Stack direction='row'>
-                  <Radio value={true.toString()}>No Adoptado</Radio>
-                  <Radio value={false.toString()}>Adoptado</Radio>
+                  <Radio value={false.toString()}>No Adoptado</Radio>
+                  <Radio value={true.toString()}>Adoptado</Radio>
                 </Stack>
               </RadioGroup>
               {errors.adopted && <FormErrorMessage>{errors.adopted}</FormErrorMessage>}

@@ -52,8 +52,8 @@ function inKindDonations() {
       setUserType(loggedUser.type);
       setUserId(loggedUser.profile.public.id);
       // console.log(loggedUser)
-    })();
-  }, []);
+      })();
+    }, []);
 
   // Toast hook for displaying notifications
   const toast = useToast();
@@ -85,7 +85,7 @@ function inKindDonations() {
         position: 'top-left',
       });
 
-      // Redirect to the desired page
+      // Redirect to the home page
       window.location.href = '/ong/auth/home';
     } catch (error) {
       // Display error toast if the operation fails
@@ -104,6 +104,8 @@ function inKindDonations() {
       toast.close(toastId);
     }
   }
+
+
 
   // Render the form
   return (
@@ -140,16 +142,16 @@ function inKindDonations() {
                 name="type"
                 id="type"
               >
-                <option key="food" value="food">
+                <option key="food" value="Alimentos">
                   Alimentos
                 </option>
-                <option key="medic" value="medic">
+                <option key="medic" value="Suministros Medicos">
                   Suministros Medicos
                 </option>
-                <option key="cleaning" value="cleaning">
+                <option key="cleaning" value="Articulos de Limpieza">
                   Articulos de Limpieza
                 </option>
-                <option key="home" value="home">
+                <option key="home" value="Suministros para el Refugio">
                   Suministros para el Refugio
                 </option>
               </Select>
@@ -202,13 +204,13 @@ function inKindDonations() {
                 name="condition"
                 id="condition"
               >
-                <option key="new" value="new">
+                <option key="new" value="nuev@(s)">
                   Nuevo
                 </option>
-                <option key="used" value="used">
+                <option key="used" value="usad@(s)">
                   Usado
                 </option>
-                <option key="good_conditions" value="good_conditions">
+                <option key="good_conditions" value="en buenas condiciones">
                   En buen estado
                 </option>
               </Select>

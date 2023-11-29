@@ -82,7 +82,9 @@ const helpers: HelperFunctions = {
   getCurrentUserId: async () => {
     const session = await helpers.getSession();
     if (!session) {
-      throw new Error('No logged in user');
+      // throw new Error('No logged in user');
+      console.log('No logged in user')
+      return ''
     }
     return session.user.id;
   },
@@ -175,12 +177,12 @@ const helpers: HelperFunctions = {
     //     // Redirect to home page
     //   }
     // });
-    const { data: sessionData, error: sessionError } =
-      await supabase.auth.getSession();
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     if (sessionError) {
       console.log('Error: ', sessionError);
-      throw new Error(sessionError.message);
-    } else if (sessionData.session) {
+      // throw new Error(sessionError.message);
+    } 
+    else if (sessionData.session) {
       return sessionData.session;
     }
     return null;

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React , { useState }from 'react';
 import {
   Stack,
   Box,
@@ -13,10 +13,12 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useToast,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { VisitOngLogo } from '@/assets/icons/icons';
+import supabase from '~/supabase/helpers';
 
 interface OngData {
   id?: string;
@@ -68,11 +70,28 @@ function MobileOngCard(props: OngData) {
 
 function DesktopOngCard(props: OngData) {
   const bgColor = useColorModeValue('white', 'gray.700');
+  const toast = useToast();
+  const [session,setSession] = useState<string | null >('')
   const handleDonation = (option: string) => {
     switch (option) {
       case 'especie':
-        // Redirige a la página de donación en especie
-        window.location.href = '/donations/inKindDonation';
+        (async () => {
+          const sessions = await supabase.getCurrentUserId();
+          setSession(sessions)
+          })();
+        if (!session){
+          toast({
+            title: 'Acceso Denegado',
+            description: 'Necesitas iniciar sesión para poder hacer donaciones en especie',
+            status: 'error',
+            duration: 5000,
+            position: 'top-left',
+          }); 
+        }
+        else{
+          // Redirige a la página de donación en especie
+          window.location.href = '/donations/inKindDonation';
+        }
         break;
       case 'monetaria':
         // Redirige a la página de donación monetaria
@@ -144,6 +163,9 @@ function DesktopOngCard(props: OngData) {
 }
 
 export default function OngCard(props: OngData) {
+    
+
+
   return (
     <Box borderRadius="15px">
       <Box
