@@ -408,7 +408,7 @@ const helpers: HelperFunctions = {
 
         // After deleting all images, you can return the updated list of user images
         return helpers.getAllUserImages();
-  }
+  },
 
   deleteProfilePic: async (animalId) => {
     const userId = await helpers.getCurrentUserId();
