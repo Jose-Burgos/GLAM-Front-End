@@ -140,7 +140,7 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
-      // ...
+     
       <NextLink href="/reports/lost">
         <Button
           fontSize="sm"
@@ -157,7 +157,7 @@ export default function NavBar(props: any) {
         </Button>
       </NextLink>
 
-// ...
+
 
       {isLoggedIn && (
         <NextLink href={`/${type}/auth/home`}>
@@ -184,7 +184,7 @@ export default function NavBar(props: any) {
       )}
     </HStack>
   );
-  return (
+  if(!isLoggedIn) return (
     <Flex
       position="fixed"
       top="16px"
@@ -272,4 +272,62 @@ export default function NavBar(props: any) {
       </Flex>
     </Flex>
   );
+  return(
+    <Flex
+      position="fixed"
+      top="16px"
+      left="50%"
+      transform="translate(-50%, 0px)"
+      background={navbarBg}
+      border={navbarBorder}
+      boxShadow={navbarShadow}
+      filter={navbarFilter}
+      backdropFilter={navbarBackdrop}
+      borderRadius="15px"
+      px="16px"
+      py="22px"
+      mx="auto"
+      width="1044px"
+      maxW="90%"
+      zIndex={100}
+      alignItems="center"
+    >
+      <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
+        {brand}
+        <HStack spacing={5}>
+          {isLoggedIn && (
+            <Button
+              bg={bgButton}
+              color={colorButton}
+              fontSize="xs"
+              variant="no-hover"
+              borderRadius="35px"
+              px="15px"
+              display={{
+                sm: 'none',
+                lg: 'flex',
+              }}
+              leftIcon={<LogOutLogo w="24px" h="24px" me="0px" />}
+              onClick={handleLogOut}
+            >
+              <NextLink href="/">
+                <Text fontSize="md">Cerrar Sesion</Text>
+              </NextLink>
+            </Button>
+          )}
+          <Icon
+            as={colorMode === 'dark' ? MoonIcon : SunIcon}
+            me={{ sm: '2px', md: '16px' }}
+            display={{
+              sm: 'none',
+              lg: 'flex',
+            }}
+            justifyContent="center"
+            alignItems="center"
+            onClick={toggleColorMode}
+          />
+        </HStack>
+      </Flex>
+    </Flex>
+  )
 }

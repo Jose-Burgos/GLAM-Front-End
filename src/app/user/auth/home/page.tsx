@@ -15,7 +15,7 @@ import {
   SimpleGrid,
   useColorModeValue,
 } from '@chakra-ui/react';
-import OrgDashboardSidebar from '@/components/adminSidebar';
+import OrgDashboardSidebar from '@/components/OrgDashboardSidebar';
 
 /* export default function animalInfo() {
   const [data, setData] = useState<Animal[]>();
