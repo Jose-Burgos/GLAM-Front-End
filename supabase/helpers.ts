@@ -382,6 +382,34 @@ const helpers: HelperFunctions = {
     }
   },
 
+  deleteAllImages: async (animalId) => {
+    const userId = await helpers.getCurrentUserId();
+    deleteProfilePic(animalId);
+    const { data: images, error } = await supabase.storage
+        .from('animal-pictures-orgs')
+        .list(`${userId}/pics/${animalId}`);
+
+        if (error){
+            throw new Error(error.message);
+        }
+
+        // Iterate through the list of images and delete each one
+        const deletionPromises = images.map(async (image) => {
+        const { error: deleteError } = await supabase.storage
+            .from('animal-pictures-orgs')
+            .remove([`${userId}/pics/${animalId}/${image.name}`]);
+            if (deleteError) {
+                throw new Error(deleteError);
+            }
+            });
+
+        // Wait for all deletion promises to complete
+        await Promise.all(deletionPromises);
+
+        // After deleting all images, you can return the updated list of user images
+        return helpers.getAllUserImages();
+  }
+
   deleteProfilePic: async (animalId) => {
     const userId = await helpers.getCurrentUserId();
     const { data: images, error } = await supabase.storage
@@ -409,13 +437,11 @@ const helpers: HelperFunctions = {
       return helpers.getAllUserImages();
   },
 
-  // .remove([`${userId}/profile-pics/${animalId}`]); // borro la carpeta del animal incluido la imagen que esta adentro
-
   uploadImage: async (file, animalId) => {
     // let file = e.target.files[0];
 
     // let f: FileBody;
-    const userId = await helpers.getCurrentUser();
+    const userId = await helpers.getCurrentUserId();
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
       .upload(`${userId}/pics/${animalId}/${imageId}/${uuidv4()}`, file);
@@ -427,7 +453,7 @@ const helpers: HelperFunctions = {
   },
 
   uploadProfilePicture: async (file, animalId) => {
-    const userId = await helpers.getCurrentUser();
+    const userId = await helpers.getCurrentUserId();
     deleteProfilePic(animalId);
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
