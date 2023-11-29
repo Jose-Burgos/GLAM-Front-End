@@ -16,7 +16,12 @@ import { OngRoutes } from '~/src/routes';
 
 import { Animal } from '~/supabase/types/supabase.tables';
 
-function OrgAnimalsTableRow(animal: Animal) {
+interface Props {
+  animal: Animal,
+  profilePic: string,
+}
+
+function OrgAnimalsTableRow({animal, profilePic}: Props) {
   const textColor = useColorModeValue('gray.700', 'white');
   const bgStatus = useColorModeValue('gray.400', '#1a202c');
   const colorStatus = useColorModeValue('white', 'gray.400');
@@ -26,7 +31,7 @@ function OrgAnimalsTableRow(animal: Animal) {
       <Td minWidth={{ sm: '250px' }} pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
           <Avatar
-            src={animal.profile_pic || 'default animal pic should go here'}
+            src={profilePic || 'default animal pic should go here'}
             w="50px"
             borderRadius="12px"
             me="18px"
