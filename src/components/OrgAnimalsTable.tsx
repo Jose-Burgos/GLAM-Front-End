@@ -15,7 +15,7 @@ function OrgAnimalsTable() {
   useEffect(() => {
     (async () => {
       setData(await helpers.getOrgAnimals());
-      setProfilePics(await helpers.getImages());
+      // setProfilePics(await helpers.getImages());
     })();
   }, []);
   console.log('Animals: ', animals);
