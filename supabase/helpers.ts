@@ -223,7 +223,7 @@ const helpers: HelperFunctions = {
     });
   },
 
-  requestAdoption: async (animalId) => {
+  requestAdoption: async (animalId, requestForm) => {
     const { data: animal, error: animalSelectError } = await supabase
       .from('animals')
       .select('*')
@@ -264,6 +264,16 @@ const helpers: HelperFunctions = {
     if (requestInsertionError) {
       throw new Error(requestInsertionError.message);
     }
+
+    // const { error: requestFormInsertionError } = await supabase
+    //   .from('adoption_request_form')
+    //   .insert({
+    //     request_id: 
+    //   });
+
+    // if (requestFormInsertionError) {
+    //   throw new Error(requestFormInsertionError.message);
+    // }
   },
 
   getUserAdoptionRequests: async () => {
@@ -488,7 +498,7 @@ const helpers: HelperFunctions = {
     const { data, error } = await supabase
       .from('in_kind_donations')
       .select('*')
-      .eq('ong', id as String);
+      .eq('ong', id);
     if (error) {
       throw new Error(error.message);
     }

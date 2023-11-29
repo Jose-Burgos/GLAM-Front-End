@@ -13,7 +13,7 @@ import {
 import { AdoptLogo } from '@/assets/icons/icons';
 import Link from 'next/link';
 import Image from 'next/image';
-import { relative } from 'path';
+import { UserRoutes } from '~/src/routes';
 
 interface PetData {
   id: string;
@@ -99,7 +99,7 @@ function DesktopPetCard(props: PetData) {
       </Stack>
       <Flex>
         <Spacer />
-        <Link href={`/adoption/${props.id}`}>
+        <Link href={`${UserRoutes.adoption}/${props.id}`}>
           <Button bg="teal.300" size="md" mt={5} mb={2} mr={2} fontSize="sm">
             Adoptame
           </Button>

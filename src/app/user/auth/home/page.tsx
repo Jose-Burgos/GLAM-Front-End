@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Animal, Request } from '~/supabase/types/supabase.tables';
+import { Animal, AdoptionRequest } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import AnimalCard from '@/components/animalCard';
 import DonationHistory from '@/components/donations';

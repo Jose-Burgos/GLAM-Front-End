@@ -18,11 +18,13 @@ import {
 import validateContactForm from '@/hooks/validation/validateContactForm';
 import useValidation from '@/hooks/useValidation';
 import { Separator } from './separator';
+import helpers from '~/supabase/helpers';
+import { AdoptionRequestForm } from '~/supabase/types/supabase.tables'
 
-export default function ContactForm() {
-  const initialState = {
-    email: '',
-    message: '',
+export default function ContactForm({animalId}: {animalId: string}) {
+  const initialState: AdoptionRequestForm = {
+    user_email: '',
+    details: '',
   };
   const { values, errors, submitForm, handleSubmit, handleChange } =
     useValidation(initialState, validateContactForm, onSubmit);
@@ -30,38 +32,49 @@ export default function ContactForm() {
     console.log('Mensaje enviado');
   }
 
+  function myHandleChange(e: any) {
+    handleChange(e);
+    console.log(values)
+    console.log(errors)
+  }
+
+  function myHandleSubmit(e: any) {
+    helpers.requestAdoption(animalId, values)
+    handleSubmit(e);
+  }
+
   return (
     <Stack direction={['column', 'column', 'column', 'row']} mt={10} mb={5}>
       <Box>
         <form id="email-form">
-          <FormControl marginBottom={5} isInvalid={errors.email}>
-            <FormLabel>E-mail</FormLabel>
+          <FormControl marginBottom={5} isInvalid={errors.user_email}>
+            {/* <FormLabel>E-mail</FormLabel> */}
             <Input
               placeholder="E-mail"
               id="constact_email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
+              name="user_email"
+              value={values.user_email}
+              onChange={myHandleChange}
               type="text"
               maxLength={20}
             />
-            {errors.email && (
-              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            {errors.user_email && (
+              <FormErrorMessage>{errors.user_email}</FormErrorMessage>
             )}
           </FormControl>
-          <FormControl marginBottom={5} isInvalid={errors.message}>
+          <FormControl marginBottom={5} isInvalid={errors.details}>
             <Textarea
               p={3}
               borderRadius="md"
               placeholder="Detalle... "
-              value={values.message}
-              onChange={handleChange}
+              value={values.details}
+              onChange={myHandleChange}
               size="xl"
               maxLength={400}
-              name="message"
+              name="details"
             />
-            {errors.message && (
-              <FormErrorMessage>{errors.message}</FormErrorMessage>
+            {errors.details && (
+              <FormErrorMessage>{errors.details}</FormErrorMessage>
             )}
           </FormControl>
           <Button
@@ -72,7 +85,7 @@ export default function ContactForm() {
             bg="teal.300"
             href="/login"
             form="registerUserForm"
-            onClick={handleSubmit}
+            onClick={myHandleSubmit}
           >
             Enviar
           </Button>

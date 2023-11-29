@@ -10,8 +10,6 @@ export type Animal = Table<'animals'> & {
   species: Table<'species'>;
 };
 
-export type Request = Table<'adoption_requests'>;
-
 export type OrgType = 'Organization';
 export type UserType = 'RegularUser';
 export type ProfileType = UserType | OrgType;
@@ -57,6 +55,10 @@ export enum RequestStates {
 }
 
 export type AdoptionRequest = Table<'adoption_requests'>;
+export interface AdoptionRequestForm {
+  details: string;
+  user_email: string;
+}
 
 export type SpeciesData = Table<'species'>;
 

@@ -102,20 +102,20 @@ function Carousel() {
   );
 }
 
-interface props {
+interface Params {
   params: { id: string };
 }
 
-export default function animalDescription(pparam: props) {
-  const [data, setData] = useState<Animal>();
+export default function animalDescription({params}: Params) {
+  const [animal, setAnimal] = useState<Animal>();
   const dataService = HelperFunctions;
   const bgColor = useColorModeValue('white', 'gray.700');
   useEffect(() => {
     (async () => {
       const aux = await dataService.getAnimals();
-      setData(aux?.find((animal) => animal.id === pparam.params.id));
+      setAnimal(aux?.find((animal) => animal.id === params.id));
     })();
-  }, [pparam.params.id, dataService]);
+  }, [params.id, dataService]);
 
   return (
     <Flex
@@ -153,19 +153,19 @@ export default function animalDescription(pparam: props) {
               >
                 <Stack>
                   <Text ml={3} mt={1}>
-                    <Heading> {data?.name} </Heading>
+                    <Heading> {animal?.name} </Heading>
                   </Text>
                   <Text ml={3} mt={1} fontSize="md" fontWeight="bold">
-                    Edad : {data?.age}
+                    Edad : {animal?.age}
                   </Text>
                   <Text ml={3} mt={1} fontSize="md" fontWeight="bold">
-                    Índice de Salud : {data?.health_rating}
+                    Índice de Salud : {animal?.health_rating}
                   </Text>
                   <Text ml={3} mt={1} fontSize="md" fontWeight="bold">
-                    Raza : {data?.breed ? data?.breed : 'Sin raza definida'}
+                    Raza : {animal?.breed ? animal?.breed : 'Sin raza definida'}
                   </Text>
                   <Text mb={3} ml={3} mt={1} fontSize="md" fontWeight="bold">
-                    Sexo : {data?.sex ? 'Macho' : 'Hembra'}
+                    Sexo : {animal?.sex ? 'Macho' : 'Hembra'}
                   </Text>
                 </Stack>
                 <Button size="lg" bg="teal.300" ml="auto" mt="auto">
@@ -222,12 +222,12 @@ export default function animalDescription(pparam: props) {
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    <ContactForm {...{animalId: params.id}} />
                   </Center>
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    <ContactForm {...{animalId: params.id}}/>
                   </Center>
                 </TabPanel>
               </TabPanels>

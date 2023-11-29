@@ -32,7 +32,7 @@ export interface HelperFunctions {
   sendForgotPassEmail: (email: string) => Promise<void>;
   getSession: () => Promise<Session | null>;
   askNewPassOnReset: () => void;
-  requestAdoption: (animalId: string) => void;
+  requestAdoption: (animalId: string, requestForm: Sb.AdoptionRequestForm) => void;
   getUserAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
   getOrgAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
   cancelAdoptionRequest: (requestId: string) => void;
