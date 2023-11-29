@@ -8,6 +8,6 @@ export const OngRoutes = {
 const userPath = (subPath?: string) => '/user/auth/' + (subPath || '') + '/';
 export const UserRoutes = {
   dashboard: userPath('home'),
-  adoptions: userPath('adoptions'),
+  adoption: userPath('adoption'),
   animals: userPath('animals'),
 };
