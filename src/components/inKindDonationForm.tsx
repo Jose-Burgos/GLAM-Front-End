@@ -25,8 +25,8 @@ import {
   InKindDonation,
   ProfileType,
 } from '~/supabase/types/supabase.tables';
-// Define the AnimalForm component
-function inKindDonations() {
+// Define the inKindDonations component
+export default function InKindDonationForm() {
   // State variables
   const [userId, setUserId] = useState('');
   const [userType, setUserType] = useState('');
@@ -71,10 +71,9 @@ function inKindDonations() {
     });
 
     try {
-      // Perform asynchronous operation (replace with your logic)
+      // Perform asynchronous operation 
       values.user = userId as string;
       await supabase.submitInKindDonation(values as InKindDonation);
-      // console.log('done')
       // Display success toast based on the operation type
       toast({
         title: 'Operación exitosa',
@@ -115,13 +114,17 @@ function inKindDonations() {
           <form id="inKindDonations">
             {/* Species selection */}
             <FormControl marginBottom={5} isInvalid={errors.ong}>
-              <FormLabel color="black">ONG</FormLabel>
+              <FormLabel>ONG</FormLabel>
               <Select
                 placeholder="Selecciona la ONG a la que desea donar"
                 onChange={handleChange}
                 value={values.ong}
                 name="ong"
                 id="ong"
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg"
               >
                 {ONGs?.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -134,13 +137,17 @@ function inKindDonations() {
 
             {/* Donations Type */}
             <FormControl marginBottom={5} isInvalid={errors.type}>
-              <FormLabel color="black">Tipo de donativo</FormLabel>
+              <FormLabel>Tipo de donativo</FormLabel>
               <Select
                 placeholder="Selecciona el tipo de donativo"
                 onChange={handleChange}
                 value={values.type}
                 name="type"
                 id="type"
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg"
               >
                 <option key="food" value="Alimentos">
                   Alimentos
@@ -162,13 +169,16 @@ function inKindDonations() {
 
             {/* Item description */}
             <FormControl marginBottom={5} isInvalid={errors.description}>
-              <FormLabel color="black">Descripción:</FormLabel>
+              <FormLabel>Descripción:</FormLabel>
               <Textarea
                 value={values.description}
                 onChange={handleChange}
                 name="description"
                 placeholder="Descripción de el/los articulo(s) a donar"
-                size="sm"
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg"
               />
               {errors.description && (
                 <FormErrorMessage>{errors.description}</FormErrorMessage>
@@ -177,17 +187,19 @@ function inKindDonations() {
 
             {/* Quantity */}
             <FormControl marginBottom={5} isInvalid={errors.quantity}>
-              <FormLabel color="black">Cantidad</FormLabel>
+              <FormLabel>Cantidad</FormLabel>
               <Input
                 placeholder="Unidades"
                 name="quantity"
                 id="quantity"
                 value={values.quantity}
                 onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
                 type="text"
                 maxLength={20}
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg"
               />
               {errors.quantity && (
                 <FormErrorMessage>{errors.quantity}</FormErrorMessage>
@@ -196,13 +208,17 @@ function inKindDonations() {
 
             {/* State */}
             <FormControl marginBottom={5} isInvalid={errors.condition}>
-              <FormLabel color="black">Estado del donativo</FormLabel>
+              <FormLabel>Estado del donativo</FormLabel>
               <Select
                 placeholder="Selecciona el estado del donativo"
                 onChange={handleChange}
                 value={values.condition}
                 name="condition"
                 id="condition"
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg"
               >
                 <option key="new" value="nuev@(s)">
                   Nuevo
@@ -221,8 +237,12 @@ function inKindDonations() {
 
             {/* Date of Rescue */}
             <FormControl marginBottom={5} isInvalid={errors.availability}>
-              <FormLabel color="black">Disponibilidad de entrega</FormLabel>
-              <InputGroup>
+              <FormLabel>Disponibilidad de entrega</FormLabel>
+              <InputGroup
+                mb="24px"
+                borderRadius="15px"
+                fontSize="sm"
+                size="lg">
                 <DatePicker
                   selected={
                     values.availability ? new Date(values.availability) : null
@@ -246,18 +266,21 @@ function inKindDonations() {
             {/* Submit Button */}
             <Center>
               <Button
-                as="a"
-                fontSize="sm"
-                fontWeight={500}
-                w={200}
-                mt={5}
-                mb={-3}
-                color="black"
-                bg={theme.colors.accent}
+                fontSize="15px"
+                type="submit"
+                bg="teal.300"
+                w="100%"
+                h="45"
+                color="white"
+                mt="20px"
                 _hover={{
-                  textColor: 'gray',
-                  borderColor: theme.colors.accent,
+                  bg: 'teal.200',
                 }}
+                _active={{
+                  bg: 'teal.400',
+                }}
+                as="a"
+                fontWeight={500}
                 form="inKindDonations"
                 onClick={handleSubmit}
               >
@@ -270,6 +293,3 @@ function inKindDonations() {
     </Center>
   );
 }
-
-// Export the AnimalForm component
-export default inKindDonations;

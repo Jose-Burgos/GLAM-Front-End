@@ -14,8 +14,17 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  Popover,
+  PopoverTrigger,
+  PopoverArrow,
+  PopoverContent,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  Input,
+  useDisclosure,
 } from '@chakra-ui/react';
-import Link from 'next/link';
+import Link from 'next/link'; 
 import Image from 'next/image';
 import { VisitOngLogo } from '@/assets/icons/icons';
 import supabase from '~/supabase/helpers';
@@ -72,36 +81,44 @@ function DesktopOngCard(props: OngData) {
   const bgColor = useColorModeValue('white', 'gray.700');
   const toast = useToast();
   const [session,setSession] = useState<string | null >('')
-  const handleDonation = (option: string) => {
-    switch (option) {
-      case 'especie':
-        (async () => {
-          const sessions = await supabase.getCurrentUserId();
-          setSession(sessions)
-          })();
-        if (!session){
-          toast({
-            title: 'Acceso Denegado',
-            description: 'Necesitas iniciar sesión para poder hacer donaciones en especie',
-            status: 'error',
-            duration: 5000,
-            position: 'top-left',
-          }); 
-        }
-        else{
-          // Redirige a la página de donación en especie
-          window.location.href = '/donations/inKindDonation';
-        }
-        break;
-      case 'monetaria':
-        // Redirige a la página de donación monetaria
-        window.location.href = '/ong/auth/home';
-        break;
-      default:
-        // Manejo por defecto, puede ser redirigir a una página de error, por ejemplo
-        break;
+  const [donationAmount, setDonationAmount] = useState('');
+  const { onOpen, onClose, isOpen } = useDisclosure()
+  const handleAmountButtonClick = (amount:any) => {
+    setDonationAmount(amount.toString());
+  };
+  async function getUser(){
+    const sessions = await supabase.getCurrentUserId();
+    setSession(sessions)
+  }
+  async function handleDonation (option: string) {
+    await getUser()
+    if (!session){
+      toast({
+        title: 'Acceso Denegado',
+        description: 'Necesitas iniciar sesión para poder hacer donaciones en especie',
+        status: 'error',
+        duration: 5000,
+        position: 'top-left',
+      }); 
+    }
+    else{
+      switch (option) {
+          case 'especie':
+          
+              // Redirige a la página de donación en especie
+              window.location.href = '/donations/inKindDonation';
+              break;
+          case 'monetaria':
+            // Redirige a la página de donación monetaria
+            window.location.href = '/donations/monetaryDonation';
+            break;
+          default:
+            // Manejo por defecto, puede ser redirigir a una página de error, por ejemplo
+            break;
+      }
     }
   };
+
 
   return (
     <Box shadow="xl" borderRadius="15px" bg={bgColor}>
@@ -136,35 +153,12 @@ function DesktopOngCard(props: OngData) {
             Visitar
           </Button>
         </Link>
-        <Menu>
-          <MenuButton
-            as={Button}
-            bg="teal.300"
-            size="md"
-            mt={5}
-            mb={2}
-            mr={2}
-            fontSize="sm"
-          >
-            Donar
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => handleDonation('especie')}>
-              Donación en Especie
-            </MenuItem>
-            <MenuItem onClick={() => handleDonation('monetaria')}>
-              Donación Monetaria
-            </MenuItem>
-          </MenuList>
-        </Menu>
       </Flex>
     </Box>
   );
 }
 
 export default function OngCard(props: OngData) {
-    
-
 
   return (
     <Box borderRadius="15px">

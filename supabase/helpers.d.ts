@@ -15,6 +15,7 @@ export interface HelperFunctions {
     type: Sb.ProfileType;
   }>;
   getCurrentUserId: () => Promise<string>;
+  getCurrentUserName: () => Promise<string>;
   userSignUp: (signupInfo: Sb.UserSignupInfo) => Promise<{
     data: User | null;
     existingAccount: boolean;

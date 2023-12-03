@@ -6,9 +6,7 @@ export type TableColumn<T extends TableName> =
 
 export type Table<T extends TableName> = Database['public']['Tables'][T]['Row'];
 
-export type Animal = Table<'animals'> & {
-  species: Table<'species'>;
-};
+export type Animal = Table<'animals'> 
 
 export type OrgType = 'Organization';
 export type UserType = 'RegularUser';

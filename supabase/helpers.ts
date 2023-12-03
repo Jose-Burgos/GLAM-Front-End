@@ -17,14 +17,15 @@ const helpers: HelperFunctions = {
   },
 
   getOrgAnimals: async () => {
+    const id = await helpers.getCurrentUserId();
     const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
       .from('animals')
-      .select('*, species(*)')
-      .eq('org_id', await helpers.getCurrentUserId());
-    if (error) {
-      throw new Error(error.message);
-    }
-    return data;
+      .select('*')
+      .eq('org_id', id);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
   },
 
   deleteAnimal: async (animalID) => {
@@ -87,6 +88,17 @@ const helpers: HelperFunctions = {
       return ''
     }
     return session.user.id;
+  },
+
+  getCurrentUserName: async () => {
+    const session = await helpers.getSession();
+    console.log(session)
+    if (!session) {
+      // throw new Error('No logged in user');
+      console.log('No logged in user')
+      return ''
+    }
+    return session.user.user_metadata.name;
   },
 
   userSignUp: async (signupInfo) => {
@@ -485,6 +497,7 @@ const helpers: HelperFunctions = {
       quantity: donationData.quantity,
       availability: donationData.availability,
       user: donationData.user,
+      condition : donationData.condition
     });
     if (error) {
       throw new Error(error.message);
@@ -493,12 +506,11 @@ const helpers: HelperFunctions = {
   },
 
   getInKindDonations: async () => {
-    const id = await helpers.getCurrentUserId();
-    // console.log(id);
+  
     const { data, error } = await supabase
       .from('in_kind_donations')
       .select('*')
-      .eq('ong', id);
+      .eq('ong', await helpers.getCurrentUserId());
     if (error) {
       throw new Error(error.message);
     }

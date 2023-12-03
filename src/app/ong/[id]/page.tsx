@@ -1,29 +1,14 @@
 'use client';
 
 import ContactForm from '@/components/contactform';
+import UserRegisterFrom from '@/components/userregisterform';
+import InKindDonationForm from '@/components/inKindDonationForm';
 import GoogleMapsView from '@/components/googlemaps';
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import Image from 'next/image';
-import {
-  Box,
-  Center,
-  Stack,
-  Text,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Grid,
-  GridItem,
-  Spinner,
-  Flex,
-  useColorModeValue,
-  Button,
-} from '@chakra-ui/react';
-import theme from '@/theme';
+import {Box, Center, Stack, Text, Tabs, TabList, Tab, TabPanels, Grid, GridItem, Spinner, Flex, useColorModeValue, Button, HStack, TabPanel, } from '@chakra-ui/react';
 import PetCard from '@/components/petcard';
 import {
   AdoptLogo,
@@ -32,6 +17,7 @@ import {
   PhoneLogo,
 } from '@/assets/icons/icons';
 import { Separator } from '@/components/separator';
+import MonetaryDonationForm from '@/components/monetaryDonationForm';
 
 interface IdInterface {
   id: string;
@@ -138,11 +124,14 @@ export default function OngInfo(props: IdInterface) {
                   <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
                     <ContactLogo w="40px" h="40px" />
                   </Tab>
-                  <Tab shadow="xl" display={{ sm: 'none', md: 'flex' }}>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'none', md: 'flex' }}>
                     Animales
                   </Tab>
                   <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
                     <AdoptLogo w="40px" h="40px" />
+                  </Tab>
+                  <Tab shadow="xl" mr={5} display={{ sm: 'none', md: 'flex' }}>
+                    Donar
                   </Tab>
                 </Flex>
               </TabList>
@@ -233,6 +222,42 @@ export default function OngInfo(props: IdInterface) {
                       )}
                     </Grid>
                   </Center>
+                </TabPanel>
+                <TabPanel>
+                      <Text
+                        fontSize="xl"
+                        // color={textColor}
+                        fontWeight="bold"
+                        textAlign="center"
+                        mb="22px"
+                      >
+                        Donaciones
+                      </Text>
+                      <Tabs
+                        variant="soft-rounded"
+                        colorScheme="brand"
+                        align="center"
+                        mb={4}
+                      >
+                        <TabList>
+                          <Tab shadow="xl" mr={8}>
+                            Monetaria
+                          </Tab>
+                          <Tab shadow="xl">
+                            En Especie
+                          </Tab>
+                        </TabList>
+                        <HStack spacing="15px" justify="center" mb="22px">
+                          <TabPanels>
+                            <TabPanel>
+                              <MonetaryDonationForm/>
+                            </TabPanel>
+                            <TabPanel>
+                              <InKindDonationForm/>
+                            </TabPanel>
+                          </TabPanels>
+                        </HStack>
+                      </Tabs>
                 </TabPanel>
               </TabPanels>
             </Tabs>

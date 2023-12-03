@@ -1,19 +1,28 @@
 'use client'
 import React, {useEffect, useState}from 'react';
-import { Flex, HStack, Text, Grid, GridItem, useColorMode, Accordion, AccordionItem, AccordionButton, AccordionPanel, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, StatGroup, Box, Center} from '@chakra-ui/react';
+import { Flex, HStack, Text, Grid, GridItem, VStack, Image, useColorMode, Accordion, AccordionItem, AccordionButton, AccordionPanel, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, StatGroup, Box, Center, AccordionIcon, Heading, StackDivider} from '@chakra-ui/react';
 import OrgDashboardSidebar from '@/components/OrgDashboardSidebar';
 import supabase from '~/supabase/helpers';
-import { InKindDonation } from '~/supabase/types/supabase.tables';
+import { Animal, InKindDonation } from '~/supabase/types/supabase.tables';
 
 export default function UserDashboard() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [iknotifications, setIKNotifications] = useState<InKindDonation[]>();
+  const [ongName, setOngName] = useState('')
+  const [ongAnimals, setOngAnimals] = useState({} as Animal[])
   useEffect(() => {
     (async () => {
-      const inkindDonations = await supabase.getInKindDonations();
-      setIKNotifications(inkindDonations);
+      setOngName(await supabase.getCurrentUserName());
+      setIKNotifications(await supabase.getInKindDonations());
+      setOngAnimals(await supabase.getOrgAnimals())
     })();
   }, []);
+  const data=    [
+    { value: ongAnimals.length, label: 'Animales para adoptar' },
+    { value: 0, label: 'Animales Adoptados' },
+    { value: 0, label: 'Solicitudes pendientes' },
+    { value: 0, label: 'Animales en proceso de adopción' },
+  ];
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
@@ -37,8 +46,18 @@ export default function UserDashboard() {
             templateColumns='repeat(12, 1fr)'
             gap={4}
           >
-            <GridItem rowSpan={2} colSpan={4}  bg={colorMode === 'light' ? 'gray.200' : 'gray.600' }  boxShadow="md" borderRadius="xl">
-
+            <GridItem rowSpan={2} colSpan={4}  bg={colorMode === 'light' ? 'gray.200' : 'gray.600' } padding={8} boxShadow="md" borderRadius="xl">
+            <Heading fontSize="4xl" mb={2}>
+              {ongName}
+            </Heading>
+              <VStack divider={<StackDivider borderColor={colorMode === 'light' ? 'gray.800' : 'gray.200' } />} spacing={5} align='stretch'>
+                {data.map((item, index) => (
+                  <Box key={index}>
+                    <Heading fontSize="3xl">{item.value}</Heading>
+                    <Text fontSize="lg">{item.label}</Text>
+                  </Box>
+                ))}
+              </VStack>
             </GridItem> 
             <GridItem colSpan={4} bg={colorMode === 'light' ? 'gray.200' : 'gray.600'} padding={4} boxShadow="md" borderRadius="xl">
               <Text fontSize='lg' fontWeight='bold' mb={4}>Notificaciones</Text>
@@ -51,10 +70,9 @@ export default function UserDashboard() {
                       <h2>
                         <AccordionButton>
                           <Box as="span" flex='1' textAlign='left'>
-                            Notificación de Donación
+                            Tienes una nueva Donación!
                           </Box>
-                          {/* Puedes personalizar el ícono del botón de la siguiente manera: */}
-                          {/* <AccordionIcon boxSize={4} /> */}
+                          <AccordionIcon boxSize={4} />
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4}>
@@ -75,15 +93,15 @@ export default function UserDashboard() {
               padding={4}
               boxShadow="md"
               borderRadius="xl"
-              textAlign="center" // Alinea el texto al centro
+              textAlign="center"
             >
               <Stat>
                 <StatLabel fontSize="lg">Balance total</StatLabel>
-                <StatNumber fontSize="2xl">$0.00 ARS</StatNumber>
-                <StatHelpText fontSize="sm">Nov 12 - Nov 30</StatHelpText>
+                <StatNumber fontSize="4xl">$0.00 ARS</StatNumber>
+                <StatHelpText fontSize="md">Nov 12 - Nov 30</StatHelpText>
               </Stat>
             </GridItem>
-            <GridItem colSpan={4} bg={colorMode === 'light' ? 'gray.200' : 'gray.600'} padding={4} boxShadow="md" borderRadius="xl">
+            <GridItem colSpan={8} bg={colorMode === 'light' ? 'gray.200' : 'gray.600'} padding={4} boxShadow="md" borderRadius="xl">
             
             </GridItem>
           </Grid>
