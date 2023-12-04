@@ -109,7 +109,6 @@ export default function InKindDonationForm() {
   // Render the form
   return (
     <Center>
-      {userType === 'RegularUser' && (
         <Stack>
           <form id="inKindDonations">
             {/* Species selection */}
@@ -289,7 +288,6 @@ export default function InKindDonationForm() {
             </Center>
           </form>
         </Stack>
-      )}
     </Center>
   );
 }

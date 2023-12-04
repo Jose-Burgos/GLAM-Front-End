@@ -27,12 +27,13 @@ export default function OngInfo(props: IdInterface) {
   const [cardData, setCardData] = useState<Animal[]>();
   const [success, setSuccess] = useState<boolean>(false);
   const bgColor = useColorModeValue('white', 'gray.700');
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     (async () => {
-      const data = await HelperFunctions.getAnimals();
-      setCardData(data);
+      setCardData(await HelperFunctions.getAnimals());
       setSuccess(true);
+      setUser(await HelperFunctions.getCurrentUserId());
     })();
   }, []);
 
@@ -224,40 +225,51 @@ export default function OngInfo(props: IdInterface) {
                   </Center>
                 </TabPanel>
                 <TabPanel>
-                      <Text
-                        fontSize="xl"
-                        // color={textColor}
-                        fontWeight="bold"
-                        textAlign="center"
-                        mb="22px"
-                      >
-                        Donaciones
-                      </Text>
-                      <Tabs
-                        variant="soft-rounded"
-                        colorScheme="brand"
-                        align="center"
-                        mb={4}
-                      >
-                        <TabList>
-                          <Tab shadow="xl" mr={8}>
-                            Monetaria
-                          </Tab>
-                          <Tab shadow="xl">
-                            En Especie
-                          </Tab>
-                        </TabList>
-                        <HStack spacing="15px" justify="center" mb="22px">
-                          <TabPanels>
-                            <TabPanel>
-                              <MonetaryDonationForm/>
-                            </TabPanel>
-                            <TabPanel>
-                              <InKindDonationForm/>
-                            </TabPanel>
-                          </TabPanels>
-                        </HStack>
-                      </Tabs>
+                  <Text
+                    fontSize="xl"
+                    // color={textColor}
+                    fontWeight="bold"
+                    textAlign="center"
+                    mb="22px"
+                  >
+                    Donaciones
+                  </Text>
+                  {user ? (
+                  <Tabs
+                    variant="soft-rounded"
+                    colorScheme="brand"
+                    align="center"
+                    mb={4}
+                  >
+                    <TabList>
+                      <Tab shadow="xl" mr={8}>
+                        Monetaria
+                      </Tab>
+                      <Tab shadow="xl">
+                        En Especie
+                      </Tab>
+                    </TabList>
+                    <HStack spacing="15px" justify="center" mb="22px">
+                      <TabPanels>
+                        <TabPanel>
+                          <MonetaryDonationForm/>
+                        </TabPanel>
+                        <TabPanel>
+                          <InKindDonationForm/>
+                        </TabPanel>
+                      </TabPanels>
+                    </HStack>
+                  </Tabs>
+                  ):(
+                    <Text
+                    fontSize="xl"
+                    // color={textColor}
+                    textAlign="center"
+                    mb="22px"
+                  >
+                    Para poder hacer donaciones debes iniciar sesión 
+                  </Text>
+                  )}
                 </TabPanel>
               </TabPanels>
             </Tabs>
