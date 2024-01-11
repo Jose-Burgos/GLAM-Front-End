@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import Image from 'next/image';
-import {Box, Center, Stack, Text, Tabs, TabList, Tab, TabPanels, Grid, GridItem, Spinner, Flex, useColorModeValue, Button, HStack, TabPanel, } from '@chakra-ui/react';
+import {Box, Center, Stack, Text, Tabs, TabList, Tab, TabPanels, Grid, GridItem, Spinner, Flex, useColorModeValue, Button, HStack, TabPanel, Heading, } from '@chakra-ui/react';
 import PetCard from '@/components/petcard';
 import {
   AdoptLogo,
@@ -28,6 +28,7 @@ export default function OngInfo(props: IdInterface) {
   const [success, setSuccess] = useState<boolean>(false);
   const bgColor = useColorModeValue('white', 'gray.700');
   const [user, setUser] = useState('');
+  const titleColor = useColorModeValue('teal.300', 'teal.200');
 
   useEffect(() => {
     (async () => {
@@ -37,11 +38,12 @@ export default function OngInfo(props: IdInterface) {
     })();
   }, []);
 
+
   return (
     <Flex
       position="relative"
-      w="100%"
       maxW="1044px"
+      w="100%"
       mx="auto"
       pt={{ sm: '10%', md: '5%' }}
     >
@@ -49,9 +51,9 @@ export default function OngInfo(props: IdInterface) {
         alignItems="center"
         justifyContent="start"
         style={{ userSelect: 'none' }}
-        w="100%"
+        w={{ base: '100%', md: '100%', lg: '100%' }}
       >
-        <Flex direction="column" w="100%" background="transparent" p="48px">
+        <Flex direction="column" w="100%"  background="transparent" p="48px">
           <Box
             bg={bgColor}
             w="100%"
@@ -63,15 +65,15 @@ export default function OngInfo(props: IdInterface) {
             <Stack
               direction={{ sm: 'column', md: 'row', lg: 'row', xl: 'row' }}
             >
-              <Box
+              <div
                 style={{
                   position: 'relative',
                   width: '100%',
-                  height: '30vh',
+                  height: '40vh',
                 }}
               >
                 <Image
-                  alt="pet"
+                  alt="ong"
                   style={{
                     borderRadius: '15px',
                     aspectRatio: '16/9',
@@ -81,7 +83,7 @@ export default function OngInfo(props: IdInterface) {
                   fill
                   priority
                 />
-              </Box>
+              </div>
               <Flex
                 bg="transparent"
                 borderRadius="15px"
@@ -90,9 +92,9 @@ export default function OngInfo(props: IdInterface) {
                 justifyContent="center"
               >
                 <Stack>
-                  <Text ml={3} mt={2}>
+                  <Heading color={titleColor} ml={3} mt={2}>
                     Nombre Ong
-                  </Text>
+                  </Heading>
                   <Text ml={3} mt={5}>
                     Direccion Ong
                   </Text>
@@ -103,7 +105,7 @@ export default function OngInfo(props: IdInterface) {
                     Descripcion
                   </Text>
                 </Stack>
-                <Button size="md" bg="teal.300" ml="auto" mt="auto">
+                <Button size="md" bg="teal.300" ml={{ sm:"auto" }} mt="auto" display={{ sm: "flex", md: "none" }}>
                   <PhoneLogo w="35px" h="35px" />
                 </Button>
               </Flex>
@@ -150,12 +152,12 @@ export default function OngInfo(props: IdInterface) {
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    <ContactForm {...{animalId: props.id}} />
                   </Center>
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    <ContactForm {...{animalId: props.id}} />
                   </Center>
                 </TabPanel>
                 <TabPanel>

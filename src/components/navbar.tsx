@@ -67,10 +67,11 @@ export default function NavBar(props: any) {
   );
   const navbarBackdrop = 'blur(21px)';
   const bgButton = useColorModeValue(
-    'linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)',
-    'gray.800'
+    'linear-gradient(81.62deg, #3F386F 2.25%, #151928 79.87%)',
+    'gray.700'
   );
   const colorButton = 'white';
+  const colorBrand = useColorModeValue('teal.800', 'teal.200');
 
   const brand = (
     <Link
@@ -82,7 +83,7 @@ export default function NavBar(props: any) {
       alignItems="center"
       color={mainText}
     >
-      <Heading fontSize="25px" mt="3px">
+      <Heading fontSize="25px" mt="3px" color={colorBrand}>
         GLAM
       </Heading>
     </Link>
@@ -97,11 +98,12 @@ export default function NavBar(props: any) {
           me={{ sm: '2px', md: '16px' }}
           color={navbarIcon}
           variant="transparent-with-icon"
+          _hover={{textColor: 'teal.400'}}
           leftIcon={
             <HomeLogo color={navbarIcon} w="24px" h="24px" me="0px" mb={2} />
           }
         >
-          <Text fontSize="md">Inicio</Text>
+          <Text fontSize="md" >Inicio</Text>
         </Button>
       </NextLink>
       <NextLink href="/adoption">
@@ -112,6 +114,7 @@ export default function NavBar(props: any) {
           me={{ sm: '2px', md: '16px' }}
           color={navbarIcon}
           variant="transparent-with-icon"
+          _hover={{textColor: 'teal.400'}}
           leftIcon={
             <AdoptionLogo
               color={navbarIcon}
@@ -133,6 +136,7 @@ export default function NavBar(props: any) {
           me={{ sm: '2px', md: '16px' }}
           color={navbarIcon}
           variant="transparent-with-icon"
+          _hover={{textColor: 'teal.400'}}
           leftIcon={
             <OngLogo color={navbarIcon} w="26px" h="26px" me="0px" mb={2} />
           }
@@ -140,7 +144,7 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
-     
+
       <NextLink href="/reports/lost">
         <Button
           fontSize="sm"
@@ -149,6 +153,7 @@ export default function NavBar(props: any) {
           me={{ sm: '2px', md: '16px' }}
           color={navbarIcon}
           variant="transparent-with-icon"
+          _hover={{textColor: 'teal.400'}}
           leftIcon={
             <ReportLogo color={navbarIcon} w="26px" h="26px" me="0px" mb={2} />
           }
@@ -156,8 +161,6 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Reporte</Text>
         </Button>
       </NextLink>
-
-
 
       {isLoggedIn && (
         <NextLink href={`/${type}/auth/home`}>
@@ -184,7 +187,96 @@ export default function NavBar(props: any) {
       )}
     </HStack>
   );
-  if(!isLoggedIn) return (
+  if (!isLoggedIn)
+    return (
+      <Flex
+        position="fixed"
+        top="16px"
+        left="50%"
+        transform="translate(-50%, 0px)"
+        background={navbarBg}
+        border={navbarBorder}
+        boxShadow={navbarShadow}
+        filter={navbarFilter}
+        backdropFilter={navbarBackdrop}
+        borderRadius="15px"
+        px="16px"
+        py="22px"
+        mx="auto"
+        width="1044px"
+        maxW="90%"
+        zIndex={100}
+        alignItems="center"
+      >
+        <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
+          {brand}
+          <Box
+            ms={{ base: 'auto', lg: '0px' }}
+            display={{ base: 'flex', lg: 'none' }}
+          >
+            <SidebarResponsive
+              logoText={props.logoText}
+              secondary={props.secondary}
+              {...rest}
+            />
+          </Box>
+          {linksAuth}
+          <HStack spacing={5}>
+            {!isLoggedIn && (
+              <Link href="/login">
+                <Button
+                  bg={bgButton}
+                  color={colorButton}
+                  fontSize="xs"
+                  variant="no-hover"
+                  borderRadius="35px"
+                  px="15px"
+                  display={{
+                    sm: 'none',
+                    lg: 'flex',
+                  }}
+                  leftIcon={<LogInLogo w="24px" h="24px" me="0px" />}
+                >
+                  <Text fontSize="md">Iniciar Sesion</Text>
+                </Button>
+              </Link>
+            )}
+            {isLoggedIn && (
+              <Button
+                bg={bgButton}
+                color={colorButton}
+                fontSize="xs"
+                variant="no-hover"
+                borderRadius="35px"
+                px="15px"
+                display={{
+                  sm: 'none',
+                  lg: 'flex',
+                }}
+                leftIcon={<LogOutLogo w="24px" h="24px" me="0px" />}
+                onClick={handleLogOut}
+              >
+                <NextLink href="/">
+                  <Text fontSize="md">Cerrar Sesion</Text>
+                </NextLink>
+              </Button>
+            )}
+            <Icon
+              as={colorMode === 'dark' ? MoonIcon : SunIcon}
+              me={{ sm: '2px', md: '16px' }}
+              display={{
+                sm: 'none',
+                lg: 'flex',
+              }}
+              justifyContent="center"
+              alignItems="center"
+              onClick={toggleColorMode}
+            />
+          </HStack>
+        </Flex>
+      </Flex>
+    );
+  return (
     <Flex
       position="fixed"
       top="16px"
@@ -206,37 +298,7 @@ export default function NavBar(props: any) {
     >
       <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
         {brand}
-        <Box
-          ms={{ base: 'auto', lg: '0px' }}
-          display={{ base: 'flex', lg: 'none' }}
-        >
-          <SidebarResponsive
-            logoText={props.logoText}
-            secondary={props.secondary}
-            {...rest}
-          />
-        </Box>
-        {linksAuth}
         <HStack spacing={5}>
-          {!isLoggedIn && (
-            <Link href="/login">
-              <Button
-                bg={bgButton}
-                color={colorButton}
-                fontSize="xs"
-                variant="no-hover"
-                borderRadius="35px"
-                px="15px"
-                display={{
-                  sm: 'none',
-                  lg: 'flex',
-                }}
-                leftIcon={<LogInLogo w="24px" h="24px" me="0px" />}
-              >
-                <Text fontSize="md">Iniciar Sesion</Text>
-              </Button>
-            </Link>
-          )}
           {isLoggedIn && (
             <Button
               bg={bgButton}
@@ -272,62 +334,4 @@ export default function NavBar(props: any) {
       </Flex>
     </Flex>
   );
-  return(
-    <Flex
-      position="fixed"
-      top="16px"
-      left="50%"
-      transform="translate(-50%, 0px)"
-      background={navbarBg}
-      border={navbarBorder}
-      boxShadow={navbarShadow}
-      filter={navbarFilter}
-      backdropFilter={navbarBackdrop}
-      borderRadius="15px"
-      px="16px"
-      py="22px"
-      mx="auto"
-      width="1044px"
-      maxW="90%"
-      zIndex={100}
-      alignItems="center"
-    >
-      <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
-        {brand}
-        <HStack spacing={5}>
-          {isLoggedIn && (
-            <Button
-              bg={bgButton}
-              color={colorButton}
-              fontSize="xs"
-              variant="no-hover"
-              borderRadius="35px"
-              px="15px"
-              display={{
-                sm: 'none',
-                lg: 'flex',
-              }}
-              leftIcon={<LogOutLogo w="24px" h="24px" me="0px" />}
-              onClick={handleLogOut}
-            >
-              <NextLink href="/">
-                <Text fontSize="md">Cerrar Sesion</Text>
-              </NextLink>
-            </Button>
-          )}
-          <Icon
-            as={colorMode === 'dark' ? MoonIcon : SunIcon}
-            me={{ sm: '2px', md: '16px' }}
-            display={{
-              sm: 'none',
-              lg: 'flex',
-            }}
-            justifyContent="center"
-            alignItems="center"
-            onClick={toggleColorMode}
-          />
-        </HStack>
-      </Flex>
-    </Flex>
-  )
 }

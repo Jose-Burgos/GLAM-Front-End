@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import OngCard from '@/components/ongcard';
-import { CircularProgress, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Grid, GridItem } from '@chakra-ui/react';
 import HelperFunctions from '~/supabase/helpers';
+import LoadingSpinner from '@/components/loadingpinner';
 
 const ongData = [
   {
@@ -42,8 +43,8 @@ export default function OngView() {
   return (
     <Flex position="relative" mb="10%">
       <Flex
-        h={{ sm: 'initial', md: '75vh', lg: '85vh' }}
-        mt={{ sm: '5%', md: '15%', lg: '10%', xl: '5%' }}
+        h="initial"
+        mt={{ sm: '2%', md: '15%', lg: '12.5%', xl: '12.5%' }}
         w="100wh"
         maxW="1044px"
         mx="auto"
@@ -56,24 +57,24 @@ export default function OngView() {
             w="100%"
             background="transparent"
           >
-            <Grid
-              gap={8}
-              templateColumns={{
-                sm: 'repeat(1, 1fr)',
-                md: 'repeat(1, 1fr)',
-                lg: 'repeat(4, 1fr)',
-              }}
-            >
-              {success ? (
-                ongData?.map((card, idx) => (
+            {success ? (
+              <Grid
+                gap={8}
+                templateColumns={{
+                  sm: 'repeat(1, 1fr)',
+                  md: 'repeat(1, 1fr)',
+                  lg: 'repeat(3 , 1fr)',
+                }}
+              >
+                {ongData?.map((card, idx) => (
                   <GridItem key={idx}>
                     <OngCard id={card.id} img={card.url} name={card.name} />
                   </GridItem>
-                ))
-              ) : (
-                <CircularProgress isIndeterminate color="teal.300" />
-              )}
-            </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <LoadingSpinner />
+            )}
           </Flex>
         </Flex>
       </Flex>

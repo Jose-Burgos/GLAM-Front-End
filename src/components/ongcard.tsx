@@ -9,19 +9,7 @@ import {
   Flex,
   Spacer,
   useColorModeValue,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useToast,
-  Popover,
-  PopoverTrigger,
-  PopoverArrow,
-  PopoverContent,
-  PopoverCloseButton,
-  PopoverHeader,
-  PopoverBody,
-  Input,
   useDisclosure,
 } from '@chakra-ui/react';
 import Link from 'next/link'; 
@@ -42,7 +30,7 @@ function MobileOngCard(props: OngData) {
     <Box me="-1%" w="85vw" shadow="xl" bg={bgColor} borderRadius="15px">
       <Flex>
         <Stack direction={['row', 'row']}>
-          <Box position="relative" width={100} h={100}>
+          <Box position="relative" width="30vw" h="20vh">
             <Image
               style={{
                 borderBottomRightRadius: '15px',
@@ -66,7 +54,7 @@ function MobileOngCard(props: OngData) {
         <Spacer />
         <Stack>
           <Spacer />
-          <Link href={`/adoption/${props.id}`}>
+          <Link href={`/ong/${props.id}`}>
             <Button bg="teal.300" size="md" mr={2} mb={2}>
               <VisitOngLogo w="35px" h="35px" />
             </Button>
@@ -124,7 +112,7 @@ function DesktopOngCard(props: OngData) {
     <Box shadow="xl" borderRadius="15px" bg={bgColor}>
       <Stack>
         <Box>
-          <Box position="relative" width={200} h={200}>
+          <Box position="relative" width="20vw" h="30vh">
             <Image
               style={{
                 borderBottomRightRadius: '15px',

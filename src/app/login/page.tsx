@@ -143,7 +143,7 @@ export default function Login() {
             w="100%"
             background="transparent"
             p="48px"
-            mt={{ md: '150px', lg: '80px' }}
+            mt={{ md: '50%', lg: '40%' }}
           >
             <Heading color={titleColor} fontSize="32px" mb="10px">
               Bienvenido

@@ -28,7 +28,7 @@ function MobilePetCard(props: PetData) {
     <Box me="-1%" w="85vw" bg={bgColor} shadow="xl" borderRadius="15px">
       <Flex>
         <Stack direction={['row', 'row']}>
-          <Box position="relative" width={100} h={100}>
+          <Box position="relative" width="30vw" h="20vh">
             <Image
               style={{
                 borderBottomRightRadius: '15px',
@@ -75,7 +75,7 @@ function DesktopPetCard(props: PetData) {
     >
       <Stack>
         <Box>
-          <Box position="relative" width={200} h={200}>
+          <Box position="relative" width="20vw" h="30vh">
             <Image
               style={{
                 borderBottomRightRadius: '15px',
@@ -99,7 +99,7 @@ function DesktopPetCard(props: PetData) {
       </Stack>
       <Flex>
         <Spacer />
-        <Link href={`${UserRoutes.adoption}/${props.id}`}>
+        <Link href={`adoption/${props.id}`}>
           <Button bg="teal.300" size="md" mt={5} mb={2} mr={2} fontSize="sm">
             Adoptame
           </Button>

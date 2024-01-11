@@ -217,7 +217,7 @@ export default function Landing() {
                       templateColumns={{
                         sm: 'repeat(1, 1fr)',
                         md: 'repeat(1, 1fr)',
-                        lg: 'repeat(4, 1fr)',
+                        lg: 'repeat(3, 1fr)',
                       }}
                     >
                       {success ? (
@@ -261,7 +261,7 @@ export default function Landing() {
                         templateColumns={{
                           sm: 'repeat(1, 1fr)',
                           md: 'repeat(1, 1fr)',
-                          lg: 'repeat(4, 1fr)',
+                          lg: 'repeat(3, 1fr)',
                         }}
                       >
                         {ongData?.map((card, idx) => (

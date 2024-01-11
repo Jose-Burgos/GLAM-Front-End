@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -19,6 +19,7 @@ import {
   Text,
   useToast,
   useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { SpeciesData } from '~/supabase/types/supabase.tables';
@@ -88,130 +89,141 @@ export default function LostPetReportView() {
       });
 
       // Perform additional actions after the operation fails
-      console.error('Error:', error);
+      // console.error('Error:', error);
     } finally {
       // Close the loading toast
       toast.close(toastId);
     }
   }
 
+  const titleColor = useColorModeValue('teal.300', 'teal.200');
+  const textColor = useColorModeValue('gray.400', 'white');
+  const bgColor = useColorModeValue('white', 'gray.700');
+  const bgIcons = useColorModeValue('white', 'teal.200');
+
   return (
-    <ChakraProvider>
-      <CSSReset />
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        background="gray.100"
-        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
-      >
-        <VStack spacing={5} mt={120}>
-          <Heading mb={2}>Reporte de Mascotas Perdidas</Heading>
-          <Box
-            width="md"
-            p={8}
-            boxShadow="md"
-            borderRadius="md"
-            bg={colorMode === 'light' ? 'white' : 'gray.600'}
-          >
-            <form id="lostAnimalForm">
-              {/* Type of Animal */}
-              <FormControl marginBottom={5} isInvalid={errors.species_id}>
-                <FormLabel>Tipo de animal</FormLabel>
-                <Select
-                  placeholder="Selecciona una especie"
-                  onChange={handleChange}
-                  value={values.species_id}
-                  name="species_id"
-                  id="species_id"
-                >
-                  {Array.isArray(species) &&
-                    species.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </Select>
-                {errors.species_id && (
-                  <FormErrorMessage>{errors.species_id}</FormErrorMessage>
-                )}
-              </FormControl>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+    >
+      <VStack spacing={5} mt="15%">
+        <Heading mb={2} color={titleColor}>
+          Reporte de Mascotas Perdidas
+        </Heading>
+        <Box width="md" p={8} boxShadow="md" borderRadius="md" bg={bgColor}>
+          <form id="lostAnimalForm">
+            {/* Type of Animal */}
+            <FormControl marginBottom={5} isInvalid={errors.species_id}>
+              <FormLabel>Tipo de animal</FormLabel>
+              <Select
+                borderRadius="15px"
+                placeholder="Selecciona una especie"
+                onChange={handleChange}
+                value={values.species_id}
+                name="species_id"
+                id="species_id"
+              >
+                {Array.isArray(species) &&
+                  species.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+              </Select>
+              {errors.species_id && (
+                <FormErrorMessage>{errors.species_id}</FormErrorMessage>
+              )}
+            </FormControl>
 
-              {/* Location */}
-              <FormControl marginBottom={5} isInvalid={errors.location}>
-                <FormLabel>Ubicacion</FormLabel>
-                <Input
-                  placeholder="Ubicación"
-                  name="location"
-                  id="location"
-                  value={values.location}
-                  onChange={handleChange}
-                  // shadow="inner"
-                  type="text"
-                  maxLength={50}
-                />
-                {errors.location && (
-                  <FormErrorMessage>{errors.location}</FormErrorMessage>
-                )}
-              </FormControl>
+            {/* Location */}
+            <FormControl marginBottom={5} isInvalid={errors.location}>
+              <FormLabel>Ubicacion</FormLabel>
+              <Input
+                placeholder="Ubicación"
+                borderRadius="15px"
+                name="location"
+                id="location"
+                value={values.location}
+                onChange={handleChange}
+                // shadow="inner"
+                type="text"
+                maxLength={50}
+              />
+              {errors.location && (
+                <FormErrorMessage>{errors.location}</FormErrorMessage>
+              )}
+            </FormControl>
 
-              {/* Animal description */}
-              <FormControl marginBottom={5} isInvalid={errors.description}>
-                <FormLabel>Descripción:</FormLabel>
-                <Textarea
-                  value={values.description}
-                  onChange={handleChange}
-                  name="description"
-                  placeholder="Descripción del animal"
-                  size="sm"
-                />
-                {errors.description && (
-                  <FormErrorMessage>{errors.description}</FormErrorMessage>
-                )}
-              </FormControl>
+            {/* Animal description */}
+            <FormControl marginBottom={5} isInvalid={errors.description}>
+              <FormLabel>Descripción:</FormLabel>
+              <Textarea
+                borderRadius="15px"
+                value={values.description}
+                onChange={handleChange}
+                name="description"
+                placeholder="Descripción del animal"
+                size="sm"
+              />
+              {errors.description && (
+                <FormErrorMessage>{errors.description}</FormErrorMessage>
+              )}
+            </FormControl>
 
-              {/* More details */}
-              <FormControl marginBottom={5} isInvalid={errors.details}>
-                <FormLabel>Más detalles:</FormLabel>
-                <Textarea
-                  value={values.details}
-                  onChange={handleChange}
-                  name="details"
-                  placeholder="Más detalles"
-                  size="sm"
-                />
-                {errors.details && (
-                  <FormErrorMessage>{errors.details}</FormErrorMessage>
-                )}
-              </FormControl>
+            {/* More details */}
+            <FormControl marginBottom={5} isInvalid={errors.details}>
+              <FormLabel>Más detalles:</FormLabel>
+              <Textarea
+                borderRadius="15px"
+                value={values.details}
+                onChange={handleChange}
+                name="details"
+                placeholder="Más detalles"
+                size="sm"
+              />
+              {errors.details && (
+                <FormErrorMessage>{errors.details}</FormErrorMessage>
+              )}
+            </FormControl>
 
-              {/* Submit Button */}
-              <Center>
-                <Button
-                  mt={8}
-                  colorScheme="teal"
-                  type="submit"
-                  form="lostAnimalForm"
-                  onClick={handleSubmit}
-                >
-                  Enviar Reporte
-                </Button>
-              </Center>
+            {/* Submit Button */}
+            <Center>
+              <Button
+                fontSize="15px"
+                bg="teal.300"
+                w="100%"
+                h="45"
+                mb="20px"
+                color="white"
+                mt="20px"
+                _hover={{
+                  bg: 'teal.200',
+                }}
+                _active={{
+                  bg: 'teal.400',
+                }}
+                type="submit"
+                form="lostAnimalForm"
+                onClick={handleSubmit}
+              >
+                Enviar Reporte
+              </Button>
+            </Center>
 
-              <Stack spacing={6}>
-                <Text />
-                <Text textAlign="center" fontSize="xl">
-                  Recuerda que las ONGs no pueden confiscar mascotas.
-                </Text>
-                <Text textAlign="center" fontSize="lg">
-                  Si presencias un caso de abuso animal, llama al 911.
-                </Text>
-              </Stack>
-            </form>
-          </Box>
-        </VStack>
-      </Box>
-    </ChakraProvider>
+            <Stack spacing={6} mt="5%">
+              <Text />
+              <Text textAlign="center" fontSize="lg" textColor="red.500">
+                Recuerda que las ONGs no pueden confiscar mascotas.
+              </Text>
+              <Text textAlign="center" fontSize="lg" textColor="red.500">
+                Si presencias un caso de abuso animal, llama al 911.
+              </Text>
+            </Stack>
+          </form>
+        </Box>
+      </VStack>
+    </Box>
   );
 }

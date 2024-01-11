@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react';
 import theme from '@/theme';
 import { Separator } from '@/components/separator';
-import { ContactLogo, LocationLogo, SignUpLogo } from '@/assets/icons/icons';
+import { AdoptLogo, ContactLogo, LocationLogo, SignUpLogo } from '@/assets/icons/icons';
 
 function Carousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [
@@ -43,8 +43,8 @@ function Carousel() {
         <div
           style={{
             position: 'relative',
-            width: '20vw',
-            height: '30vh',
+            width: '80vw',
+            height: '40vh',
           }}
           className="embla__slide"
         >
@@ -63,8 +63,6 @@ function Carousel() {
         <div
           style={{
             position: 'relative',
-            width: '20vw',
-            height: '30vh',
           }}
           className="embla__slide"
         >
@@ -81,7 +79,7 @@ function Carousel() {
           />
         </div>
         <div
-          style={{ position: 'relative', width: '20vw', height: '30vh' }}
+          style={{ position: 'relative' }}
           className="embla__slide"
         >
           <Image
@@ -89,7 +87,6 @@ function Carousel() {
             style={{
               borderRadius: '15px',
               aspectRatio: '16/9',
-              maxWidth: '400px',
             }}
             sizes="(max-width: 768px) 100vw, 700px"
             src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
@@ -113,7 +110,7 @@ export default function animalDescription({params}: Params) {
   useEffect(() => {
     (async () => {
       const aux = await dataService.getAnimals();
-      setAnimal(aux?.find((animal) => animal.id === params.id));
+      setAnimal(aux?.find((animalId) => animalId.id === params.id));
     })();
   }, [params.id, dataService]);
 
@@ -168,8 +165,9 @@ export default function animalDescription({params}: Params) {
                     Sexo : {animal?.sex ? 'Macho' : 'Hembra'}
                   </Text>
                 </Stack>
-                <Button size="lg" bg="teal.300" ml="auto" mt="auto">
-                  <SignUpLogo w="35px" h="35px" />
+                <Button size="lg" bg="teal.300" borderRadius="15px" ml="auto" mt="auto">
+                  <Text size="md" display={{sm: 'none', md: 'flex'}}>Formulario Adopción</Text>
+                  <AdoptLogo display={{sm: 'flex', md: 'none'}}/>
                 </Button>
               </Flex>
             </Stack>
@@ -196,7 +194,7 @@ export default function animalDescription({params}: Params) {
                   mr={5}
                   display={{ sm: 'none', md: 'flex' }}
                 >
-                  Ubicacion
+                  Ubicación
                 </Tab>
                 <Tab shadow="xl" mr={5} display={{ sm: 'flex', md: 'none' }}>
                   <LocationLogo w="40px" h="40px" />

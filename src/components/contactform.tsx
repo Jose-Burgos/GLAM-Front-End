@@ -19,9 +19,9 @@ import validateContactForm from '@/hooks/validation/validateContactForm';
 import useValidation from '@/hooks/useValidation';
 import { Separator } from './separator';
 import helpers from '~/supabase/helpers';
-import { AdoptionRequestForm } from '~/supabase/types/supabase.tables'
+import { AdoptionRequestForm } from '~/supabase/types/supabase.tables';
 
-export default function ContactForm({animalId}: {animalId: string}) {
+export default function ContactForm({ animalId }: { animalId: string }) {
   const initialState: AdoptionRequestForm = {
     user_email: '',
     details: '',
@@ -34,12 +34,12 @@ export default function ContactForm({animalId}: {animalId: string}) {
 
   function myHandleChange(e: any) {
     handleChange(e);
-    console.log(values)
-    console.log(errors)
+    console.log(values);
+    console.log(errors);
   }
 
   function myHandleSubmit(e: any) {
-    helpers.requestAdoption(animalId, values)
+    helpers.requestAdoption(animalId, values);
     handleSubmit(e);
   }
 
@@ -50,6 +50,7 @@ export default function ContactForm({animalId}: {animalId: string}) {
           <FormControl marginBottom={5} isInvalid={errors.user_email}>
             {/* <FormLabel>E-mail</FormLabel> */}
             <Input
+              borderRadius="15px"
               placeholder="E-mail"
               id="constact_email"
               name="user_email"
@@ -65,7 +66,7 @@ export default function ContactForm({animalId}: {animalId: string}) {
           <FormControl marginBottom={5} isInvalid={errors.details}>
             <Textarea
               p={3}
-              borderRadius="md"
+              borderRadius="15px"
               placeholder="Detalle... "
               value={values.details}
               onChange={myHandleChange}
@@ -85,6 +86,7 @@ export default function ContactForm({animalId}: {animalId: string}) {
             bg="teal.300"
             href="/login"
             form="registerUserForm"
+            borderRadius="15px"
             onClick={myHandleSubmit}
           >
             Enviar
