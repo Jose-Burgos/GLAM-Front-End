@@ -41,6 +41,6 @@ export interface HelperFunctions {
   // getImages: () => Promise<any>;        // hay que cambiar el tipo de dato que devuelve
   deleteImage: (imageName) => Promise<any>;
   uploadImage: (imageName) => Promise<any>;
-  submitInKindDonation: (donationdata : Sb.InKindDonation) => Promise<void>;
-  getInKindDonations: () => Promise<Sb.InKindDonation[]>
+  submitInKindDonation: (donationdata: Sb.InKindDonation) => Promise<void>;
+  getInKindDonations: () => Promise<Sb.InKindDonation[]>;
 }

@@ -4,7 +4,6 @@ import './addAnimal.css';
 import { Animal } from '~/supabase/types/supabase.tables';
 
 export default function AddAnimal() {
-
   const initialAnimal = {
     adopted: false,
     age: 0,

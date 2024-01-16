@@ -26,7 +26,7 @@ const helpers: HelperFunctions = {
     }
   },
 
-  upsertAnimal: async (animal : Sb.Animal) => {
+  upsertAnimal: async (animal: Sb.Animal) => {
     const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
@@ -280,9 +280,7 @@ const helpers: HelperFunctions = {
   },
 
   getOrganizations: async () => {
-    const { data, error } = await supabase
-      .from('organizations')
-      .select('*');
+    const { data, error } = await supabase.from('organizations').select('*');
     if (error) {
       throw new Error(error.message);
     }
@@ -297,60 +295,59 @@ const helpers: HelperFunctions = {
     return data;
   },
 
-  
-
-  deleteImage : async (imageName) => {
+  deleteImage: async (imageName) => {
     const userId = await helpers.getCurrentUserId();
-    const { error } = await supabase
-      .storage
+    const { error } = await supabase.storage
       .from('animal-pictures-orgs')
       .remove([userId + '/' + imageName]);
-      if(error){
-        throw new Error(error.message);
+    if (error) {
+      throw new Error(error.message);
     }
   },
 
-  uploadImage : async (file) => {
+  uploadImage: async (file) => {
     // let file = e.target.files[0];
 
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
       .upload(helpers.getCurrentUserId() + '/' + uuidv4(), file);
 
-    if (data) {                                             // if we got an image
-      getImages();                                          // refresh images
+    if (data) {
+      // if we got an image
+      getImages(); // refresh images
     } else {
       throw new Error(error.message);
     }
-
   },
 
-  submitInKindDonation : async (donationData : Sb.InKindDonation) => {
-    const { error } = await supabase.from('in_kind_donations').insert({ 
-        ong: donationData.ong, 
-        type : donationData.type, 
-        description : donationData.description, 
-        quantity : donationData.quantity,
-        availability : donationData.availability,
-        user : donationData.user,
-      })
+  submitInKindDonation: async (donationData: Sb.InKindDonation) => {
+    const { error } = await supabase.from('in_kind_donations').insert({
+      ong: donationData.ong,
+      type: donationData.type,
+      description: donationData.description,
+      quantity: donationData.quantity,
+      availability: donationData.availability,
+      user: donationData.user,
+    });
     if (error) {
       throw new Error(error.message);
     }
     return;
   },
 
-  getInKindDonations : async () => {
+  getInKindDonations: async () => {
     const id = await helpers.getCurrentUserId();
     // console.log(id);
-    const { data, error } = await supabase.from('in_kind_donations').select("*").eq('ong',id as String);
+    const { data, error } = await supabase
+      .from('in_kind_donations')
+      .select('*')
+      .eq('ong', id as String);
     if (error) {
-      throw new Error(error.message); 
+      throw new Error(error.message);
     }
     return data;
-  }
+  },
 };
-
 
 export default helpers;
 
@@ -423,20 +420,23 @@ async function getAdoptionRequests(
   return data;
 }
 
-async function getImages (){
+async function getImages() {
   const userId = await helpers.getCurrentUserId();
-  const { data, error } = await supabase
-    .storage
+  const { data, error } = await supabase.storage
     .from('animal-pictures-orgs')
     .list(userId);
-    if(error) {
-        throw new Error(error.message);
-    } else{
-        return data.map(element => ({
-        url:"https://bjsqhsdofulofilczfcj.supabase.co/storage/v1/object/public/animal-pictures-orgs/" + userId + '/' + element.name,
-        name: userId + '/' + element.name,
-        }));
-    }
+  if (error) {
+    throw new Error(error.message);
+  } else {
+    return data.map((element) => ({
+      url:
+        'https://bjsqhsdofulofilczfcj.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
+        userId +
+        '/' +
+        element.name,
+      name: userId + '/' + element.name,
+    }));
+  }
 }
 
 declare global {

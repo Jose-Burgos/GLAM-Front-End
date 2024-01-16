@@ -1,4 +1,3 @@
-
 import {
   Table,
   Thead,
@@ -137,28 +136,60 @@ export default function AnimalTable(props: TableProps) {
                           color="black"
                           aria-label="Mas Opciones"
                           size="sm"
-                         />
+                        />
                         <MenuList>
-                          <MenuItem onClick={() => editAnimal(animal.id)}>Editar</MenuItem>
-                          <MenuItem onClick={() => { setOpenStates({ ...openStates, [animal.id]: true }); }}>Eliminar</MenuItem>
+                          <MenuItem onClick={() => editAnimal(animal.id)}>
+                            Editar
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              setOpenStates({
+                                ...openStates,
+                                [animal.id]: true,
+                              });
+                            }}
+                          >
+                            Eliminar
+                          </MenuItem>
                           <AlertDialog
                             isOpen={openStates[animal.id] || false}
                             leastDestructiveRef={cancelRef}
-                            onClose={() => { setOpenStates({ ...openStates, [animal.id]: false }); }}
+                            onClose={() => {
+                              setOpenStates({
+                                ...openStates,
+                                [animal.id]: false,
+                              });
+                            }}
                           >
                             <AlertDialogOverlay>
                               <AlertDialogContent>
-                                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                <AlertDialogHeader
+                                  fontSize="lg"
+                                  fontWeight="bold"
+                                >
                                   Eliminar Animal
                                 </AlertDialogHeader>
                                 <AlertDialogBody>
-                                  Estas seguro que quieres eliminar este animal? No lo podrás recuperar después.
+                                  Estas seguro que quieres eliminar este animal?
+                                  No lo podrás recuperar después.
                                 </AlertDialogBody>
                                 <AlertDialogFooter>
-                                  <Button ref={cancelRef} onClick={() => { setOpenStates({ ...openStates, [animal.id]: false }); }}>
+                                  <Button
+                                    ref={cancelRef}
+                                    onClick={() => {
+                                      setOpenStates({
+                                        ...openStates,
+                                        [animal.id]: false,
+                                      });
+                                    }}
+                                  >
                                     Cancelar
                                   </Button>
-                                  <Button colorScheme='red' onClick={() => deleteAnimal(animal.id)} ml={3}>
+                                  <Button
+                                    colorScheme="red"
+                                    onClick={() => deleteAnimal(animal.id)}
+                                    ml={3}
+                                  >
                                     Eliminar
                                   </Button>
                                 </AlertDialogFooter>

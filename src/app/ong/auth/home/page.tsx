@@ -44,15 +44,13 @@ import AdminSidebarResponsive from '@/components/adminSidebar';
 
 export default function UserDashboard() {
   const bgCard = useColorModeValue('white', 'gray.700');
-  
+
   useEffect(() => {
     (async () => {
-      const data = await supabase.getInKindDonations()   
+      const data = await supabase.getInKindDonations();
       // console.log(data)
     })();
-}, []);
-
-
+  }, []);
 
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
@@ -89,7 +87,6 @@ export default function UserDashboard() {
           >
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
               Notificaciones
-
             </Box>
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
               Mundo

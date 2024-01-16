@@ -7,7 +7,8 @@ import {
   Box,
   CardBody,
   CardHeader,
- Card } from '@chakra-ui/react';
+  Card,
+} from '@chakra-ui/react';
 import React from 'react';
 
 export default function NotificationsHistory(props: any) {
