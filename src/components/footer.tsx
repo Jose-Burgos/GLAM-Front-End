@@ -59,6 +59,7 @@ export default function Footer() {
             Adopciones
           </Link>
         </ListItem>
+        
         <ListItem
           me={{
             base: '20px',
@@ -67,6 +68,16 @@ export default function Footer() {
         >
           <Link color={linkTeal} href="/ong" target="_blank">
             Organizaciones
+          </Link>
+        </ListItem>
+        <ListItem
+          me={{
+            base: '20px',
+            md: '44px',
+          }}
+        >
+          <Link color={linkTeal} href="/reports/lost" target="_blank">
+            Reportar
           </Link>
         </ListItem>
       </List>

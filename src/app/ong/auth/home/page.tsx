@@ -1,9 +1,11 @@
 'use client'
+
 import React, {useEffect, useState}from 'react';
-import { Flex, HStack, Text, Grid, GridItem, VStack, Image, useColorMode, Accordion, AccordionItem, AccordionButton, AccordionPanel, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, StatGroup, Box, Center, AccordionIcon, Heading, StackDivider} from '@chakra-ui/react';
+import { Flex, HStack, Text, Grid, GridItem, VStack, Image, useColorMode, Accordion, AccordionItem, AccordionButton, AccordionPanel, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, StatGroup, Box, Center, AccordionIcon, Heading, StackDivider, useColorModeValue, Divider, Spacer} from '@chakra-ui/react';
 import OrgDashboardSidebar from '@/components/OrgDashboardSidebar';
 import supabase from '~/supabase/helpers';
 import { Animal, InKindDonation } from '~/supabase/types/supabase.tables';
+import { Separator } from '@/components/separator';
 
 export default function UserDashboard() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -21,8 +23,13 @@ export default function UserDashboard() {
     { value: ongAnimals.length, label: 'Animales para adoptar' },
     { value: 0, label: 'Animales Adoptados' },
     { value: 0, label: 'Solicitudes pendientes' },
-    { value: 0, label: 'Animales en proceso de adopción' },
+    { value: 0, label: 'Adopciónes en curso' },
   ];
+  
+  const titleColor = useColorModeValue('teal.300', 'teal.200');
+  const textColor = useColorModeValue('gray.700', 'white');
+  const bgColor = useColorModeValue('white', 'gray.700');
+
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
@@ -40,26 +47,27 @@ export default function UserDashboard() {
           <Grid
           mt={1}
             mb={3}
-            h='500px'
+            
             // w="100%"
             templateRows='repeat(2, 1fr)'
             templateColumns='repeat(12, 1fr)'
             gap={4}
           >
-            <GridItem rowSpan={2} colSpan={4}  bg={colorMode === 'light' ? 'gray.200' : 'gray.600' } padding={8} boxShadow="md" borderRadius="xl">
-            <Heading fontSize="4xl" mb={2}>
+            <GridItem rowSpan={2} colSpan={4}  bg={bgColor } padding={8} boxShadow="md" borderRadius="xl">
+            <Heading fontSize="4xl" mb={2} color={titleColor}>
               {ongName}
             </Heading>
-              <VStack divider={<StackDivider borderColor={colorMode === 'light' ? 'gray.800' : 'gray.200' } />} spacing={5} align='stretch'>
+              <VStack divider={<Separator />} spacing={3} align='stretch'>
                 {data.map((item, index) => (
-                  <Box key={index}>
+                  <HStack mt={5} key={index}>
                     <Heading fontSize="3xl">{item.value}</Heading>
+                    <Spacer />
                     <Text fontSize="lg">{item.label}</Text>
-                  </Box>
+                  </HStack>
                 ))}
               </VStack>
             </GridItem> 
-            <GridItem colSpan={4} bg={colorMode === 'light' ? 'gray.200' : 'gray.600'} padding={4} boxShadow="md" borderRadius="xl">
+            <GridItem colSpan={4} bg={bgColor} padding={4} boxShadow="md" borderRadius="xl">
               <Text fontSize='lg' fontWeight='bold' mb={4}>Notificaciones</Text>
               {iknotifications?.length === 0 ? (
                 <Text>No tienes notificaciones</Text>
@@ -76,7 +84,7 @@ export default function UserDashboard() {
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4}>
-                        Un usuario donará {item.quantity} elementos de {item.type} {item.condition}, se presentará el día {item.availability}
+                        Un usuario donará {item.quantity} elementos de {item.type} {item.condition}, se presentará el día {item.availability.split('T')[0]}
                       </AccordionPanel>
                     </AccordionItem>
                   ))}
@@ -89,7 +97,7 @@ export default function UserDashboard() {
               display="flex"
               alignItems="center"
               justifyContent="center"
-              bg={colorMode === 'light' ? 'gray.200' : 'gray.600'}
+              bg={bgColor}
               padding={4}
               boxShadow="md"
               borderRadius="xl"
@@ -101,9 +109,7 @@ export default function UserDashboard() {
                 <StatHelpText fontSize="md">Nov 12 - Nov 30</StatHelpText>
               </Stat>
             </GridItem>
-            <GridItem colSpan={8} bg={colorMode === 'light' ? 'gray.200' : 'gray.600'} padding={4} boxShadow="md" borderRadius="xl">
-            
-            </GridItem>
+            <GridItem colSpan={8} bg={bgColor} padding={4} boxShadow="md" borderRadius="xl" />
           </Grid>
         </Flex>
       </HStack>

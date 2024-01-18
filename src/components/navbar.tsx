@@ -88,7 +88,7 @@ export default function NavBar(props: any) {
       </Heading>
     </Link>
   );
-  const linksAuth = (
+  const links = (
     <HStack display={{ sm: 'none', lg: 'flex' }}>
       <NextLink href="/">
         <Button
@@ -181,7 +181,7 @@ export default function NavBar(props: any) {
               />
             }
           >
-            <Text fontSize="md">Dashboard</Text>
+            <Text fontSize="md" _hover={{textColor: 'teal.400'}}>Dashboard</Text>
           </Button>
         </NextLink>
       )}
@@ -220,7 +220,7 @@ export default function NavBar(props: any) {
               {...rest}
             />
           </Box>
-          {linksAuth}
+          {links}
           <HStack spacing={5}>
             {!isLoggedIn && (
               <Link href="/login">
@@ -297,7 +297,7 @@ export default function NavBar(props: any) {
       alignItems="center"
     >
       <Flex w="100%" justifyContent={{ sm: 'start', lg: 'space-between' }}>
-        {brand}
+        {brand}{links}
         <HStack spacing={5}>
           {isLoggedIn && (
             <Button
