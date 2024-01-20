@@ -97,7 +97,7 @@ export default function InKindDonationForm() {
       });
 
       // Perform additional actions after the operation fails
-      console.error('Error:', error);
+      // console.error('Error:', error);
     } finally {
       // Close the loading toast
       toast.close(toastId);

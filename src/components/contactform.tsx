@@ -29,13 +29,13 @@ export default function ContactForm({ animalId }: { animalId: string }) {
   const { values, errors, submitForm, handleSubmit, handleChange } =
     useValidation(initialState, validateContactForm, onSubmit);
   async function onSubmit() {
-    console.log('Mensaje enviado');
+   // console.log('Mensaje enviado');
   }
 
   function myHandleChange(e: any) {
     handleChange(e);
-    console.log(values);
-    console.log(errors);
+   // console.log(values);
+   // console.log(errors);
   }
 
   function myHandleSubmit(e: any) {

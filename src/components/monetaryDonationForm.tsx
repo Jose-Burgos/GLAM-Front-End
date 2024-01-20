@@ -1,7 +1,9 @@
 'use client'
+
 import { Button, Input, Stack, FormControl, FormLabel, Center, FormErrorMessage } from '@chakra-ui/react';
 import useValidation from '@/hooks/useValidation';
 import validateMonetaryDonationForm from '@/hooks/validation/validateMonetaryDonationForm';
+import React, { useState, useEffect } from 'react';
 
 export default function MonetaryDonationForm () {
     const initialState = {
@@ -10,9 +12,9 @@ export default function MonetaryDonationForm () {
     const { values, errors, submitForm, handleSubmit, handleChange } =
     useValidation(initialState, validateMonetaryDonationForm, onSubmit);
     async function onSubmit(){
-        //Handle submit function
+        // Handle submit function
         // Conectar con Merado Pago
-        console.log('Valor enviado',values.amount); 
+       // console.log('Valor enviado',values.amount); 
     }
 
     return (

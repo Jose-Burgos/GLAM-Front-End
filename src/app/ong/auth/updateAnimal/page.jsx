@@ -1,8 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+
 import { getAnimals } from '~/supabase/helpers';
 import { supabase } from '../../../../../supabase/supabaseClient';
 import { Animal } from '~/supabase/types/supabase.tables';
+import React, { useEffect, useState } from 'react';
+
 
 export default function updateAnimal() {
   const [name, setName] = useState();
@@ -15,13 +17,13 @@ export default function updateAnimal() {
   const [session, setSession] = useState(null);
 
   const call = async () => {
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from('animals')
       .select('name, breed, height,back_length,weight,age')
       .eq('name', 'Señor Gato');
 
     if (error) {
-      console.warn(error);
+      // console.warn(error);
     } else if (data) {
       setName(data[0].name);
       setBreed(data[0].breed);
@@ -50,15 +52,15 @@ export default function updateAnimal() {
   async function updateAnimals(event) {
     event.preventDefault();
     console.log(event);
-    let { error } = await supabase
+    const { error } = await supabase
       .from('animals')
       .update({
-        name: name,
-        breed: breed,
-        height: height,
-        back_length: back_length,
-        weight: weight,
-        age: age,
+        name,
+        breed,
+        height,
+        back_length,
+        weight,
+        age,
         updated_at: new Date(),
       })
       .eq('name', 'Señor Gato')

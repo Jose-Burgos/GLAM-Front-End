@@ -74,7 +74,7 @@ export default function AnimalTable(props: TableProps) {
       });
 
       // Perform additional actions after the operation fails
-      console.error('Error:', error);
+      // console.error('Error:', error);
     } finally {
       // Show a success toast when the operation is completed
       toast({
@@ -94,7 +94,7 @@ export default function AnimalTable(props: TableProps) {
   // Function to edit an animal
   const editAnimal = (id: String) => {
     // Log the animal ID and redirect to the editAnimal page
-    console.log(id);
+    // console.log(id);
     window.location.href = `/ong/auth/editAnimal?id=${id}`;
   };
 

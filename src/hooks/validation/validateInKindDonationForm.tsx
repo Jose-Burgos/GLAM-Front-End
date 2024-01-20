@@ -1,4 +1,4 @@
-//validateInKindDonationsForm.tsx
+// validateInKindDonationsForm.tsx
 export default function validateInKindDonationForm(values: any) {
   const errors: any = {};
   // Validate type

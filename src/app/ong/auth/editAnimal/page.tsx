@@ -32,10 +32,10 @@ export default function EditAnimal() {
   }, [userID]);
 
   return (
-    <>
+    <div>
       {selected && (
         <AnimalForm animal={selectedAnimal} submitBtnText="Editar Animal" />
       )}
-    </>
+    </div>
   );
 }

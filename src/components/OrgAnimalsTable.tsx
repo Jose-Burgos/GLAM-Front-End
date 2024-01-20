@@ -18,7 +18,7 @@ function OrgAnimalsTable() {
       // setProfilePics(await helpers.getImages());
     })();
   }, []);
-  console.log('Animals: ', animals);
+ // console.log('Animals: ', animals);
   return (
     // <CardBody>
     <Table variant="simple">
