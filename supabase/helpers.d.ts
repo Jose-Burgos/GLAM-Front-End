@@ -48,7 +48,7 @@ export interface HelperFunctions {
   // deleteProfilePic: (animalId: string) => Promise<any>;
   // uploadImage: (file: any, animalId: string) => Promise<any>;
   submitInKindDonation: (donationdata : Sb.InKindDonation) => Promise<void>;
-  getInKindDonations: () => Promise<Sb.InKindDonation[]>
-
+  getInKindDonations: () => Promise<>
+  setSeenNotification: (notificationId : number) => void;
 
 }

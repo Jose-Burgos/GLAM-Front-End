@@ -332,6 +332,42 @@ const helpers: HelperFunctions = {
     return data;
   },
 
+  submitInKindDonation: async (donationData: Sb.InKindDonation) => {
+    const { error } = await supabase.from('in_kind_donations').insert({
+      ong: donationData.ong,
+      type: donationData.type,
+      description: donationData.description,
+      quantity: donationData.quantity,
+      availability: donationData.availability,
+      user: donationData.user,
+      condition : donationData.condition
+    });
+    if (error) {
+      throw new Error(error.message);
+    }
+    ;
+  },
+
+  getInKindDonations: async () => {
+  
+    const { data, error } = await supabase
+      .from('in_kind_donations')
+      .select('*')
+      .eq('ong', await helpers.getCurrentUserId());
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  },
+  
+  setSeenNotification: async (notificationId : number) => {
+    const { error } = await supabase
+    .from('in_kind_donations')
+    .update({ seen : true })
+    .eq('id', notificationId)
+    return;  
+  },
+
   // getImages: async () => {
   //   const userId = await helpers.getCurrentUserId();
   //   const path = `${userId}/pics`;
@@ -489,34 +525,8 @@ const helpers: HelperFunctions = {
   //   }
   // },
 
-  submitInKindDonation: async (donationData: Sb.InKindDonation) => {
-    const { error } = await supabase.from('in_kind_donations').insert({
-      ong: donationData.ong,
-      type: donationData.type,
-      description: donationData.description,
-      quantity: donationData.quantity,
-      availability: donationData.availability,
-      user: donationData.user,
-      condition : donationData.condition
-    });
-    if (error) {
-      throw new Error(error.message);
-    }
-    ;
-  },
-
-  getInKindDonations: async () => {
-  
-    const { data, error } = await supabase
-      .from('in_kind_donations')
-      .select('*')
-      .eq('ong', await helpers.getCurrentUserId());
-    if (error) {
-      throw new Error(error.message);
-    }
-    return data;
-  },
 };
+
 
 export default helpers;
 

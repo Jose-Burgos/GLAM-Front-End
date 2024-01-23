@@ -75,4 +75,6 @@ export interface InKindDonation {
   condition: string;
   availability: string;
   user: string;
+  seen: boolean;
+  id: number;
 }
