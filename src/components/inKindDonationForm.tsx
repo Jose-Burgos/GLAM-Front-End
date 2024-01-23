@@ -29,7 +29,6 @@ import {
 export default function InKindDonationForm() {
   // State variables
   const [userId, setUserId] = useState('');
-  const [userType, setUserType] = useState('');
   const [ONGs, setONGs] = useState({} as Org[]);
 
   const initialState = {
@@ -49,12 +48,10 @@ export default function InKindDonationForm() {
       const ongs = await supabase.getOrganizations();
       const loggedUser = await supabase.getCurrentUser();
       setONGs(ongs);
-      setUserType(loggedUser.type);
       setUserId(loggedUser.profile.public.id);
-      // console.log(loggedUser)
-      })();
-    }, []);
-
+    })();
+  }, []);
+  
   // Toast hook for displaying notifications
   const toast = useToast();
 
@@ -124,12 +121,15 @@ export default function InKindDonationForm() {
                 borderRadius="15px"
                 fontSize="sm"
                 size="lg"
+              
               >
-                {ONGs?.map((item) => (
+              {Array.isArray(ONGs) && (
+                ONGs.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
                   </option>
-                ))}
+                ))
+              )}
               </Select>
               {errors.ong && <FormErrorMessage>{errors.ong}</FormErrorMessage>}
             </FormControl>
@@ -155,7 +155,7 @@ export default function InKindDonationForm() {
                   Suministros Medicos
                 </option>
                 <option key="cleaning" value="Articulos de Limpieza">
-                  Articulos de Limpieza
+                  Ar ticulos de Limpieza
                 </option>
                 <option key="home" value="Suministros para el Refugio">
                   Suministros para el Refugio
@@ -219,13 +219,13 @@ export default function InKindDonationForm() {
                 fontSize="sm"
                 size="lg"
               >
-                <option key="new" value="nuev@(s)">
+                <option key="new" value="Nuevo">
                   Nuevo
                 </option>
-                <option key="used" value="usad@(s)">
+                <option key="used" value="Usado">
                   Usado
                 </option>
-                <option key="good_conditions" value="en buenas condiciones">
+                <option key="good_conditions" value="En buenas condiciones">
                   En buen estado
                 </option>
               </Select>
