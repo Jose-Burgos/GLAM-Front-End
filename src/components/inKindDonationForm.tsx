@@ -47,7 +47,7 @@ export default function InKindDonationForm() {
     (async () => {
       const ongs = await supabase.getOrganizations();
       const loggedUser = await supabase.getCurrentUser();
-      setONGs(ongs);
+      setONGs(ongs);  
       setUserId(loggedUser.profile.public.id);
     })();
   }, []);

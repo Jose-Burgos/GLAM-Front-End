@@ -13,8 +13,8 @@ export default function MonetaryDonationForm () {
     useValidation(initialState, validateMonetaryDonationForm, onSubmit);
     async function onSubmit(){
         // Handle submit function
-        // Conectar con Merado Pago
-       // console.log('Valor enviado',values.amount); 
+        // Conectar con Merado Pago 
+        // console.log('Valor enviado',values.amount);         
     }
 
     return (
