@@ -54,8 +54,14 @@ export enum RequestStates {
 
 export type AdoptionRequest = Table<'adoption_requests'>;
 export interface AdoptionRequestForm {
-  details: string;
-  user_email: string;
+  nombreApellido: string,
+  numeroCelular: string,
+  edad: string,
+  domicilio: string,
+  localidad: string,
+  tipoLocacion: string[] ,
+  exterior: string[], 
+  animalesTransitante: string,
 }
 
 export type SpeciesData = Table<'species'>;
