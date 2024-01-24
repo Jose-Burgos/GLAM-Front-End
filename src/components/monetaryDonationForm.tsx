@@ -7,10 +7,10 @@ import React, { useState, useEffect } from 'react';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
 // import { error } from 'console';
-
+     
 export default function MonetaryDonationForm () {
     useEffect(() => {
-        initMercadoPago('TEST-f4ff05f0-9e8d-4fc3-a0e7-64bb29313733', {
+        initMercadoPago('TEST-82b34673-5d48-497b-b2e0-ec7590ef7ffc', {
             locale: 'es-MX',
         });
     }, []); // El segundo argumento es una lista de dependencias vacía para que se ejecute solo una vez.

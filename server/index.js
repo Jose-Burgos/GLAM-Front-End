@@ -4,7 +4,7 @@ import cors from 'cors';
 import {MercadoPagoConfig, Preference} from 'mercadopago'
 
 const client = new MercadoPagoConfig({
-    accessToken: 'TEST-7817348985886906-112920-1dc2aec458bbbd913436cb47f1718772-1570399463',
+    accessToken: 'TEST-7724859608309433-012412-faebbe301ddb1f8d6e741d5e2cc80722-1650260579',
 })
 
 const app = express()
@@ -29,9 +29,9 @@ app.post('/payment',async (req,res) => {
                 }
             ],
             back_urls: {
-                success: 'https://www.success.com',
-                failure: 'http://www.failure.com',
-                pending: 'http://www.pending.com'
+                success: 'localhost:3000',
+                failure: 'localhost:3000',
+                pending: 'localhost:3000'
             },
             auto_return: 'approved',
         }
@@ -41,7 +41,7 @@ app.post('/payment',async (req,res) => {
             id: result.id,
         })
     }catch(err){
-        console.log(error)
+
         res.status(500).json({
             error: "error al crear la preferencia"
         })
