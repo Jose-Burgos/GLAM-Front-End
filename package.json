@@ -23,6 +23,7 @@
     "@mui/material": "^5.14.15",
     "@supabase/supabase-js": "^2.39.3",
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.6",
+    "axios": "^1.6.5",
     "chakra": "^0.0.3",
     "embla-carousel-autoplay": "^8.0.0-rc14",
     "embla-carousel-react": "^8.0.0-rc14",
