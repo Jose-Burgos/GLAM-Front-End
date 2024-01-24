@@ -9,9 +9,12 @@ import axios from 'axios'
 // import { error } from 'console';
 
 export default function MonetaryDonationForm () {
-    initMercadoPago('TEST-f4ff05f0-9e8d-4fc3-a0e7-64bb29313733', {
-        locale: 'es-MX',
-    });
+    useEffect(() => {
+        initMercadoPago('TEST-f4ff05f0-9e8d-4fc3-a0e7-64bb29313733', {
+            locale: 'es-MX',
+        });
+    }, []); // El segundo argumento es una lista de dependencias vacía para que se ejecute solo una vez.
+    
     const initialState = {
         amount : 0
     };
@@ -45,7 +48,7 @@ export default function MonetaryDonationForm () {
     return (
         <Center>
             <Stack spacing={4}>
-                <form id="monetaryDonations">
+                <form id="monetaryDonations" onSubmit={handleSubmit}>
                     <FormControl isInvalid={errors.amount}>
                         <FormLabel>Monto a donar</FormLabel>
                         <Input 
@@ -97,15 +100,15 @@ export default function MonetaryDonationForm () {
                             _active={{
                                 bg: 'teal.400',
                             }}
-                            as="a"
+                            // as="a"
                             fontWeight={500}
                             form="monetaryDonations"
-                            onClick={handleSubmit}
+                            // onClic   k={handleSubmit}
                         >
                             Donar
                         </Button>
                         {preferenceId &&
-                            <Wallet initialization={{ preferenceId: preferenceId ,  redirectMode: "blank"}}
+                            <Wallet initialization={{ preferenceId: preferenceId}}
                             />
                         }
                     </Stack>
