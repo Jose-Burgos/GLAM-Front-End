@@ -50,5 +50,6 @@ export interface HelperFunctions {
   submitInKindDonation: (donationdata : Sb.InKindDonation) => Promise<void>;
   getInKindDonations: () => Promise<>
   setSeenNotification: (notificationId : number) => void;
-
+  getOrganization: () => Promise<Sb.OngInfo[]>
+  updateOrganization:(org : Sb.OngInfo) => Promise<>
 }

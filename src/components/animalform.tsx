@@ -61,12 +61,9 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
     })();
   }, []);
 
-  // Toast hook for displaying notifications
   const toast = useToast();
 
-  // Function to handle form submission
   async function onSubmit() {
-    // Display a loading toast
     const toastId = toast({
       title: 'Agregando Informacion',
       description: 'Por favor espere',

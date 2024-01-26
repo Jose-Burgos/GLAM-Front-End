@@ -13,7 +13,6 @@ export default function EditAnimal() {
   const [selected, setSelected] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState<Animal>();
 
-  useEffect(() => {}, []);
   useEffect(() => {
     (async () => {
       // Get user info

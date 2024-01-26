@@ -63,6 +63,11 @@ export default function OrgDashboardSidebar() {
       name: 'Dashboard',
       icon: <DashboardLogo w="26px" h="26px" me="0px" />,
     },
+    {
+      path: OngRoutes.settings,
+      name: 'Mi ONG',
+      icon: <OngLogo w="26px" h="26px" me="0px" />,
+    },
   ];
 
   const createLinks = () => {

@@ -9,7 +9,9 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "gen-types-npx": "npx supabase gen types typescript --project-id 'bjsqhsdofulofilczfcj' --schema public > supabase/types/supabase.ts",
-    "gen-types-pnpx": "pnpx supabase gen types typescript --project-id 'bjsqhsdofulofilczfcj' --schema public > supabase/types/supabase.ts"
+    "gen-types-pnpx": "pnpx supabase gen types typescript --project-id 'bjsqhsdofulofilczfcj' --schema public > supabase/types/supabase.ts",
+    "start-server": "node server/index.js",
+    "dev-and-server": "concurrently \"npm run dev\" \"npm run start-server\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -47,6 +49,7 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",

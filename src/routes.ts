@@ -3,6 +3,7 @@ export const OngRoutes = {
   dashboard: ongPath('home'),
   adoptions: ongPath('adoptions'),
   animals: ongPath('animals'),
+  settings : ongPath('settings'),
 };
 
 const userPath = (subPath?: string) => `/user/auth/${  subPath || ''  }/`;

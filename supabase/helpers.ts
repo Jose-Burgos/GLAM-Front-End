@@ -368,6 +368,22 @@ const helpers: HelperFunctions = {
     return;  
   },
 
+  getOrganization : async () => {        
+    const userId = await helpers.getCurrentUserId();
+    let { data: organization, error } = await supabase
+    .from('organizations')
+    .select('id, mp_access_token, mp_public_key, mp_user_id, name')
+    .eq('id', userId)
+    return organization as any
+  },
+
+  updateOrganization: async(org : Sb.OngInfo) => {
+    const userId = await helpers.getCurrentUserId();
+    const { error } = await supabase
+    .from('organizations')
+    .update({ name : org.name, mp_access_token : org.mp_access_token, mp_public_key : org.mp_public_key, mp_user_id : org.mp_user_id  })
+    .eq('id', userId)
+  }
   // getImages: async () => {
   //   const userId = await helpers.getCurrentUserId();
   //   const path = `${userId}/pics`;

@@ -1,5 +1,3 @@
-import { Rating } from '@mui/material';
-
 export default function validateAddAnimalForm(values: any) {
   const errors: any = {};
   // Validate species

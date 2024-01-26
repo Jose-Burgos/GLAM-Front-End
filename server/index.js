@@ -4,8 +4,8 @@ import cors from 'cors';
 import {MercadoPagoConfig, Preference} from 'mercadopago'
 
 const client = new MercadoPagoConfig({
-    accessToken: 'TEST-7724859608309433-012412-faebbe301ddb1f8d6e741d5e2cc80722-1650260579',
-})
+    accessToken: 'TEST-7817348985886906-112920-1dc2aec458bbbd913436cb47f1718772-1570399463',
+}) 
 
 const app = express()
 const port = 3001
@@ -13,9 +13,9 @@ const port = 3001
 app.use(cors())
 app.use(express.json())
 
-app.get('/',(req,res) => {
-    res.send("soy el serverga")
-})
+// app.get('/',(req,res) => {
+//     res.send("soy el server")
+// })
 
 app.post('/payment',async (req,res) => {
     try{

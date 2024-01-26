@@ -129,7 +129,7 @@ export default function UserDashboard() {
             >
               <Stat>
                 <StatLabel fontSize="lg">Balance total</StatLabel>
-                <StatNumber fontSize="4xl">$0.00 ARS</StatNumber>
+                <StatNumber fontSize="4xl">$6000.00 ARS</StatNumber>
                 <StatHelpText fontSize="md">Nov 12 - Nov 30</StatHelpText>
               </Stat>
             </GridItem>

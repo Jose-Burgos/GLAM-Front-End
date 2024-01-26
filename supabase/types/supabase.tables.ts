@@ -78,3 +78,11 @@ export interface InKindDonation {
   seen: boolean;
   id: number;
 }
+
+export interface OngInfo {
+  id : string;
+  mp_access_token : string
+  mp_public_key : string
+  mp_user_id : string
+  name : string
+}
