@@ -12,6 +12,7 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
     const { colorMode, toggleColorMode } = useColorMode();
     const toast = useToast();
     const { values, errors, submitForm, handleSubmit, handleChange } = useValidation(formData, validateOngSettingsForm, onSubmit);
+
     async function onSubmit() {
         const toastId = toast({
         title: 'Actualizando Informacion',
@@ -23,8 +24,7 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
         });
         try {
             
-        await supabase.updateOrganization(values);
- 
+        await supabase.updateOrganization(values as OngInfo);
         // Display success toast based on the operation type
         toast({
             title: 'Operación exitosa',
@@ -90,8 +90,7 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                         value={values.name}
                                         onChange={handleChange}
                                         shadow="inner"
-                                        type="text"
-                                        maxLength={20}
+                                        type="text"     
                                     />
                                     {errors.name && (
                                         <FormErrorMessage>{errors.name}</FormErrorMessage>
@@ -100,7 +99,7 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                 {/* User ID */}
                                 <FormControl 
                                 marginBottom={5} 
-                                // isInvalid={errors.mp_user_id}
+                                isInvalid={errors.mp_user_id}
                                 >
                                 <FormLabel>User ID de Mercado Pago</FormLabel>
                                 <Input
@@ -110,17 +109,16 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                     value={values.mp_user_id || ''}
                                     onChange={handleChange}
                                     shadow="inner"
-                                    type={'password'}
-                                    maxLength={20}
+                                    type="password" 
                                 />
-                                {/* {errors.mp_user_id && (
+                                {errors.mp_user_id && (
                                     <FormErrorMessage>{errors.mp_user_id}</FormErrorMessage>
-                                )} */}
+                                )}
                                 </FormControl>
                                 {/* Access Token */}
                                 <FormControl 
                                 marginBottom={5} 
-                                // isInvalid={errors.mp_access_token}
+                                isInvalid={errors.mp_access_token}
                                 >
                                 <FormLabel>Access Token de Mercado Pago</FormLabel>
                                 <Input
@@ -130,17 +128,16 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                     value={values.mp_access_token || ''}
                                     onChange={handleChange}
                                     shadow="inner"
-                                    type={'password'}
-                                    maxLength={20}
+                                    type="password"
                                 />
-                                {/* {errors.mp_access_token && (
+                                {errors.mp_access_token && (
                                     <FormErrorMessage>{errors.mp_access_token}</FormErrorMessage>
-                                )} */}
+                                )}
                                 </FormControl>
                                 {/* Public Key */}
                                 <FormControl 
                                 marginBottom={5} 
-                                // isInvalid={errors.mp_public_key}
+                                isInvalid={errors.mp_public_key}
                                 >
                                 <FormLabel>Public Key de Mercado Pago</FormLabel>
                                 <Input
@@ -150,12 +147,11 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                     value={values.mp_public_key || ''}
                                     onChange={handleChange}
                                     shadow="inner"
-                                    type={'password'}
-                                    maxLength={20}
+                                    type="password"
                                 />
-                                {/* {errors.mp_public_key && (
+                                {errors.mp_public_key && (
                                     <FormErrorMessage>{errors.mp_public_key}</FormErrorMessage>
-                                )} */}
+                                )}
                                 </FormControl>
                                 
                             {/* Submit Button */}
@@ -167,7 +163,7 @@ export default function OngInformation(props: {ong ?: OngInfo}) {
                                 form="updateOngInfo"
                                 onClick={handleSubmit}
                             >
-                                Actualizar
+                                Actualizar 
                             </Button>
                             </Center>
                         </form>

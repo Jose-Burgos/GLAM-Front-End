@@ -6,14 +6,23 @@ import validateMonetaryDonationForm from '@/hooks/validation/validateMonetaryDon
 import React, { useState, useEffect } from 'react';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
+import { OngInfo } from '~/supabase/types/supabase.tables';
+import supabase from '~/supabase/helpers';
 // import { error } from 'console';
 export default function MonetaryDonationForm () {
+    const [org, setOrg] = useState({} as OngInfo)
     useEffect(() => {
-        initMercadoPago('TEST-f4ff05f0-9e8d-4fc3-a0e7-64bb29313733', {
-            locale: 'es-MX',
-        });
-    }, []); // El segundo argumento es una lista de dependencias vacía para que se ejecute solo una vez.
-    
+        (async () => {
+            const id = await supabase.getOrganization()
+            if(id){
+                setOrg(id[0]);
+            }
+        })();
+    }, []);
+    console.log(org.mp_public_key)
+    initMercadoPago(org.mp_public_key as string, {
+        locale: 'es-MX',
+    });
     const initialState = {
         amount : 0
     };

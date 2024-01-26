@@ -28,6 +28,8 @@ const useValidation = (initialState: any, validate: any, func: any) => {
     const validationErrors = validate(values);
     saveErrors(validationErrors);
     saveSubmitForm(true);
+    // console.log(values);
+    // console.log(validationErrors);
   };
 
   return {

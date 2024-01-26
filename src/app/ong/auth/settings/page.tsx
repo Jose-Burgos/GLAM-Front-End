@@ -13,7 +13,9 @@ export default function Settings() {
     useEffect(() => {
         (async () => {
             const user = await supabase.getOrganization()
+            if (user) {
             setOng(user[0])
+            }
             // console.log(user)
         })();
     }, []);

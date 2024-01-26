@@ -29,18 +29,8 @@ export default function ContactForm({ animalId }: { animalId: string }) {
   const { values, errors, submitForm, handleSubmit, handleChange } =
     useValidation(initialState, validateContactForm, onSubmit);
   async function onSubmit() {
-   // console.log('Mensaje enviado');
-  }
-
-  function myHandleChange(e: any) {
-    handleChange(e);
-   // console.log(values);
-   // console.log(errors);
-  }
-
-  function myHandleSubmit(e: any) {
+    // console.log('Mensaje enviado');
     helpers.requestAdoption(animalId, values);
-    handleSubmit(e);
   }
 
   return (
@@ -55,7 +45,7 @@ export default function ContactForm({ animalId }: { animalId: string }) {
               id="constact_email"
               name="user_email"
               value={values.user_email}
-              onChange={myHandleChange}
+              onChange={handleChange}
               type="text"
               maxLength={20}
             />
@@ -69,7 +59,7 @@ export default function ContactForm({ animalId }: { animalId: string }) {
               borderRadius="15px"
               placeholder="Detalle... "
               value={values.details}
-              onChange={myHandleChange}
+              onChange={handleChange}
               size="xl"
               maxLength={400}
               name="details"
@@ -87,7 +77,7 @@ export default function ContactForm({ animalId }: { animalId: string }) {
             href="/login"
             form="registerUserForm"
             borderRadius="15px"
-            onClick={myHandleSubmit}
+            onClick={handleSubmit}
           >
             Enviar
           </Button>

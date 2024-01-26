@@ -92,7 +92,7 @@ const helpers: HelperFunctions = {
 
   getCurrentUserName: async () => {
     const session = await helpers.getSession();
-    console.log(session)
+    // console.log(session)
     if (!session) {
       // throw new Error('No logged in user');
       console.log('No logged in user')

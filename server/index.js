@@ -2,9 +2,13 @@ import express from 'express';
 import cors from 'cors';
 
 import {MercadoPagoConfig, Preference} from 'mercadopago'
+import supabase from '~/supabase/helpers';
 
+async () => {
+    const id = await supabase.getOrganization()
+}
 const client = new MercadoPagoConfig({
-    accessToken: 'TEST-7817348985886906-112920-1dc2aec458bbbd913436cb47f1718772-1570399463',
+    accessToken: id,
 }) 
 
 const app = express()
