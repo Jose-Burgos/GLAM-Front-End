@@ -37,7 +37,7 @@ interface IdInterface {
   id: string;
 }
 
-export default function OngInfo(props: IdInterface) {
+export default function OngInfo() {
   const [cardData, setCardData] = useState<Animal[]>();
   const [success, setSuccess] = useState<boolean>(false);
   const bgColor = useColorModeValue('white', 'gray.700');
