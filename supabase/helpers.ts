@@ -430,7 +430,7 @@ async function getImages() {
   } else {
     return data.map((element) => ({
       url:
-        'https://bjsqhsdofulofilczfcj.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
+        'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
         userId +
         '/' +
         element.name,

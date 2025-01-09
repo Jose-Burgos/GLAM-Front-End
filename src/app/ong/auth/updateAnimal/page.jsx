@@ -39,7 +39,7 @@ export default function updateAnimal() {
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       setSession(currentSession);
     });
-  
+
     supabase.auth.onAuthStateChange((_event, currentSession) => {
       setSession(currentSession);
     });
@@ -51,7 +51,7 @@ export default function updateAnimal() {
   async function updateAnimals(event) {
     event.preventDefault();
     console.log(event);
-  
+
     const { error } = await supabase
       .from('animals')
       .update({
@@ -65,7 +65,7 @@ export default function updateAnimal() {
       })
       .eq('name', 'Señor Gato')
       .select();
-  
+
     if (error) {
       alert(error.message);
       console.log('error');
