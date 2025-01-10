@@ -27,6 +27,7 @@ export default function validateUserRegisterForm(values: any) {
     errors.email = 'El email es obligatorio';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
     errors.user_email = 'Email no válido';
+    console.log("Invalid email!!!");
   }
 
   // Validate password

@@ -34,6 +34,7 @@ export default function UserRegisterFrom() {
       const { data, existingAccount } = await HelperFunctions.userSignUp(
         JSON.parse(log)
       );
+      console.log("Creating the user");
       if (existingAccount) {
         toast({
           title: 'Error',
