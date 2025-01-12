@@ -341,7 +341,7 @@ const helpers: HelperFunctions = {
 
     if (data) {
       // if we got an image
-      getImages(); // refresh images
+      helpers.getImages(); // refresh images
     } else {
       throw new Error(error.message);
     }
@@ -373,6 +373,25 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     }
     return data;
+  },
+
+  getImages: async () => {
+    const userId = await helpers.getCurrentUserId();
+    const { data, error } = await supabase.storage
+      .from('animal-pictures-orgs')
+      .list(userId);
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data.map((element) => ({
+        url:
+          'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
+          userId +
+          '/' +
+          element.name,
+        name: userId + '/' + element.name,
+      }));
+    }
   },
 };
 
@@ -447,24 +466,7 @@ async function getAdoptionRequests(
   return data;
 }
 
-async function getImages() {
-  const userId = await helpers.getCurrentUserId();
-  const { data, error } = await supabase.storage
-    .from('animal-pictures-orgs')
-    .list(userId);
-  if (error) {
-    throw new Error(error.message);
-  } else {
-    return data.map((element) => ({
-      url:
-        'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
-        userId +
-        '/' +
-        element.name,
-      name: userId + '/' + element.name,
-    }));
-  }
-}
+
 
 declare global {
   interface Window {
