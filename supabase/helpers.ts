@@ -78,6 +78,10 @@ const helpers: HelperFunctions = {
 
   userSignUp: async (signupInfo) => {
     const profile_type: Sb.ProfileType = 'RegularUser';
+  
+ 
+  
+    // Step 1: Sign up the user with Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email: signupInfo.email,
       password: signupInfo.password,
@@ -91,15 +95,38 @@ const helpers: HelperFunctions = {
         },
       },
     });
-
+  
+    // Step 2: Check if the account already exists in the 'users' table
+    const existingAccount = await accountExists(data.user);
+    if (existingAccount) {
+      throw new Error('Account already exists with this email.');
+    }
     if (error) {
-      // console.log('Error: ', error);
+      // If there's an error during sign-up, throw it
       throw new Error(error.message);
     }
-
-    // data.session should be null when email verifaction is active
-    return { data: data.user, existingAccount: accountExists(data.user) };
-  },
+  
+    // Step 3: Insert user data into the 'users' table
+    const userData = {
+      user_id: data.user?.id || '',  // Use the user ID from Supabase Auth
+      username: signupInfo.username,
+      first_name: signupInfo.firstName,
+      last_name: signupInfo.lastName,
+      identification: signupInfo.identification,
+      email: signupInfo.email,  // Storing email in the users table as well
+    };
+  
+    const { error: userTableError } = await supabase.from('users').insert([userData]);
+  
+    if (userTableError) {
+      console.error('Error inserting user into the users table:', userTableError);
+      throw new Error(userTableError.message);
+    }
+  
+    // Step 4: Return the user data and account existence status
+    return { data: data.user, existingAccount };
+  }
+  ,
 
   orgSignUp: async ({ email, password, name }) => {
     const profile_type: Sb.ProfileType = 'Organization';

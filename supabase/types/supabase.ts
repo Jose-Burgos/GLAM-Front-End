@@ -268,41 +268,31 @@ export interface Database {
       };
       users: {
         Row: {
-          adoption_ban_until: string | null;
-          id: string;
-          region: string | null;
-          reputation: number | null;
+          user_id: string;
           username: string;
+          first_name: string;
+          last_name: string;
+          identification: string;
+          email: string;
         };
         Insert: {
-          adoption_ban_until?: string | null;
-          id: string;
-          region?: string | null;
-          reputation?: number | null;
+          user_id: string;
           username: string;
+          first_name: string;
+          last_name: string;
+          identification: string;
+          email: string;
         };
         Update: {
-          adoption_ban_until?: string | null;
-          id?: string;
-          region?: string | null;
-          reputation?: number | null;
+          user_id?: string;
           username?: string;
+          first_name?: string;
+          last_name?: string;
+          identification?: string;
+          email?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: 'users_id_fkey';
-            columns: ['id'];
-            referencedRelation: 'private_user_info';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'users_region_fkey';
-            columns: ['region'];
-            referencedRelation: 'regions';
-            referencedColumns: ['alpha_3'];
-          },
-        ];
-      };
+      }
+      
     };
     Views: {
       [_ in never]: never;
