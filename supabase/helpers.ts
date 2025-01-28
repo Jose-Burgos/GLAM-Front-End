@@ -106,7 +106,7 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     }
   
-    // Step 3: Insert user data into the 'users' table
+    // Step 3: Insert user data into the table
     const userData = {
       user_id: data.user?.id || '',  // Use the user ID from Supabase Auth
       username: signupInfo.username,
@@ -128,26 +128,51 @@ const helpers: HelperFunctions = {
   }
   ,
 
-  orgSignUp: async ({ email, password, name }) => {
-    const profile_type: Sb.ProfileType = 'Organization';
+  orgSignUp: async (signupInfo) => {
+    const profile_type: Sb.ProfileType = 'RegularUser';
+  
+ 
+  
+    // Step 1: Sign up the user with Supabase Auth
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
+      email: signupInfo.email,
+      password: signupInfo.password,
       options: {
         data: {
-          name,
+          username: signupInfo.name,
+          email: signupInfo.email,
           profile_type,
         },
       },
     });
-
+  
+    // Step 2: Check if the account already exists in the 'users' table
+    const existingAccount = await accountExists(data.user);
+    if (existingAccount) {
+      throw new Error('Account already exists with this email.');
+    }
     if (error) {
-      // console.log('Error: ', error);
+      // If there's an error during sign-up, throw it
       throw new Error(error.message);
     }
-
-    // data.session should be null when email verifaction is active
-    return { data: data.user, existingAccount: accountExists(data.user) };
+  
+    // Step 3: Insert user data into the 'users' table
+    const userData = {
+      id: data.user?.id || '',  // Use the user ID from Supabase Auth
+      name: signupInfo.name,
+      email: signupInfo.email,  // Storing email in the users table as well
+      address: signupInfo.address,
+    };
+  
+    const { error: userTableError } = await supabase.from('organizations').insert([userData]);
+  
+    if (userTableError) {
+      console.error('Error inserting user into the users table:', userTableError);
+      throw new Error(userTableError.message);
+    }
+  
+    // Step 4: Return the user data and account existence status
+    return { data: data.user, existingAccount };
   },
 
   login: async ({ email, password }) => {

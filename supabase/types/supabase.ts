@@ -138,17 +138,20 @@ export interface Database {
         Row: {
           id: string;
           name: string;
-          reputation: number | null;
+          email: string;
+          address: string;
         };
         Insert: {
           id: string;
           name: string;
-          reputation?: number | null;
+          email: string;
+          address: string;
         };
         Update: {
           id?: string;
           name?: string;
-          reputation?: number | null;
+          email: string;
+          address: string;
         };
         Relationships: [
           {
