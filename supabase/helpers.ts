@@ -4,7 +4,9 @@ import { supabase } from './supabaseClient';
 import { HelperFunctions } from './helpers.d';
 import { v4 as uuidv4 } from 'uuid';
 
+
 const helpers: HelperFunctions = {
+  supabase,
   // Tendría que agregar pagination a esto probablemente. Y filtering.
   getAnimals: async () => {
     const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
@@ -78,9 +80,9 @@ const helpers: HelperFunctions = {
 
   userSignUp: async (signupInfo) => {
     const profile_type: Sb.ProfileType = 'RegularUser';
-  
- 
-  
+
+
+
     // Step 1: Sign up the user with Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email: signupInfo.email,
@@ -95,7 +97,7 @@ const helpers: HelperFunctions = {
         },
       },
     });
-  
+
     // Step 2: Check if the account already exists in the 'users' table
     const existingAccount = await accountExists(data.user);
     if (existingAccount) {
@@ -105,34 +107,34 @@ const helpers: HelperFunctions = {
       // If there's an error during sign-up, throw it
       throw new Error(error.message);
     }
-  
+
     // Step 3: Insert user data into the table
     const userData = {
-      user_id: data.user?.id || '',  // Use the user ID from Supabase Auth
+      user_id: data.user?.id || '', // Use the user ID from Supabase Auth
       username: signupInfo.username,
       first_name: signupInfo.firstName,
       last_name: signupInfo.lastName,
       identification: signupInfo.identification,
-      email: signupInfo.email,  // Storing email in the users table as well
+      email: signupInfo.email, // Storing email in the users table as well
     };
-  
+
     const { error: userTableError } = await supabase.from('users').insert([userData]);
-  
+
     if (userTableError) {
       console.error('Error inserting user into the users table:', userTableError);
       throw new Error(userTableError.message);
     }
-  
+
     // Step 4: Return the user data and account existence status
     return { data: data.user, existingAccount };
-  }
-  ,
+  },
+
 
   orgSignUp: async (signupInfo) => {
     const profile_type: Sb.ProfileType = 'RegularUser';
-  
- 
-  
+
+
+
     // Step 1: Sign up the user with Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email: signupInfo.email,
@@ -145,7 +147,7 @@ const helpers: HelperFunctions = {
         },
       },
     });
-  
+
     // Step 2: Check if the account already exists in the 'users' table
     const existingAccount = await accountExists(data.user);
     if (existingAccount) {
@@ -155,22 +157,22 @@ const helpers: HelperFunctions = {
       // If there's an error during sign-up, throw it
       throw new Error(error.message);
     }
-  
+
     // Step 3: Insert user data into the 'users' table
     const userData = {
-      id: data.user?.id || '',  // Use the user ID from Supabase Auth
+      id: data.user?.id || '', // Use the user ID from Supabase Auth
       name: signupInfo.name,
-      email: signupInfo.email,  // Storing email in the users table as well
+      email: signupInfo.email, // Storing email in the users table as well
       address: signupInfo.address,
     };
-  
+
     const { error: userTableError } = await supabase.from('organizations').insert([userData]);
-  
+
     if (userTableError) {
       console.error('Error inserting user into the users table:', userTableError);
       throw new Error(userTableError.message);
     }
-  
+
     // Step 4: Return the user data and account existence status
     return { data: data.user, existingAccount };
   },
@@ -209,17 +211,8 @@ const helpers: HelperFunctions = {
   },
 
   getSession: async () => {
-    // supabase.auth.onAuthStateChange((event, session) => {
-    //   console.log('On verifySession():', event, session)
-    //   if (event == 'SIGNED_IN') {
-    //     alert('Already signed in')
-    //     // Redirect to home page
-    //   }
-    // });
-    const { data: sessionData, error: sessionError } =
-      await supabase.auth.getSession();
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     if (sessionError) {
-      console.log('Error: ', sessionError);
       throw new Error(sessionError.message);
     } else if (sessionData.session) {
       return sessionData.session;
@@ -231,7 +224,6 @@ const helpers: HelperFunctions = {
   // Todo esto probablemente se cambie cuando implementen el routing porque ni idea como
   // funca por ahora
   /// ////////////////////////////////////////////////////////////////////////////////////////
-
   // I can add a callback if we need to use the data.user object outside of this function
   askNewPassOnReset: () => {
     supabase.auth.onAuthStateChange(async (event, session) => {
@@ -359,7 +351,6 @@ const helpers: HelperFunctions = {
 
   uploadImage: async (file) => {
     // let file = e.target.files[0];
-
     const { data, error } = await supabase.storage
       .from('animal-pictures-orgs')
       .upload(helpers.getCurrentUserId() + '/' + uuidv4(), file);
@@ -409,8 +400,7 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     } else {
       return data.map((element) => ({
-        url:
-          'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
+        url: 'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
           userId +
           '/' +
           element.name,
@@ -418,9 +408,11 @@ const helpers: HelperFunctions = {
       }));
     }
   },
+  //supabase: undefined
 };
 
 export default helpers;
+export {supabase};
 
 // Local functions that shouldn't be exported go here
 
@@ -498,7 +490,10 @@ declare global {
     supabase: any;
   }
 }
-window.supabase = {
-  ...helpers,
-  supabase,
-};
+// Check if code is running on the client-side before using 'window'
+if (typeof window !== 'undefined') {
+  window.supabase = {
+    ...helpers,
+    supabase,
+  };
+}

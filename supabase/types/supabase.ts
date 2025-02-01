@@ -54,7 +54,7 @@ export interface Database {
             foreignKeyName: 'adoption_requests_user_id_fkey';
             columns: ['user_id'];
             referencedRelation: 'users';
-            referencedColumns: ['id'];
+            referencedColumns: ['user_id'];
           },
         ];
       };
@@ -180,7 +180,7 @@ export interface Database {
             foreignKeyName: 'private_org_info_id_fkey';
             columns: ['id'];
             referencedRelation: 'users';
-            referencedColumns: ['id'];
+            referencedColumns: ['user_id'];
           },
         ];
       };
@@ -208,7 +208,7 @@ export interface Database {
             foreignKeyName: 'private_user_info_id_fkey';
             columns: ['id'];
             referencedRelation: 'users';
-            referencedColumns: ['id'];
+            referencedColumns: ['user_id'];
           },
         ];
       };

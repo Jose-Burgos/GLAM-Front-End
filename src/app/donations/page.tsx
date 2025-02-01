@@ -50,7 +50,7 @@ function inKindDonations() {
       const loggedUser = await supabase.getCurrentUser();
       setONGs(ongs);
       setUserType(loggedUser.type);
-      setUserId(loggedUser.profile.public.id);
+      //setUserId(loggedUser.profile.public.id);
       // console.log(loggedUser)
     })();
   }, []);

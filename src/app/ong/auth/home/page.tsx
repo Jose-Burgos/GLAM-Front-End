@@ -17,31 +17,6 @@ import {
 } from '@chakra-ui/react';
 import AdminSidebarResponsive from '@/components/adminSidebar';
 
-/* export default function animalInfo() {
-  const [data, setData] = useState<Animal[]>();
-  // const [userID, setUserID] = useState<string>();
-  // const [requests, setRequests] = useState<Request[]>();
-  useEffect(() => {
-    (async () => {
-      const aux = await supabase.getAnimals();
-      // const request = await supabase.getUserAdoptionRequests();
-      // const user  = await supabase.getCurrentUser();
-      setData(aux);
-      // setUserID(user?.profile.public.id);
-      // setRequests(request);
-    })();
-  }, []);
-
-  // getUserAdoptionRequests te devuelve solo las requests del usuario...
-  // const adopctions = requests?.filter(request => request.user_id === userID);
-  return <h1>Soon</h1>;
-}
-*/
-/*  
-      {data?.filter(animal => adopctions?.filter(request => animal.id === request.animal_id )).map((animal) => (
-      <AnimalCard key={animal.id} {...animal} />))}
-*/
-
 export default function UserDashboard() {
   const bgCard = useColorModeValue('white', 'gray.700');
 

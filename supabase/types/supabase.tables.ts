@@ -22,11 +22,6 @@ export interface Profile<T> {
     : Table<'private_user_info'>;
 }
 
-// export type RegularUserPublic = Tables<'users'>;
-// export type RegularUserPrivate = Tables<'private_user_info'>;
-// export type OrganizationPublic = Tables<'organizations'>;
-// export type OrganizationPrivate = Tables<'private_org_info'>;
-
 export interface UserSignupInfo {
   username: string;
   firstName: string;

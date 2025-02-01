@@ -25,6 +25,7 @@ import validateLoginForm from '@/hooks/validation/validateLoginForm';
 import useValidation from '@/hooks/useValidation';
 import logInImg1 from '@/assets/images/signInImage1.png';
 import AuthContext from '@/hooks/authContext';
+import helpers from '~/supabase/helpers';
 
 export default function Login() {
   const router = useRouter();
@@ -74,29 +75,82 @@ export default function Login() {
   async function onSubmit() {
     const log = JSON.stringify(values);
     try {
-      const { session, type } = await supabase.login(JSON.parse(log));
-      if (type === 'RegularUser') {
+      const { session, user } = await helpers.supabase.auth.signInWithPassword({
+        email: JSON.parse(log).email,
+        password: JSON.parse(log).password,
+      });
+  
+      // Ensure we explicitly re-fetch the session after login
+      const { data: sessionData, error } = await helpers.supabase.auth.getSession();
+  
+      // Log the session and any error if it exists
+      console.log("Session data:", sessionData);
+      console.log("Error:", error);
+  
+      if (sessionData?.session) {
+        // Session exists and is valid, proceed with the redirection
+        console.log("Session data exists and is valid");
+  
+        // Access the user directly from sessionData
+        const user = sessionData.session.user;  // Get the user from sessionData
+        console.log("User object from session:", user);  // Log the user object
+  
+        const profile_type = user?.user_metadata?.profile_type;
+        console.log("Profile Type:", profile_type);  // Log profile type to check
+  
+        if (user) {
+          const userId = user.user_metadata.user_id;  // Check if you have user_id in user_metadata
+          if (profile_type === 'RegularUser') {
+            console.log("You are User");
+            toast({
+              title: 'Usted es un Usuario.',
+              description: '',
+              status: 'success',
+              duration: 4000,
+              isClosable: true,
+              variant: 'left-accent',
+              position: 'top-left',
+            });
+            try {
+              router.push('/user/auth/home');
+            } catch (error) {
+              console.error("Redirection failed:", error);
+              toast({
+                title: 'Redirection Error',
+                description: 'There was an issue redirecting after login.',
+                status: 'error',
+                duration: 4000,
+                isClosable: true,
+                variant: 'left-accent',
+                position: 'top-left',
+              });
+            }
+          } else if (profile_type === 'Organization') {
+            console.log("You are ONG");
+            toast({
+              title: 'Usted es una ONG.',
+              description: '',
+              status: 'success',
+              duration: 4000,
+              isClosable: true,
+              variant: 'left-accent',
+              position: 'top-left',
+            });
+            router.push('/ong/auth/home');
+          } else {
+            console.log("Unknown user type?!");
+          }
+        }
+      } else {
         toast({
-          title: 'Usted es un Usuario.',
-          description: '',
-          status: 'success',
+          title: 'Error',
+          description: 'No session found after login',
+          status: 'error',
           duration: 4000,
           isClosable: true,
           variant: 'left-accent',
           position: 'top-left',
         });
-        router.push('/user/auth/home');
-      } else if (type === 'Organization') {
-        toast({
-          title: 'Usted es una ONG.',
-          description: '',
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-          variant: 'left-accent',
-          position: 'top-left',
-        });
-        router.push('/ong/auth/home');
       }
     } catch (err) {
       toast({
@@ -110,6 +164,8 @@ export default function Login() {
       });
     }
   }
+  
+  
 
   useEffect(() => {
     if (!useEffectExecuted.current) {

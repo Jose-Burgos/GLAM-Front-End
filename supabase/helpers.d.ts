@@ -43,4 +43,8 @@ export interface HelperFunctions {
   uploadImage: (imageName) => Promise<any>;
   submitInKindDonation: (donationdata: Sb.InKindDonation) => Promise<void>;
   getInKindDonations: () => Promise<Sb.InKindDonation[]>;
+  //auth: SupabaseClient['auth'];  // Make sure 'auth' is correctly typed
+  supabase: SupabaseClient;  // Explicitly include supabase in helpers' type
 }
+
+export { HelperFunctions };

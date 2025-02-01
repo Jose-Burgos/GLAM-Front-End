@@ -12,5 +12,6 @@ export default function validateLoginForm(values: any) {
   } else if (values.password.length < 6) {
     errors.password = 'La contraseña debe ser de al menos 6 caracteres';
   }
+  console.log("Validated login form");
   return errors;
 }
