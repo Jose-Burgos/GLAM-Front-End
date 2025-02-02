@@ -131,7 +131,7 @@ const helpers: HelperFunctions = {
 
 
   orgSignUp: async (signupInfo) => {
-    const profile_type: Sb.ProfileType = 'RegularUser';
+    const profile_type: Sb.ProfileType = 'Organization';
 
 
 
