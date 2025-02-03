@@ -235,7 +235,7 @@ export default function Login() {
                   name="email"
                   id="login_email"
                   type="email"
-                  placeholder="ejemplo@gmai.com"
+                  placeholder="ejemplo@gmail.com"
                   onChange={handleChange}
                   value={values.email}
                   mb="24px"
