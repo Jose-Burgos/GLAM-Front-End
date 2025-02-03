@@ -29,6 +29,8 @@ const helpers: HelperFunctions = {
   },
 
   upsertAnimal: async (animal: Sb.Animal) => {
+    console.log("Animal:");
+    console.log(animal);
     const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
@@ -336,6 +338,8 @@ const helpers: HelperFunctions = {
     if (error) {
       throw new Error(error.message);
     }
+    console.log("Species data requested: ");
+    console.log(data);
     return data;
   },
 

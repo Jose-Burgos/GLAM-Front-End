@@ -36,9 +36,6 @@ export default function AnimalCard(props: Animal) {
           />
           <Stack mt="6" spacing="3">
             <Text size="md">Nombre: {props.name}</Text>
-            <Text>
-              Estado de la adopción: Revisando solicitud {props.adopted}
-            </Text>
           </Stack>
         </CardBody>
         <CardFooter>

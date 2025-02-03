@@ -75,18 +75,26 @@ export default function Login() {
   async function onSubmit() {
     const log = JSON.stringify(values);
     try {
-      const { session, user } = await helpers.supabase.auth.signInWithPassword({
+      const { session, user, error } = await helpers.supabase.auth.signInWithPassword({
         email: JSON.parse(log).email,
         password: JSON.parse(log).password,
       });
-  
-      // Ensure we explicitly re-fetch the session after login
-      const { data: sessionData, error } = await helpers.supabase.auth.getSession();
-  
-      // Log the session and any error if it exists
-      console.log("Session data:", sessionData);
-      console.log("Error:", error);
-  
+      
+      if (error) {
+        console.log('Login failed:', error.message);
+        return;
+      }
+      
+      // After login, ensure the session is available
+      await helpers.supabase.auth.getSession(); // Re-fetch the session to confirm it's updated
+      const { data: sessionData, error: sessionError } = await helpers.supabase.auth.getSession();
+      
+      if (sessionError) {
+        console.error('Error fetching session:', sessionError.message);
+      } else {
+        console.log('Session data:', sessionData);
+      }
+      
       if (sessionData?.session) {
         // Session exists and is valid, proceed with the redirection
         console.log("Session data exists and is valid");
