@@ -29,6 +29,8 @@ const helpers: HelperFunctions = {
   },
 
   upsertAnimal: async (animal: Sb.Animal) => {
+    console.log("Animal:");
+    console.log(animal);
     const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
@@ -50,25 +52,62 @@ const helpers: HelperFunctions = {
 
   getCurrentUser: async () => {
     const session = await helpers.getSession();
+    console.log("Session data:", session); // Log the session data to check its content
+    
     if (!session) {
       throw new Error('No active session found');
     }
 
-    const regularUserProfile = await currentUser('RegularUser');
-    if (regularUserProfile) {
-      return { profile: regularUserProfile, type: 'RegularUser' };
+    // Determine user profile type based on session data or other identifiable criteria
+    let profileType: 'RegularUser' | 'Organization' | null = null;
+
+    // Example logic to determine profile type (this can be adjusted as per your app's logic)
+    const { data: publicData, error } = await supabase
+      .from('users')  // Or 'organizations' if you can check which table to expect based on session info
+      .select('*')
+      .eq('user_id', session.user.id);  // Check if it's a RegularUser or an Organization
+
+    if (error) {
+      throw new Error(error.message);
     }
 
-    const orgProfile = await currentUser('Organization');
-    if (orgProfile) {
-      return { profile: orgProfile, type: 'Organization' };
+    if (publicData.length > 0) {
+      profileType = 'RegularUser';
+    } else {
+      // Now check if it's an organization
+      const { data: orgData, error: orgError } = await supabase
+        .from('organizations')
+        .select('*')
+        .eq('id', session.user.id);
+
+      if (orgError) {
+        throw new Error(orgError.message);
+      }
+
+      if (orgData.length > 0) {
+        profileType = 'Organization';
+      }
     }
 
-    // No debería pasar nunca esto.
+    if (!profileType) {
+      throw new Error('Unable to determine profile type for this user.');
+    }
+
+    // Now, fetch the correct profile data based on the determined type
+    const userProfile = await currentUser(profileType);
+    
+    if (userProfile) {
+      console.log(`${profileType} profile found:`, userProfile);
+      return { profile: userProfile, type: profileType };
+    }
+  
+    // This should never happen under normal circumstances
     throw new Error(
-      `No regular user or organization account information found for user: ${session.user.id}`
+      `No account information found for user: ${session.user.id}`
     );
   },
+
+  
 
   getCurrentUserId: async () => {
     const session = await helpers.getSession();
@@ -98,7 +137,6 @@ const helpers: HelperFunctions = {
       },
     });
 
-    // Step 2: Check if the account already exists in the 'users' table
     const existingAccount = await accountExists(data.user);
     if (existingAccount) {
       throw new Error('Account already exists with this email.');
@@ -115,7 +153,7 @@ const helpers: HelperFunctions = {
       first_name: signupInfo.firstName,
       last_name: signupInfo.lastName,
       identification: signupInfo.identification,
-      email: signupInfo.email, // Storing email in the users table as well
+      email: signupInfo.email, 
     };
 
     const { error: userTableError } = await supabase.from('users').insert([userData]);
@@ -148,7 +186,7 @@ const helpers: HelperFunctions = {
       },
     });
 
-    // Step 2: Check if the account already exists in the 'users' table
+
     const existingAccount = await accountExists(data.user);
     if (existingAccount) {
       throw new Error('Account already exists with this email.');
@@ -158,11 +196,10 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     }
 
-    // Step 3: Insert user data into the 'users' table
     const userData = {
       id: data.user?.id || '', // Use the user ID from Supabase Auth
       name: signupInfo.name,
-      email: signupInfo.email, // Storing email in the users table as well
+      email: signupInfo.email, 
       address: signupInfo.address,
     };
 
@@ -336,6 +373,8 @@ const helpers: HelperFunctions = {
     if (error) {
       throw new Error(error.message);
     }
+    console.log("Species data requested: ");
+    console.log(data);
     return data;
   },
 
@@ -408,6 +447,83 @@ const helpers: HelperFunctions = {
       }));
     }
   },
+  getUsernameById: async (userId: string) => {
+    console.log("Fetching username for userId:", userId);  // Log the userId you're using
+    const { data, error } = await supabase
+      .from('users')
+      .select('username, user_id')  // Select only 'username' and 'user_id'
+      .eq('user_id', userId)  // Only fetch the RegularUser with matching user_id
+      .single();  
+
+    if (error) {
+      console.error("Error fetching username:", error.message);  // Log the error message
+      throw new Error(error.message);  // Rethrow or handle error
+    }
+
+    if (!data) {
+      console.error(`No data found for user with ID: ${userId}`);
+      throw new Error(`User with ID ${userId} not found`);
+    }
+  
+    console.log("Data found:", data);  // Log the returned data
+
+    // Check if it's a RegularUser (i.e., has user_id)
+    if ('user_id' in data) {
+      return data.username;  // Return the username for RegularUser
+    }
+
+    // If it's not a RegularUser (i.e., it's an Organization), throw an error
+    throw new Error('Only RegularUser can have a username');
+    },
+
+    createAdoptionRequest: async (animalId: string, description: string) => {
+      // Get the current logged-in user’s ID, email, and username
+      console.log("Getting current user.");
+      const user = await helpers.getCurrentUser();
+      console.log("User acquired.");
+      
+      if (user.type !== 'RegularUser') {
+          throw new Error("Only RegularUsers can make adoption requests.");
+      }
+      
+      const userId = user.profile.private.user_id;  // Get the user's ID from their profile
+      const email = user.profile.public.email;
+      console.log("Getting username by ID");
+      
+      // Ensure that we're calling getUsernameById only for RegularUser
+      const username = await helpers.getUsernameById(user.profile.private.user_id);
+    
+      // Fetch the animal's data (org_id)
+      const { data: animal, error: animalError } = await supabase
+        .from('animals')
+        .select('org_id')
+        .eq('id', animalId)
+        .single();
+    
+      if (animalError) {
+        throw new Error(animalError.message);
+      }
+    
+      // Insert a new adoption request
+      const { error: insertError } = await supabase
+        .from('adoption_requests')
+        .insert({
+          animal_id: animalId,
+          org_id: animal.org_id,
+          user_email: email,      // Insert the logged-in user's email
+          user_name: username,  // Insert the logged-in user's username
+          description: description  // The description provided for the adoption request
+        });
+    
+      if (insertError) {
+        throw new Error(insertError.message);
+      }
+    
+      return { message: 'Adoption request created successfully' };
+    }
+  
+  
+  
   //supabase: undefined
 };
 
@@ -423,42 +539,78 @@ async function currentUser(
   if (!session) {
     throw new Error('No active session found');
   }
-
+  console.log("Profile Type:", profileType);
   let tablePublic: Sb.TableName;
   let tablePrivate: Sb.TableName;
+  let publicIdColumn: string;
+
+  // Determine the table and column names based on the profileType
   if (profileType === 'RegularUser') {
+    console.log("Current user is regular");
     tablePublic = 'users';
-    tablePrivate = 'private_user_info';
-  } else {
+    tablePrivate = 'users';
+    publicIdColumn = 'user_id'; // RegularUser uses 'user_id'
+  } else if (profileType === 'Organization') {
+    console.log("Current user is an org");
     tablePublic = 'organizations';
-    tablePrivate = 'private_org_info';
+    tablePrivate = 'organizations';
+    publicIdColumn = 'id'; // Organization uses 'id'
+  } else {
+    throw new Error('Invalid profile type');
   }
 
+  // Query the public table (users or organizations) based on the profile type
   const { data: publicData, error } = await supabase
     .from(tablePublic)
     .select('*')
-    .eq('id', session.user.id);
+    .eq(publicIdColumn, session.user.id);  // Use the correct column for the profile type
 
   if (error) {
     throw new Error(error.message);
   } else if (publicData[0]) {
-    const { data: privateData, error } = await supabase
-      .from(tablePrivate)
-      .select('*');
-    // .eq('id', session.user.id);
+    // Only query the private data table if the user is authorized
+    if (profileType === 'RegularUser') {
+      const { data: privateData, error: privateError } = await supabase
+        .from(tablePrivate)
+        .select('*')
+        .eq('user_id', session.user.id);  // Access private user data for RegularUser
 
-    if (error) {
-      throw new Error(error.message);
-    } else if (!privateData[0]) {
-      throw new Error(
-        `This shouldn't have happened. No private info found for the ${profileType}`
-      );
+      if (privateError) {
+        throw new Error(privateError.message);
+      } else if (!privateData[0]) {
+        throw new Error('Private info not found for RegularUser');
+      }
+
+      return { public: publicData[0], private: privateData[0] };
     }
-    return { public: publicData[0], private: privateData[0] };
-  } else {
-    return null;
-  }
+
+    if (profileType === 'Organization') {
+      const { data: privateData, error: privateError } = await supabase
+        .from(tablePrivate)
+        .select('*')
+        .eq('org_id', session.user.id);  // Access private org data for Organization
+
+      if (privateError) {
+        throw new Error(privateError.message);
+      } else if (!privateData[0]) {
+        throw new Error('Private info not found for Organization');
+      }
+
+      return { public: publicData[0], private: privateData[0] };
+    }
+  } 
+
+  // Return null if no user data is found
+  return null;
 }
+
+
+
+
+
+
+
+
 
 function accountExists(user: User | null): boolean {
   // This is an ugly hack necessary because supabase is stupid...

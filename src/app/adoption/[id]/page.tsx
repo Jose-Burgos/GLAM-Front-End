@@ -40,76 +40,22 @@ function Carousel() {
   return (
     <div className="embla" ref={emblaRef}>
       <div className="embla__container">
-        <div
-          style={{
-            position: 'relative',
-            width: '20vw',
-            height: '30vh',
-          }}
-          className="embla__slide"
-        >
-          <Image
-            alt="pet"
-            style={{
-              borderRadius: '15px',
-              aspectRatio: '16/9',
-            }}
-            sizes="(max-width: 768px) 100vw, 700px"
-            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-            fill
-            priority
-          />
-        </div>
-        <div
-          style={{
-            position: 'relative',
-            width: '20vw',
-            height: '30vh',
-          }}
-          className="embla__slide"
-        >
-          <Image
-            alt="pet"
-            style={{
-              borderRadius: '15px',
-              aspectRatio: '16/9',
-            }}
-            sizes="(max-width: 768px) 100vw, 700px"
-            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-            fill
-            priority
-          />
-        </div>
-        <div
-          style={{ position: 'relative', width: '20vw', height: '30vh' }}
-          className="embla__slide"
-        >
-          <Image
-            alt="pet"
-            style={{
-              borderRadius: '15px',
-              aspectRatio: '16/9',
-              maxWidth: '400px',
-            }}
-            sizes="(max-width: 768px) 100vw, 700px"
-            src="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-            fill
-            priority
-          />
-        </div>
+        {/* Image Carousel slides here */}
       </div>
     </div>
   );
 }
 
 interface props {
-  params: { id: string };
+  params: { id: string }; // Expecting animalId from params
 }
 
-export default function animalDescription(pparam: props) {
+export default function AnimalDescription(pparam: props) {
   const [data, setData] = useState<Animal>();
   const dataService = HelperFunctions;
   const bgColor = useColorModeValue('white', 'gray.700');
+
+  // Fetch animal data based on the provided animalId
   useEffect(() => {
     (async () => {
       const aux = await dataService.getAnimals();
@@ -153,7 +99,7 @@ export default function animalDescription(pparam: props) {
               >
                 <Stack>
                   <Text ml={3} mt={1}>
-                    <Heading> {data?.name} </Heading>
+                    <Heading>{data?.name}</Heading>
                   </Text>
                   <Text ml={3} mt={1} fontSize="md" fontWeight="bold">
                     Edad : {data?.age}
@@ -222,12 +168,13 @@ export default function animalDescription(pparam: props) {
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    {/* Pass the animalId to the ContactForm component */}
+                    <ContactForm animalId={pparam.params.id} />
                   </Center>
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    <ContactForm animalId={pparam.params.id} />
                   </Center>
                 </TabPanel>
               </TabPanels>

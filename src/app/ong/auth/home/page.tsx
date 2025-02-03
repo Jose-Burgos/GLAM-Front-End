@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-
 import { Animal, Request } from '~/supabase/types/supabase.tables';
 import supabase from '~/supabase/helpers';
 import AnimalCard from '@/components/animalCard';
@@ -14,6 +13,7 @@ import {
   HStack,
   SimpleGrid,
   useColorModeValue,
+  Button,  // Import Chakra UI Button
 } from '@chakra-ui/react';
 import AdminSidebarResponsive from '@/components/adminSidebar';
 
@@ -26,6 +26,13 @@ export default function UserDashboard() {
       // console.log(data)
     })();
   }, []);
+
+  // Handle the click event for the button using window.location
+  const handleAddAnimalClick = () => {
+    window.location.href = '/ong/auth/addAnimal';  // Correct path to addAnimal page
+  };
+  
+  
 
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
@@ -54,6 +61,17 @@ export default function UserDashboard() {
               Hola
             </Box>
           </SimpleGrid>
+
+          {/* Add the button here */}
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={handleAddAnimalClick}  // Trigger the redirection using window.location
+            mt={6}  // Add some margin on top of the button
+          >
+            Add Animal
+          </Button>
+
           <Grid
             templateColumns={{ md: '1fr', lg: '1.8fr 1.2fr' }}
             templateRows={{ md: '1fr auto', lg: '1fr' }}

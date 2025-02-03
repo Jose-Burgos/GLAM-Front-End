@@ -53,6 +53,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
       const specie = await supabase.getSpecies();
       setOrgId(id);
       setSpecies(specie);
+      console.log("Species: " + specie);
     })();
   }, []);
 

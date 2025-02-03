@@ -165,15 +165,13 @@ export interface Database {
       private_org_info: {
         Row: {
           id: string;
-          idk_something_private: string | null;
+          
         };
         Insert: {
           id: string;
-          idk_something_private?: string | null;
         };
         Update: {
           id?: string;
-          idk_something_private?: string | null;
         };
         Relationships: [
           {
@@ -187,26 +185,26 @@ export interface Database {
       private_user_info: {
         Row: {
           first_name: string;
-          id: string;
+          user_id: string;
           identification: string | null;
           last_name: string;
         };
         Insert: {
           first_name: string;
-          id: string;
+          user_id: string;
           identification?: string | null;
           last_name: string;
         };
         Update: {
           first_name?: string;
-          id?: string;
+          user_id?: string;
           identification?: string | null;
           last_name?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'private_user_info_id_fkey';
-            columns: ['id'];
+            columns: ['user_id'];
             referencedRelation: 'users';
             referencedColumns: ['user_id'];
           },
@@ -294,7 +292,58 @@ export interface Database {
           identification?: string;
           email?: string;
         };
-      }
+      };
+      requests: {
+        Row: {
+          request_id: string; // UUID
+          animal_id: number;  // INT8
+          org_id: string;     // UUID
+          user_email: string; // TEXT
+          user_name: string;  // TEXT
+          description: string; // TEXT
+        };
+        Insert: {
+          animal_id: number;  // INT8
+          org_id: string;     // UUID
+          user_email: string; // TEXT
+          user_name: string;  // TEXT
+          description: string; // TEXT
+        };
+        Update: {
+          request_id?: string;  // UUID
+          animal_id?: number;   // INT8
+          org_id?: string;      // UUID
+          user_email?: string;  // TEXT
+          user_name?: string;   // TEXT
+          description?: string; // TEXT
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'requests_animal_id_fkey',
+            columns: ['animal_id'],
+            referencedRelation: 'animals',
+            referencedColumns: ['id'],
+          },
+          {
+            foreignKeyName: 'requests_org_id_fkey',
+            columns: ['org_id'],
+            referencedRelation: 'organizations',
+            referencedColumns: ['id'],
+          },
+          {
+            foreignKeyName: 'requests_user_email_fkey',
+            columns: ['user_email'],
+            referencedRelation: 'users',
+            referencedColumns: ['email'],
+          },
+          {
+            foreignKeyName: 'requests_user_name_fkey',
+            columns: ['user_name'],
+            referencedRelation: 'users',
+            referencedColumns: ['username'],
+          },
+        ];
+      };
       
     };
     Views: {

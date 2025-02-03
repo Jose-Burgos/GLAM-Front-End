@@ -5,29 +5,26 @@ const useValidation = (initialState: any, validate: any, func: any) => {
   const [errors, saveErrors] = useState({} as any);
   const [submitForm, saveSubmitForm] = useState(false);
 
+  // Use effect for submission and validation
   useEffect(() => {
     if (submitForm) {
-      const noErrors = Object.keys(errors).length === 0;
-      if (noErrors) {
-        func();
+      const validationErrors = validate(values); // Validate values
+      saveErrors(validationErrors); // Set errors
+      if (Object.keys(validationErrors).length === 0) {
+        func(); // Call submit function if no errors
       }
-      saveSubmitForm(false);
+      saveSubmitForm(false); // Reset submitForm after submission attempt
     }
-  }, [errors]);
+  }, [submitForm, values, validate, func]);
 
-  const handleChange = (e: any) => {
-    if (e && e.target) {
-      // console.log(e);
-      const { name, value } = e.target;
-      saveValues({ ...values, [name]: value });
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    saveValues((prevState: any) => ({ ...prevState, [name]: value })); // Update the correct field
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validate(values);
-    saveErrors(validationErrors);
-    saveSubmitForm(true);
+    saveSubmitForm(true); // Trigger validation
   };
 
   return {
@@ -38,4 +35,5 @@ const useValidation = (initialState: any, validate: any, func: any) => {
     handleChange,
   };
 };
+
 export default useValidation;
