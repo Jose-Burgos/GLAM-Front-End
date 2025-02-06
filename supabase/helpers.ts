@@ -31,6 +31,8 @@ const helpers: HelperFunctions = {
   upsertAnimal: async (animal: Sb.Animal) => {
     console.log("Animal:");
     console.log(animal);
+    console.log("Animal:");
+    console.log(animal);
     const { error } = await supabase.from('animals').upsert(animal);
     if (error) {
       throw new Error(error.message);
@@ -375,6 +377,8 @@ const helpers: HelperFunctions = {
     }
     console.log("Species data requested: ");
     console.log(data);
+    console.log("Species data requested: ");
+    console.log(data);
     return data;
   },
 
@@ -391,7 +395,7 @@ const helpers: HelperFunctions = {
   uploadImage: async (file) => {
     // let file = e.target.files[0];
     const { data, error } = await supabase.storage
-      .from('animal-pictures-orgs')
+      .from('animals-pictures')
       .upload(helpers.getCurrentUserId() + '/' + uuidv4(), file);
 
     if (data) {
@@ -432,14 +436,15 @@ const helpers: HelperFunctions = {
 
   getImages: async () => {
     const userId = await helpers.getCurrentUserId();
-    const { data, error } = await supabase.storage
-      .from('animal-pictures-orgs')
+    const { data, error } = await supabase
+      .storage
+      .from('animals-pictures')
       .list(userId);
     if (error) {
       throw new Error(error.message);
     } else {
       return data.map((element) => ({
-        url: 'https://xqpndhzykqanaqasuejh.supabase.co/storage/v1/object/public/animal-pictures-orgs/' +
+        url: 'https://svyzokdesnbggpplkaxn.supabase.co/storage/v1/object/public/animals-pictures/' +
           userId +
           '/' +
           element.name,
@@ -524,6 +529,26 @@ const helpers: HelperFunctions = {
   
   
   
+
+  // getAllImages: async () => {
+  //   const userId = await helpers.getCurrentUserId();
+  //   const { data, error } = await supabase
+  //     .storage
+  //     .from('animals-pictures')
+  //     .list();
+  //   if (error) {
+  //     throw new Error(error.message);
+  //   } else {
+  //     return data.map((element) => ({
+  //       url: 'https://svyzokdesnbggpplkaxn.supabase.co/storage/v1/object/public/animals-pictures/' +
+  //         userId +
+  //         '/' +
+  //         element.name,
+  //       name: userId + '/' + element.name,
+  //     }));
+  //   }
+  // }
+
   //supabase: undefined
 };
 

@@ -39,6 +39,7 @@ export interface HelperFunctions {
   getOrganizations: () => Promise<Sb.Org[]>;
   getSpecies: () => Promise<Sb.SpeciesData[]>;
   getImages: () => Promise<Array<{ url: string; name: string }>>;       // hay que cambiar el tipo de dato que devuelve
+  //getAllImages: () => Promise<Array<{ url: string; name: string }>>;
   deleteImage: (imageName) => Promise<any>;
   uploadImage: (imageName) => Promise<any>;
   submitInKindDonation: (donationdata: Sb.InKindDonation) => Promise<void>;

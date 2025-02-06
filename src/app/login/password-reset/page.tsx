@@ -105,7 +105,7 @@ export default function RecoverPassword() {
                   mb="24px"
                   fontSize="sm"
                   type="email"
-                  placeholder="ejemplo@gmai.com"
+                  placeholder="ejemplo@gmail.com"
                   value={values.email}
                   onChange={handleChange}
                   size="lg"
