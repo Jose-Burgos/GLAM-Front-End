@@ -525,8 +525,31 @@ const helpers: HelperFunctions = {
       }
     
       return { message: 'Adoption request created successfully' };
+    },
+
+    getOrgAdoptionRequestsForDashboard: async (): Promise<Request[]> => {
+      console.log("Getting current user for adoption requests.");
+      const user = await helpers.getCurrentUser();
+      if (user.type !== 'Organization') {
+          throw new Error("Only organizations can view their adoption requests.");
+      }
+    
+      const orgId = user.profile.private.id; // Assuming 'id' in private profile corresponds to org_id
+      const { data, error } = await supabase
+        .from('adoption_requests')
+        .select('*')
+        .eq('org_id', orgId); // Filter by the organization ID
+    
+      if (error) {
+        throw new Error(error.message);
+      }
+      else{
+        console.log("Data returned: ", data);
+      }
+    
+      return data as Request[];
     }
-  
+    
   
   
 
@@ -613,7 +636,7 @@ async function currentUser(
       const { data: privateData, error: privateError } = await supabase
         .from(tablePrivate)
         .select('*')
-        .eq('org_id', session.user.id);  // Access private org data for Organization
+        .eq('id', session.user.id);  // Access private org data for Organization
 
       if (privateError) {
         throw new Error(privateError.message);
@@ -643,22 +666,7 @@ function accountExists(user: User | null): boolean {
   return user?.identities?.length === 0;
 }
 
-async function getAdoptionRequests(
-  profileType: Sb.ProfileType,
-  id: string
-): Promise<Sb.AdoptionRequest[]> {
-  const col: Sb.TableColumn<'adoption_requests'> =
-    profileType === 'RegularUser' ? 'user_id' : 'org_id';
-  const { data, error } = await supabase
-    .from('adoption_requests')
-    .select('*')
-    .eq(col, id);
-  if (error) {
-    throw new Error(error.message);
-  }
 
-  return data;
-}
 
 
 

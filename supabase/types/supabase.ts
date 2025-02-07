@@ -9,55 +9,6 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      adoption_requests: {
-        Row: {
-          animal_id: string;
-          finalized_at: string | null;
-          id: string;
-          org_id: string;
-          requested_at: string;
-          state_id: number;
-          user_id: string;
-        };
-        Insert: {
-          animal_id: string;
-          finalized_at?: string | null;
-          id?: string;
-          org_id: string;
-          requested_at?: string;
-          state_id: number;
-          user_id: string;
-        };
-        Update: {
-          animal_id?: string;
-          finalized_at?: string | null;
-          id?: string;
-          org_id?: string;
-          requested_at?: string;
-          state_id?: number;
-          user_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'adoption_requests_org_id_fkey';
-            columns: ['org_id'];
-            referencedRelation: 'organizations';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'adoption_requests_state_id_fkey';
-            columns: ['state_id'];
-            referencedRelation: 'request_states';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'adoption_requests_user_id_fkey';
-            columns: ['user_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['user_id'];
-          },
-        ];
-      };
       animals: {
         Row: {
           adopted: boolean;
@@ -209,48 +160,6 @@ export interface Database {
             referencedColumns: ['user_id'];
           },
         ];
-      };
-      regions: {
-        Row: {
-          alpha_2: string;
-          alpha_3: string;
-          country_code: string;
-          intermediate_region: string | null;
-          intermediate_region_code: string | null;
-          iso_3166_2: string;
-          name: string;
-          region: string;
-          region_code: string | null;
-          sub_region: string | null;
-          sub_region_code: string | null;
-        };
-        Insert: {
-          alpha_2: string;
-          alpha_3: string;
-          country_code: string;
-          intermediate_region?: string | null;
-          intermediate_region_code?: string | null;
-          iso_3166_2: string;
-          name: string;
-          region: string;
-          region_code?: string | null;
-          sub_region?: string | null;
-          sub_region_code?: string | null;
-        };
-        Update: {
-          alpha_2?: string;
-          alpha_3?: string;
-          country_code?: string;
-          intermediate_region?: string | null;
-          intermediate_region_code?: string | null;
-          iso_3166_2?: string;
-          name?: string;
-          region?: string;
-          region_code?: string | null;
-          sub_region?: string | null;
-          sub_region_code?: string | null;
-        };
-        Relationships: [];
       };
       species: {
         Row: {

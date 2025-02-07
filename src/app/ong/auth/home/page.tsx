@@ -1,11 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Animal, Request } from '~/supabase/types/supabase.tables';
+import { Request } from '~/supabase/types/supabase.tables'; // Use the Request type
 import supabase from '~/supabase/helpers';
-import AnimalCard from '@/components/animalCard';
-import DonationHistory from '@/components/donations';
-import NotificationsHistory from '@/components/notifications';
 import {
   Box,
   Flex,
@@ -13,17 +10,23 @@ import {
   HStack,
   SimpleGrid,
   useColorModeValue,
-  Button,  // Import Chakra UI Button
+  Button,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import AdminSidebarResponsive from '@/components/adminSidebar';
 
 export default function UserDashboard() {
   const bgCard = useColorModeValue('white', 'gray.700');
 
+  // State to store the adoption requests with the correct type
+  const [adoptionRequests, setAdoptionRequests] = useState<Request[]>([]);
+
   useEffect(() => {
     (async () => {
-      const data = await supabase.getInKindDonations();
-      // console.log(data)
+      // Fetch the adoption requests and set the state
+      const data = await supabase.getOrgAdoptionRequestsForDashboard();
+      setAdoptionRequests(data); // Now TypeScript knows it's a Request[] type
     })();
   }, []);
 
@@ -31,8 +34,18 @@ export default function UserDashboard() {
   const handleAddAnimalClick = () => {
     window.location.href = '/ong/auth/addAnimal';  // Correct path to addAnimal page
   };
-  
-  
+
+  // Handle accept request
+  const handleAcceptRequest = (requestId: string) => {
+    console.log(`Accepted request with ID: ${requestId}`);
+    // Add your accept logic here (e.g., update status in database)
+  };
+
+  // Handle reject request
+  const handleRejectRequest = (requestId: string) => {
+    console.log(`Rejected request with ID: ${requestId}`);
+    // Add your reject logic here (e.g., update status in database)
+  };
 
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
@@ -48,18 +61,56 @@ export default function UserDashboard() {
           pt={{ base: '120px', md: '14%', lg: '12%' }}
         >
           <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing="24px">
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
+            {/* Render adoption request cards */}
+            {adoptionRequests.length > 0 ? (
+              adoptionRequests.map((request, index) => (
+                <Box
+                  key={request.request_id || index}  // Use 'request_id' as key or fallback to 'index'
+                  h={250}  // Increase height to accommodate buttons
+                  borderRadius="15px"
+                  p={4}
+                  bg={bgCard}
+                  boxShadow="md"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <VStack spacing={4} align="start">
+                    <Text fontWeight="bold" fontSize="lg">
+                      {request.user_name || 'No Adopter Name'}  {/* Display adopter's name */}
+                    </Text>
+                    <Text color="gray.600">
+                      {request.description || 'No Description'}  {/* Display description of the animal */}
+                    </Text>
+                    <Text>{'Pending'}</Text> {/* Display static 'Pending' as per your current logic */}
+                  </VStack>
+
+                  {/* Buttons at the bottom */}
+                  <HStack justify="space-between" w="100%" mt="auto">
+                    <Button
+                      colorScheme="teal"
+                      size="sm"
+                      onClick={() => handleAcceptRequest(request.request_id)}
+                      w="48%"
+                    >
+                      Aceptar
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      size="sm"
+                      onClick={() => handleRejectRequest(request.request_id)}
+                      w="48%"
+                    >
+                      Rechazar
+                    </Button>
+                  </HStack>
+                </Box>
+              ))
+            ) : (
+              <Box h={200} borderRadius="15px" p={4} bg={bgCard} boxShadow="md">
+                <Text>No adoption requests available.</Text>
+              </Box>
+            )}
           </SimpleGrid>
 
           {/* Add the button here */}
@@ -72,6 +123,7 @@ export default function UserDashboard() {
             Add Animal
           </Button>
 
+          {/* Additional grid content */}
           <Grid
             templateColumns={{ md: '1fr', lg: '1.8fr 1.2fr' }}
             templateRows={{ md: '1fr auto', lg: '1fr' }}
@@ -79,35 +131,10 @@ export default function UserDashboard() {
             gap="24px"
           >
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Notificaciones
+              <Text>Notificaciones</Text>
             </Box>
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Mundo
-            </Box>
-          </Grid>
-          <Grid
-            templateColumns={{ sm: '1fr', lg: '1.3fr 1.7fr' }}
-            templateRows={{ sm: 'repeat(2, 1fr)', lg: '1fr' }}
-            gap="24px"
-            mb={{ lg: '26px' }}
-          >
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Mundo
-            </Box>
-          </Grid>
-          <Grid
-            templateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '2fr 1fr' }}
-            templateRows={{ sm: '1fr auto', md: '1fr', lg: '1fr' }}
-            gap="24px"
-          >
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Hola
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              Mundo
+              <Text>Donation History</Text>
             </Box>
           </Grid>
         </Flex>

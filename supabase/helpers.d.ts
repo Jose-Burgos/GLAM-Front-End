@@ -48,7 +48,8 @@ export interface HelperFunctions {
     animalId: string, 
     description: string
   ) => Promise<{ message: string }>;
-  getUsernameById: (userId: string) => Promise<any>
+  getUsernameById: (userId: string) => Promise<any>;
+  getOrgAdoptionRequestsForDashboard: () => Promise<any[]>;
   //auth: SupabaseClient['auth'];  // Make sure 'auth' is correctly typed
   supabase: SupabaseClient;  // Explicitly include supabase in helpers' type
 }
