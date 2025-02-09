@@ -36,16 +36,41 @@ export default function UserDashboard() {
   };
 
   // Handle accept request
-  const handleAcceptRequest = (requestId: string) => {
-    console.log(`Accepted request with ID: ${requestId}`);
-    // Add your accept logic here (e.g., update status in database)
+  const handleAcceptRequest = async (requestId: string, animalId: string) => {
+    try {
+      console.log(`Accepted request with ID: ${requestId}`);
+      
+      // Call the deleteAnimal function to delete the animal from the database
+      await supabase.deleteAnimal(animalId); 
+  
+      // Optionally, you can update your UI state to reflect the changes
+      setAdoptionRequests(adoptionRequests.filter(request => request.animal_id !== animalId));
+  
+      console.log(`Animal with ID: ${animalId} has been deleted.`);
+      // Add other logic if needed (e.g., updating the request status)
+    } catch (error) {
+      console.error("Error accepting request:", error.message);
+    }
   };
 
   // Handle reject request
-  const handleRejectRequest = (requestId: string) => {
-    console.log(`Rejected request with ID: ${requestId}`);
-    // Add your reject logic here (e.g., update status in database)
-  };
+// Handle reject request
+const handleRejectRequest = async (requestId: string) => {
+  console.log(`Rejected request with ID: ${requestId}`);
+
+  try {
+    // Delete the request from the database
+    await supabase.deleteRequest(requestId); 
+
+    // Remove the rejected request from the state
+    setAdoptionRequests(adoptionRequests.filter(request => request.request_id !== requestId));
+
+    console.log(`Request with ID: ${requestId} has been rejected and removed from the database.`);
+  } catch (error) {
+    console.error("Error rejecting request:", error.message);
+  }
+};
+
 
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
@@ -87,23 +112,23 @@ export default function UserDashboard() {
 
                   {/* Buttons at the bottom */}
                   <HStack justify="space-between" w="100%" mt="auto">
-                    <Button
-                      colorScheme="teal"
-                      size="sm"
-                      onClick={() => handleAcceptRequest(request.request_id)}
-                      w="48%"
-                    >
-                      Aceptar
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      size="sm"
-                      onClick={() => handleRejectRequest(request.request_id)}
-                      w="48%"
-                    >
-                      Rechazar
-                    </Button>
+                  <Button
+                  colorScheme="teal"
+                  size="sm"
+                  onClick={() => handleAcceptRequest(request.request_id, request.animal_id)}  // Pass request ID and animal ID
+                  w="48%"
+                  >
+                  Aceptar
+                </Button>
+                <Button
+                colorScheme="red"
+                size="sm"
+                onClick={() => handleRejectRequest(request.request_id)}  // Pass request ID
+                w="48%">
+                Rechazar
+                </Button>
                   </HStack>
+
                 </Box>
               ))
             ) : (

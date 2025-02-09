@@ -19,6 +19,7 @@ const helpers: HelperFunctions = {
   },
 
   deleteAnimal: async (animalID) => {
+    console.log("Deleting animal with ID: ", animalID);
     const { error } = await supabase
       .from('animals')
       .delete()
@@ -548,7 +549,20 @@ const helpers: HelperFunctions = {
       }
     
       return data as Request[];
-    }
+    },
+
+    // Helper function to delete the adoption request from the database
+  deleteRequest: async (requestId: string) => {
+  const { error } = await supabase
+    .from('adoption_requests')
+    .delete()
+    .eq('request_id', requestId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
     
   
   

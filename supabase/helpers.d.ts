@@ -50,6 +50,7 @@ export interface HelperFunctions {
   ) => Promise<{ message: string }>;
   getUsernameById: (userId: string) => Promise<any>;
   getOrgAdoptionRequestsForDashboard: () => Promise<any[]>;
+  deleteRequest: (requestId: string) => Promise<void>;
   //auth: SupabaseClient['auth'];  // Make sure 'auth' is correctly typed
   supabase: SupabaseClient;  // Explicitly include supabase in helpers' type
 }
