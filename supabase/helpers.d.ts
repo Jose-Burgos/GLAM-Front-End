@@ -9,6 +9,9 @@ export interface HelperFunctions {
   deleteAnimal: (animalID: String) => Promise<void>;
   upsertAnimal: (animal: Sb.Animal) => Promise<void>;
   getAnimalById: (id: string) => Promise<Animal>;
+  getAnimalsByOrg: (orgId: string) => Promise<Sb.Animal[]>;
+  getRequestsByUser: (username: string) => Promise<Sb.AdoptionRequest[]>;
+  getNameById: (id: string) => Promise<string>;
   getCurrentUser: () => Promise<{
     profile: Sb.Profile<Sb.ProfileType>;
     type: Sb.ProfileType;

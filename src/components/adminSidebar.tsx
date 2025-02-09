@@ -32,14 +32,27 @@ import {
   SignUpLogo,
   DashboardLogo,
   LogOutLogo,
+  PawPrintIcon,
 } from '@/assets/icons/icons';
 import AuthContext from '@/hooks/authContext';
+import helpers from '~/supabase/helpers';
 
 interface Routes {
   path: string;
   name: string;
   icon: any;
+  rolesAllowed?: string[];
 }
+
+let session: any;
+let name: string;
+
+async function fetchSession() {
+  session = await helpers.getSession();
+  name = await helpers.getNameById(session.user.id);
+}
+
+fetchSession();
 
 export default function AdminSidebarResponsive(props: any) {
   const location = usePathname();
@@ -74,21 +87,37 @@ export default function AdminSidebarResponsive(props: any) {
       path: '/',
       name: 'Inicio',
       icon: <HomeLogo w="24px" h="24px" me="0px" />,
+      rolesAllowed: ['ong', 'user'],
     },
     {
       path: '/adoption',
       name: 'Adopciones',
       icon: <AdoptionLogo w="20px" h="20px" me="0px" />,
+      rolesAllowed: ['ong', 'user'],
     },
     {
       path: '/ong',
       name: 'Organizaciones',
       icon: <OngLogo w="26px" h="26px" me="0px" />,
+      rolesAllowed: ['ong', 'user'],
     },
     {
       path: `/${type}/auth/home`,
       name: 'Dashboard',
       icon: <DashboardLogo w="26px" h="26px" me="0px" />,
+      rolesAllowed: ['ong'],
+    },
+    {
+      path: `/${type}/animals?owner=${session.user.id}`,
+      name: 'Mis Animales',
+      icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+      rolesAllowed: ['ong'],
+    },
+    {
+      path: `/${type}/auth/requests?owner=${name}`,
+      name: 'Mis Solicitudes',
+      icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+      rolesAllowed: ['user'],
     },
   ];
 
@@ -113,11 +142,12 @@ export default function AdminSidebarResponsive(props: any) {
     const activeColor = useColorModeValue('gray.700', 'white');
     const inactiveColor = useColorModeValue('gray.400', 'gray.400');
 
-    return dataSet.map((prop: any, key: any) => {
+    return dataSet.filter((prop) => prop.rolesAllowed?.includes(type) ).map((prop: any, key: any) => {
       if (prop.redirect) {
         return null;
       }
       if (prop.category) {
+        
         return <div key={prop.name}>{createLinks()}</div>;
       }
       return (

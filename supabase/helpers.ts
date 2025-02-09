@@ -18,6 +18,17 @@ const helpers: HelperFunctions = {
     return data;
   },
 
+  getAnimalsByOrg: async (orgId: string) => {
+    const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
+      .from('animals')
+      .select('*')
+      .eq('org_id', orgId);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  },
+
   deleteAnimal: async (animalID) => {
     console.log("Deleting animal with ID: ", animalID);
     const { error } = await supabase
@@ -526,6 +537,31 @@ const helpers: HelperFunctions = {
       }
     
       return { message: 'Adoption request created successfully' };
+    },
+
+    getRequestsByUser: async (username: string) => {
+      const { data, error } = await supabase
+        .from('adoption_requests')
+        .select('*')
+        .eq('user_name', username);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return data;
+    },
+
+    getNameById: async (id: string) => {
+      const { data, error } = await supabase
+        .from('users')
+        .select('username')
+        .eq('user_id', id)
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data.username;
     },
 
     getOrgAdoptionRequestsForDashboard: async (): Promise<Request[]> => {
