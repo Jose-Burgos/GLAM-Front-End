@@ -19,17 +19,28 @@ import { useEffect, useState } from 'react';
 
 interface PetData {
   id: string;
-  img: string;
+  species_id: number;  // Add species_id to the interface
   name: string;
   description: string | null;
 }
 
 interface PetCardProps extends PetData {
   isLoggedIn: boolean;
+  img: string;
 }
 
+// Mapping species IDs to image URLs
+const speciesImages: { [key: string]: string } = {
+  "0dcec5e1-37a3-41a6-9a4f-da7f760a35b9": "https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg", // Imagen de un perro
+  "b0386722-da0b-4883-a5b2-642b18ded16d": "https://images.pexels.com/photos/144240/goat-lamb-little-grass-144240.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Cabra"
+  "0073939f-0113-4320-9cf3-234edc32a92b": "https://images.pexels.com/photos/3652958/pexels-photo-3652958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Tortuga"
+  "01a4fef0-457b-4644-8b2f-1e14a522ca2b": "https://images.pexels.com/photos/635499/pexels-photo-635499.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Caballo"
+  "9e38b8a6-d0bd-4bfd-a78b-1af8d06d6630": "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Pez"
+  "81af0a69-3e2b-4466-8e94-f8980e7cbd74": "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Gato"
+};
+
 function MobilePetCard(props: PetCardProps) {
-  const { isLoggedIn, id, img, name } = props;
+  const { isLoggedIn, id, species_id, name } = props;
   const bgColor = useColorModeValue('white', 'gray.700');
   const toast = useToast();
 
@@ -44,6 +55,9 @@ function MobilePetCard(props: PetCardProps) {
       });
     }
   };
+
+  // Determine the image based on species_id
+  const img = speciesImages[species_id] || "https://images.pexels.com/photos/11829002/pexels-photo-11829002.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"; // Default image if no species_id is found
 
   return (
     <Box me="-1%" w="85vw" bg={bgColor} shadow="xl" borderRadius="15px">
@@ -93,10 +107,10 @@ function MobilePetCard(props: PetCardProps) {
 }
 
 function DesktopPetCard(props: PetCardProps) {
-  const { isLoggedIn, id, img, name, description } = props;
+  const { isLoggedIn, id, species_id, name, description } = props;
   const bgColor = useColorModeValue('white', 'gray.700');
   const toast = useToast();
-
+  console.log("Species ID: ", species_id);
   const handleAdoptClick = () => {
     if (!isLoggedIn) {
       toast({
@@ -108,6 +122,9 @@ function DesktopPetCard(props: PetCardProps) {
       });
     }
   };
+
+  // Determine the image based on species_id
+  const img = speciesImages[species_id] || "https://images.pexels.com/photos/11829002/pexels-photo-11829002.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"; // Default image if no species_id is found
 
   return (
     <Box
@@ -161,7 +178,7 @@ function DesktopPetCard(props: PetCardProps) {
   );
 }
 
-export default function PetCard(props: PetData) {
+export default function PetCard(props: PetCardProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Check the session status using supabase.getSession()
@@ -179,6 +196,7 @@ export default function PetCard(props: PetData) {
       <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
         <DesktopPetCard
           id={props.id}
+          species_id={props.species_id} // Pass species_id
           img={props.img}
           name={props.name}
           description={props.description}
@@ -196,6 +214,7 @@ export default function PetCard(props: PetData) {
       >
         <MobilePetCard
           id={props.id}
+          species_id={props.species_id} // Pass species_id
           img={props.img}
           name={props.name}
           description={props.description}

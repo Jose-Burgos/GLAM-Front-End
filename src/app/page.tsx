@@ -221,19 +221,22 @@ export default function Landing() {
                       }}
                     >
                       {success ? (
-                        cardData?.map((card, idx) => (
-                          <GridItem key={idx}>
-                            <PetCard
-                              id={card.id}
-                              img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
-                              name={card.name}
-                              description={card.breed}
-                            />
-                          </GridItem>
-                        ))
-                      ) : (
-                        <CircularProgress isIndeterminate color="teal.300" />
-                      )}
+  cardData?.map((card, idx) => (
+    <GridItem key={idx}>
+      <PetCard
+        id={card.id}
+        img="favicon.ico"
+        name={card.name}
+        description={card.breed}
+        species_id={card.species_id}
+        isLoggedIn={true}
+      />
+    </GridItem>
+  ))
+) : (
+  <CircularProgress isIndeterminate color="teal.300" />
+)}
+
                     </Grid>
                   </Flex>
                 </Flex>

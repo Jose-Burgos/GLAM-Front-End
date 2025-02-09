@@ -9,13 +9,26 @@ const helpers: HelperFunctions = {
   supabase,
   // Tendría que agregar pagination a esto probablemente. Y filtering.
   getAnimals: async () => {
-    const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
-      .from('animals')
-      .select('*');
-    if (error) {
-      throw new Error(error.message);
+    try {
+      // Attempting to fetch data from Supabase
+      const { data, error }: PostgrestResponse<Sb.Animal> = await supabase
+        .from('animals')
+        .select('*');
+
+      // Handle error in the query
+      if (error) {
+        console.error("Error fetching animals:", error);  // Log the error
+        throw new Error(error.message);  // Throw the error after logging
+      }
+
+      // If no error, return the fetched data
+      return data;
+
+    } catch (error) {
+      // Catch any errors that occur during the fetch operation
+      console.error("Unexpected error in getAnimals:", error);  // Log the error
+      throw new Error("Failed to fetch animals data: " + error.message);
     }
-    return data;
   },
 
   getAnimalsByOrg: async (orgId: string) => {
@@ -558,11 +571,21 @@ const helpers: HelperFunctions = {
         .select('username')
         .eq('user_id', id)
         .single();
+    
+
+    
+      // Check if data is null or undefined, and handle accordingly
+      if (!data) {
+        // Return a default value if no data is found
+        return null; // You could also return an empty string or some other value
+      }
       if (error) {
+        // You can either throw an error or handle it as per your preference
         throw new Error(error.message);
       }
       return data.username;
-    },
+    }
+    ,
 
     getOrgAdoptionRequestsForDashboard: async (): Promise<Request[]> => {
       console.log("Getting current user for adoption requests.");

@@ -1,10 +1,6 @@
-// Tiene que ser client para el password reset que necesita useEffect.
-// Después igual se puede cambiar a dónde redirecciona el mail de confimación
-// de cambio de clave y movemos el useEffect ahí y listo.
-
 'use client';
 
-// This is the landing
+// This is the landing page
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -13,45 +9,55 @@ import {
   Grid,
   GridItem,
   Heading,
-  Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
-import Image from 'next/image';
-import IconBox from '@/assets/icons/iconBox';
-import {
-  AboutUsLogo,
-  AdoptLogo,
-  DonateLogo,
-  OngLogo,
-} from '@/assets/icons/icons';
-import { Separator } from '@/components/separator';
 import PetCard from '@/components/petcard';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import NavBar from '@/components/navbar';
-
+import { Separator } from '@/components/separator';
 
 export default function Landing() {
-  const [cardData, setCardData] = useState<Animal[]>();
-  const [success, setSuccess] = useState<boolean>(false);
+  const [cardData, setCardData] = useState<Animal[] | null>(null); // Updated to reflect when we fetch animal data
+  const [success, setSuccess] = useState<boolean>(false); // Indicator of success
 
   const searchParams = useSearchParams();
   const owner = searchParams.get("owner");
 
   useEffect(() => {
-    (async () => {
+    const fetchAnimalData = async () => {
       if (owner) {
-        const data = await HelperFunctions.getRequestsByUser(owner) as Animal[];
-        setCardData(data);
-        setSuccess(true);
+        // Fetch the requests by user (which should return animal IDs or references)
+        const requestData = await HelperFunctions.getRequestsByUser(owner) as Animal[];
+        console.log("Requests: ", requestData);
+
+        // If there are requests, fetch the full animal details for each request ID
+        if (requestData?.length > 0) {
+          const animalDetailsPromises = requestData.map(async (request) => {
+            // Fetch full animal data based on the ID in each request
+            console.log(request);
+            const fullAnimal = await HelperFunctions.getAnimalById(request.animal_id);
+            return fullAnimal;
+          });
+
+          // Wait for all animal details to be fetched
+          const animals = await Promise.all(animalDetailsPromises);
+          console.log("Fetched Animals: ", animals);
+
+          // Set the fetched animal details to state
+          setCardData(animals);
+          setSuccess(true); // Mark the fetching process as successful
+        }
       }
-    })();
-  }, []);
+    };
+
+    fetchAnimalData();
+  }, [owner]);
+
   const titleColor = useColorModeValue('black', 'teal.200');
-  const textColor = useColorModeValue('gray.700', 'white');
   const bgColor = useColorModeValue('white', 'gray.700');
-  const bgIcons = useColorModeValue('white', 'teal.200');
+  
   return (
     <>
       <NavBar />
@@ -97,6 +103,8 @@ export default function Landing() {
                               img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
                               name={card.name}
                               description={card.breed}
+                              species_id={card.species_id}
+                              isLoggedIn={true}
                             />
                           </GridItem>
                         ))

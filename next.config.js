@@ -20,6 +20,12 @@ const nextConfig = {
         port: '',
         pathname: '/project_modules/hd/79b5f558303657.5a09eafeaf888.jpg',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com', // Add this domain to allow images from Pexels
+        port: '',
+        pathname: '/**', // Allow all paths under this domain
+      },
     ],
   },
 };

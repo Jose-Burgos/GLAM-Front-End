@@ -2,7 +2,6 @@
 
 import ContactForm from '@/components/contactform';
 import GoogleMapsView from '@/components/googlemaps';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
@@ -51,17 +50,58 @@ interface props {
 }
 
 export default function AnimalDescription(pparam: props) {
-  const [data, setData] = useState<Animal>();
+  const [data, setData] = useState<Animal | undefined>(undefined);
+  console.log("pparams: ", pparam.params);
   const dataService = HelperFunctions;
   const bgColor = useColorModeValue('white', 'gray.700');
 
   // Fetch animal data based on the provided animalId
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       const aux = await dataService.getAnimals();
-      setData(aux?.find((animal) => animal.id === pparam.params.id));
-    })();
-  }, [pparam.params.id, dataService]);
+      console.log('Animals Data:', aux); // Ensure aux is populated with animal objects
+
+      // Log the expected ID and check its type
+      console.log('Expected ID:', pparam.params.id);
+      console.log('Expected ID Type:', typeof pparam.params.id);
+
+      // Log each animal's ID to confirm they are available and correct
+      aux?.forEach((animal) => {
+        console.log('Animal ID:', animal.id); // Log the actual animal id
+      });
+
+      // Now attempt to find the correct animal
+      const foundAnimal = aux?.find((animal) => {
+        // Ensure both `id` and `pparam.params.id` are of the same type for comparison
+        const animalId = animal.id.toString(); // Convert animal.id to string if it's a number
+        const expectedId = pparam.params.id.trim().toLowerCase(); // Ensure pparam.params.id is a trimmed string
+
+        console.log('Comparing Animal ID:', animalId, 'with Expected ID:', expectedId);
+        const isMatch = animalId === expectedId;
+        console.log('Match?', isMatch);
+
+        return isMatch; // This should return true if it's a match
+      });
+
+      // After finding the animal, log the result
+      console.log('Found Animal:', foundAnimal);
+
+      // Set the found animal in state
+      if (foundAnimal) {
+        console.log("Setting found animal to state:", foundAnimal);
+        setData(foundAnimal);
+      } else {
+        console.log("No matching animal found.");
+      }
+    };
+
+    fetchData();
+  }, [pparam.params.id, dataService]); // Re-run when the ID or dataService changes
+
+  // Log updated `data` when it changes
+  useEffect(() => {
+    console.log("Updated data:", data);  // Log data after it updates
+  }, [data]); // This effect runs every time `data` changes
 
   return (
     <Flex
@@ -158,7 +198,7 @@ export default function AnimalDescription(pparam: props) {
               <TabPanels>
                 <TabPanel>
                   <Center>
-                    <GoogleMapsView />
+                    <GoogleMapsView/>
                   </Center>
                 </TabPanel>
                 <TabPanel>
