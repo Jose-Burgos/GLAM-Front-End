@@ -1,5 +1,3 @@
-import { Rating } from '@mui/material';
-
 export default function validateAddAnimalForm(values: any) {
   const errors: any = {};
   // Validate species
@@ -42,7 +40,7 @@ export default function validateAddAnimalForm(values: any) {
     errors.age = 'La edad debe ser un valor numerico';
   }
   // Validate sex
-  if (!values.sex) {
+  if (values.sex === undefined || values.sex === null) {
     errors.sex = 'El sexo es obligatorio';
   }
   // Validate Rescue Date
@@ -54,8 +52,8 @@ export default function validateAddAnimalForm(values: any) {
     errors.health_rating = 'El porcentaje de salud es obligatorio';
   }
   // Validate vaccinated
-  if (!values.vaccinated) {
-    errors.vaccinated = 'Indica si el animal esta vacunado';
+  if (values.vaccinated === undefined || values.vaccinated === null) {
+    errors.vaccinated = 'Indica si el animal está vacunado';
   }
   return errors;
 }

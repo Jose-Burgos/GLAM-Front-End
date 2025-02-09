@@ -37,6 +37,8 @@ const speciesImages: { [key: string]: string } = {
   "01a4fef0-457b-4644-8b2f-1e14a522ca2b": "https://images.pexels.com/photos/635499/pexels-photo-635499.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Caballo"
   "9e38b8a6-d0bd-4bfd-a78b-1af8d06d6630": "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Pez"
   "81af0a69-3e2b-4466-8e94-f8980e7cbd74": "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Imagen de "Gato"
+  "fe425e76-e49b-4d49-a934-ff41b9d386fc": "https://images.pexels.com/photos/1661179/pexels-photo-1661179.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "ecb8b184-df31-4526-8595-fbcbd089b06c": "https://images.pexels.com/photos/15316903/pexels-photo-15316903/free-photo-of-hamster-in-vase.jpeg?auto=compress&cs=tinysrgb&w=600"
 };
 
 function MobilePetCard(props: PetCardProps) {

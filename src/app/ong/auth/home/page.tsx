@@ -133,7 +133,7 @@ const handleRejectRequest = async (requestId: string) => {
               ))
             ) : (
               <Box h={200} borderRadius="15px" p={4} bg={bgCard} boxShadow="md">
-                <Text>No adoption requests available.</Text>
+                <Text>No hay pedidos de adopción disponibles.</Text>
               </Box>
             )}
           </SimpleGrid>
@@ -145,7 +145,7 @@ const handleRejectRequest = async (requestId: string) => {
             onClick={handleAddAnimalClick}  // Trigger the redirection using window.location
             mt={6}  // Add some margin on top of the button
           >
-            Add Animal
+            Nuevo Animal
           </Button>
 
           {/* Additional grid content */}
@@ -159,7 +159,7 @@ const handleRejectRequest = async (requestId: string) => {
               <Text>Notificaciones</Text>
             </Box>
             <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              <Text>Donation History</Text>
+              <Text>Historial de Donaciones</Text>
             </Box>
           </Grid>
         </Flex>

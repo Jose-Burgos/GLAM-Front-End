@@ -35,7 +35,11 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
   // State variables
   const [orgId, setOrgId] = useState<string>();
   const [species, setSpecies] = useState({} as SpeciesData[]);
-  const [formData, setFormData] = useState(props.animal as Animal);
+  const [formData, setFormData] = useState(props.animal || {
+    sex: 'false', // Default to "Hembra"
+    vaccinated: 'false', // Default to "No"
+  });
+
   const { values, errors, submitForm, handleSubmit, handleChange } =
     useValidation(formData, validateOngRegisterForm, onSubmit);
 
@@ -173,76 +177,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 <FormErrorMessage>{errors.breed}</FormErrorMessage>
               )}
             </FormControl>
-            {/* Height */}
-            <FormControl marginBottom={5} isInvalid={errors.height}>
-              <FormLabel color="black">Altura (cm)</FormLabel>
-              <Input
-                placeholder="Altura (cm)"
-                name="height"
-                id="height"
-                value={values.height}
-                onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.height && (
-                <FormErrorMessage>{errors.height}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Back Length */}
-            <FormControl marginBottom={5} isInvalid={errors.back_length}>
-              <FormLabel color="black">Longitud del lomo (cm)</FormLabel>
-              <Input
-                placeholder="Longitud (cm)"
-                name="back_length"
-                id="back_length"
-                value={values.back_length}
-                onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.back_length && (
-                <FormErrorMessage>{errors.back_length}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Weight */}
-            <FormControl marginBottom={5} isInvalid={errors.weight}>
-              <FormLabel color="black">Peso (kg)</FormLabel>
-              <Input
-                placeholder="Peso (kg)"
-                name="weight"
-                id="weight"
-                value={values.weight}
-                onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.weight && (
-                <FormErrorMessage>{errors.weight}</FormErrorMessage>
-              )}
-            </FormControl>
-            {/* Age */}
-            <FormControl marginBottom={5} isInvalid={errors.age}>
-              <FormLabel color="black">Edad (años)</FormLabel>
-              <Input
-                placeholder="Edad (años)"
-                name="age"
-                id="age"
-                value={values.age}
-                onChange={handleChange}
-                bg="inputbg"
-                shadow="inner"
-                type="text"
-                maxLength={20}
-              />
-              {errors.age && <FormErrorMessage>{errors.age}</FormErrorMessage>}
-            </FormControl>
+
             {/* Sex */}
             <FormControl marginBottom={5} isInvalid={errors.sex}>
               <FormLabel color="black">Sexo</FormLabel>
@@ -250,7 +185,7 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 onChange={(value) =>
                   handleChange({ target: { name: 'sex', value } })
                 }
-                value={values.sex.toString()}
+                value={values.sex !== undefined ? values.sex.toString() : 'false'} // Default value
               >
                 <Stack direction="row">
                   <Radio value={false.toString()}>Hembra</Radio>
@@ -260,66 +195,6 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
               {errors.sex && <FormErrorMessage>{errors.sex}</FormErrorMessage>}
             </FormControl>
 
-            {/* Date of Rescue */}
-            <FormControl marginBottom={5} isInvalid={errors.rescue_date}>
-              <FormLabel color="black">Fecha de Rescate</FormLabel>
-              <InputGroup>
-                <DatePicker
-                  selected={
-                    values.rescue_date ? new Date(values.rescue_date) : null
-                  }
-                  onChange={(date) =>
-                    handleChange({
-                      target: {
-                        name: 'rescue_date',
-                        value: date?.toISOString(),
-                      },
-                    })
-                  }
-                  dateFormat="dd/MM/yyyy"
-                />
-              </InputGroup>
-              {errors.rescue_date && (
-                <FormErrorMessage>{errors.rescue_date}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            {/* Health Rating Slider */}
-            <FormControl marginBottom={5} isInvalid={errors.health_rating}>
-              <FormLabel color="black">Salud</FormLabel>
-              <Slider
-                colorScheme="gray"
-                aria-label="slider-ex-6"
-                step={10}
-                value={values.health_rating * 10}
-                onChange={(val) =>
-                  handleChange({
-                    target: { name: 'health_rating', value: val / 10 },
-                  })
-                }
-              >
-                {/* Slider marks */}
-                <SliderMark value={25} {...labelStyles}>
-                  25%
-                </SliderMark>
-                <SliderMark value={50} {...labelStyles}>
-                  50%
-                </SliderMark>
-                <SliderMark value={75} {...labelStyles}>
-                  75%
-                </SliderMark>
-
-                {/* Slider track and thumb */}
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-              {errors.health_rating && (
-                <FormErrorMessage>{errors.health_rating}</FormErrorMessage>
-              )}
-            </FormControl>
-
             {/* Vaccinated Radio Group */}
             <FormControl marginBottom={5} isInvalid={errors.vaccinated}>
               <FormLabel color="black">Vacunas</FormLabel>
@@ -327,15 +202,120 @@ function AnimalForm(props: { animal?: Animal; submitBtnText?: string }) {
                 onChange={(value) =>
                   handleChange({ target: { name: 'vaccinated', value } })
                 }
-                value={values.vaccinated.toString()}
+                value={values.vaccinated !== undefined ? values.vaccinated.toString() : 'false'} // Default value
               >
                 <Stack direction="row">
-                  <Radio value={true.toString()}>Si</Radio>
+                  <Radio value={true.toString()}>Sí</Radio>
                   <Radio value={false.toString()}>No</Radio>
                 </Stack>
               </RadioGroup>
               {errors.vaccinated && (
                 <FormErrorMessage>{errors.vaccinated}</FormErrorMessage>
+              )}
+            </FormControl>
+
+            {/* Height */}
+            <FormControl marginBottom={5} isInvalid={errors.height}>
+              <FormLabel color="black">Altura</FormLabel>
+              <Input
+                placeholder="Altura en cm"
+                name="height"
+                id="height"
+                value={values.height}
+                onChange={handleChange}
+                bg="inputbg"
+                shadow="inner"
+                type="text"
+              />
+              {errors.height && <FormErrorMessage>{errors.height}</FormErrorMessage>}
+            </FormControl>
+
+            {/* Back Length */}
+            <FormControl marginBottom={5} isInvalid={errors.back_length}>
+              <FormLabel color="black">Longitud del lomo</FormLabel>
+              <Input
+                placeholder="Longitud en cm"
+                name="back_length"
+                id="back_length"
+                value={values.back_length}
+                onChange={handleChange}
+                bg="inputbg"
+                shadow="inner"
+                type="text"
+              />
+              {errors.back_length && (
+                <FormErrorMessage>{errors.back_length}</FormErrorMessage>
+              )}
+            </FormControl>
+
+            {/* Weight */}
+            <FormControl marginBottom={5} isInvalid={errors.weight}>
+              <FormLabel color="black">Peso</FormLabel>
+              <Input
+                placeholder="Peso en kg"
+                name="weight"
+                id="weight"
+                value={values.weight}
+                onChange={handleChange}
+                bg="inputbg"
+                shadow="inner"
+                type="text"
+              />
+              {errors.weight && <FormErrorMessage>{errors.weight}</FormErrorMessage>}
+            </FormControl>
+
+            {/* Age */}
+            <FormControl marginBottom={5} isInvalid={errors.age}>
+              <FormLabel color="black">Edad</FormLabel>
+              <Input
+                placeholder="Edad"
+                name="age"
+                id="age"
+                value={values.age}
+                onChange={handleChange}
+                bg="inputbg"
+                shadow="inner"
+                type="text"
+              />
+              {errors.age && <FormErrorMessage>{errors.age}</FormErrorMessage>}
+            </FormControl>
+
+            {/* Rescue Date */}
+            <FormControl marginBottom={5} isInvalid={errors.rescue_date}>
+              <FormLabel color="black">Fecha de rescate</FormLabel>
+              <DatePicker
+                selected={values.rescue_date ? new Date(values.rescue_date) : null}
+                onChange={(date) =>
+                  handleChange({ target: { name: 'rescue_date', value: date } })
+                }
+                placeholderText="Selecciona la fecha"
+                dateFormat="dd/MM/yyyy"
+                isClearable
+              />
+              {errors.rescue_date && (
+                <FormErrorMessage>{errors.rescue_date}</FormErrorMessage>
+              )}
+            </FormControl>
+
+            {/* Health Rating */}
+            <FormControl marginBottom={5} isInvalid={errors.health_rating}>
+              <FormLabel color="black">Porcentaje de salud</FormLabel>
+              <Slider
+                value={values.health_rating}
+                onChange={(value) => handleChange({ target: { name: 'health_rating', value } })}
+                min={0}
+                max={100}
+              >
+                <SliderTrack>
+                  <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb />
+                <SliderMark value={values.health_rating} mt={2} ml={2}>
+                  {values.health_rating}%
+                </SliderMark>
+              </Slider>
+              {errors.health_rating && (
+                <FormErrorMessage>{errors.health_rating}</FormErrorMessage>
               )}
             </FormControl>
 
