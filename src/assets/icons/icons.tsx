@@ -38,6 +38,20 @@ export const LogInLogo = createIcon({
   ),
 });
 
+export const PawPrintIcon = createIcon({
+  displayName: "PawPrintIcon",
+  viewBox: "0 0 24 24",
+  path: (
+    <>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        fill="currentColor"
+        d="M12 10c-2.5 0 -4.5 2 -4.5 4.5s2 4.5 4.5 4.5 4.5 -2 4.5 -4.5 -2 -4.5 -4.5 -4.5zm-6 -2c1.1 0 2 -1.1 2 -2.5s-.9-2.5-2-2.5-2 1.1-2 2.5 .9 2.5 2 2.5zm12 0c1.1 0 2 -1.1 2 -2.5s-.9-2.5-2-2.5-2 1.1-2 2.5 .9 2.5 2 2.5zm-9.5 2c.8 0 1.5 -.9 1.5 -2s-.7-2-1.5-2-1.5 .9-1.5 2 .7 2 1.5 2zm7 0c.8 0 1.5 -.9 1.5 -2s-.7-2-1.5-2-1.5 .9-1.5 2 .7 2 1.5 2z"
+      />
+    </>
+  ),
+})
+
 export const LogOutLogo = createIcon({
   displayName: 'LogOutLogo',
   viewBox: '0 0 24 24',
