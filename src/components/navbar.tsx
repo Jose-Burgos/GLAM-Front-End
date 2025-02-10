@@ -139,7 +139,7 @@ export default function NavBar(props: any) {
         </Button>
       </NextLink>
       {isLoggedIn && (
-        <NextLink href={`/${type}/auth/home`}>
+        <NextLink href="/adoption">
           <Button
             fontSize="sm"
             ms="0px"
@@ -157,7 +157,7 @@ export default function NavBar(props: any) {
               />
             }
           >
-            <Text fontSize="md">Dashboard</Text>
+            <Text fontSize="md">Mis Solicitudes</Text>
           </Button>
         </NextLink>
       )}
