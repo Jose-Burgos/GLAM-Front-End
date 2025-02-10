@@ -34,9 +34,16 @@ let session: any;
 let name: string;
 
 async function fetchSession() {
-  session = await helpers.getSession();
-  name = await helpers.getNameById(session.user.id);  
+  const session = await helpers.getSession();
+  if (session !== null) {
+    const name = await helpers.getNameById(session.user.id);
+    // you can now use 'name' here if needed
+  } else {
+    // Handle case where session is null, if necessary
+    console.log("No session found");
+  }
 }
+
 
 fetchSession();
 

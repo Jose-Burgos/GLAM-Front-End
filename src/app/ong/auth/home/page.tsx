@@ -1,12 +1,10 @@
-'use client';
-
+'use client'
 import React, { useEffect, useState } from 'react';
 import { Request } from '~/supabase/types/supabase.tables'; // Use the Request type
 import supabase from '~/supabase/helpers';
 import {
   Box,
   Flex,
-  Grid,
   HStack,
   SimpleGrid,
   useColorModeValue,
@@ -21,12 +19,30 @@ export default function UserDashboard() {
 
   // State to store the adoption requests with the correct type
   const [adoptionRequests, setAdoptionRequests] = useState<Request[]>([]);
+  const [animalNames, setAnimalNames] = useState<{ [key: string]: string }>({}); // New state to store animal names
 
   useEffect(() => {
     (async () => {
       // Fetch the adoption requests and set the state
       const data = await supabase.getOrgAdoptionRequestsForDashboard();
       setAdoptionRequests(data); // Now TypeScript knows it's a Request[] type
+
+      // Fetch animal names for each request
+      const animalNamePromises = data.map(async (request) => {
+        const animal = await supabase.getAnimalById(request.animal_id);
+        return { animalId: request.animal_id, animalName: animal.name };
+      });
+
+      // Wait for all animal names to be fetched
+      const animalNamesData = await Promise.all(animalNamePromises);
+
+      // Map the results to the state
+      const animalNamesMap = animalNamesData.reduce((acc, { animalId, animalName }) => {
+        acc[animalId] = animalName;
+        return acc;
+      }, {} as { [key: string]: string });
+
+      setAnimalNames(animalNamesMap); // Set the state with animal names
     })();
   }, []);
 
@@ -54,23 +70,21 @@ export default function UserDashboard() {
   };
 
   // Handle reject request
-// Handle reject request
-const handleRejectRequest = async (requestId: string) => {
-  console.log(`Rejected request with ID: ${requestId}`);
+  const handleRejectRequest = async (requestId: string) => {
+    console.log(`Rejected request with ID: ${requestId}`);
 
-  try {
-    // Delete the request from the database
-    await supabase.deleteRequest(requestId); 
+    try {
+      // Delete the request from the database
+      await supabase.deleteRequest(requestId); 
 
-    // Remove the rejected request from the state
-    setAdoptionRequests(adoptionRequests.filter(request => request.request_id !== requestId));
+      // Remove the rejected request from the state
+      setAdoptionRequests(adoptionRequests.filter(request => request.request_id !== requestId));
 
-    console.log(`Request with ID: ${requestId} has been rejected and removed from the database.`);
-  } catch (error) {
-    console.error("Error rejecting request:", error.message);
-  }
-};
-
+      console.log(`Request with ID: ${requestId} has been rejected and removed from the database.`);
+    } catch (error) {
+      console.error("Error rejecting request:", error.message);
+    }
+  };
 
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
@@ -102,33 +116,36 @@ const handleRejectRequest = async (requestId: string) => {
                 >
                   <VStack spacing={4} align="start">
                     <Text fontWeight="bold" fontSize="lg">
-                      {request.user_name || 'No Adopter Name'}  {/* Display adopter's name */}
+                      Adoptante: {request.user_name || 'Error'}  {/* Display adopter's name */}
                     </Text>
                     <Text color="gray.600">
-                      {request.description || 'No Description'}  {/* Display description of the animal */}
+                      Descripción del pedido: {request.description || 'Sin descripción'}  {/* Display description of the animal */}
                     </Text>
-                    <Text>{'Pending'}</Text> {/* Display static 'Pending' as per your current logic */}
+                    <Text fontWeight="bold" fontSize="lg">
+                      Mascota: {animalNames[request.animal_id] || 'Animal sin nombre'}  {/* Display animal's name */}
+                    </Text>
+                    <Text>{'Pendiente'}</Text> {/* Display static 'Pending' as per your current logic */}
                   </VStack>
 
                   {/* Buttons at the bottom */}
                   <HStack justify="space-between" w="100%" mt="auto">
-                  <Button
-                  colorScheme="teal"
-                  size="sm"
-                  onClick={() => handleAcceptRequest(request.request_id, request.animal_id)}  // Pass request ID and animal ID
-                  w="48%"
-                  >
-                  Aceptar
-                </Button>
-                <Button
-                colorScheme="red"
-                size="sm"
-                onClick={() => handleRejectRequest(request.request_id)}  // Pass request ID
-                w="48%">
-                Rechazar
-                </Button>
+                    <Button
+                      colorScheme="teal"
+                      size="sm"
+                      onClick={() => handleAcceptRequest(request.request_id, request.animal_id)}  // Pass request ID and animal ID
+                      w="48%"
+                    >
+                      Aceptar
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      size="sm"
+                      onClick={() => handleRejectRequest(request.request_id)}  // Pass request ID
+                      w="48%"
+                    >
+                      Rechazar
+                    </Button>
                   </HStack>
-
                 </Box>
               ))
             ) : (
@@ -147,23 +164,6 @@ const handleRejectRequest = async (requestId: string) => {
           >
             Nuevo Animal
           </Button>
-
-          {/* Additional grid content */}
-          {/*
-          <Grid
-            templateColumns={{ md: '1fr', lg: '1.8fr 1.2fr' }}
-            templateRows={{ md: '1fr auto', lg: '1fr' }}
-            my="26px"
-            gap="24px"
-          >
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              <Text>Notificaciones</Text>
-            </Box>
-            <Box h={200} borderRadius="15px" p={2} bg={bgCard}>
-              <Text>Historial de Donaciones</Text>
-            </Box>
-          </Grid>
-          */}
         </Flex>
       </HStack>
     </Flex>

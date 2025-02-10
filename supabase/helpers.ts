@@ -258,13 +258,21 @@ const helpers: HelperFunctions = {
   },
 
   logout: async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log('Logout error: ', error);
-      throw new Error(error.message);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.log('Logout error: ', error);
+        throw new Error(error.message);
+      }
+      // Manually clear session data
+      localStorage.removeItem('supabase.auth.token'); // Remove token from localStorage
+      console.log('Logout successful');
+      // Reset any other relevant state variables
+    } catch (err) {
+      console.log('Error during sign-out process:', err);
     }
-    console.log('Logout successful');
-  },
+  }
+  ,
 
   sendForgotPassEmail: async (email) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email);
