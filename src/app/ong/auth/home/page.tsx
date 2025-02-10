@@ -75,7 +75,7 @@ const handleRejectRequest = async (requestId: string) => {
   return (
     <Flex p={8} flexDirection="column" justifyContent="center">
       <HStack>
-        <Flex mt={{ lg: '-50%', xl: '-30%' }}>
+        <Flex>
           <AdminSidebarResponsive />
         </Flex>
         <Flex
@@ -149,6 +149,7 @@ const handleRejectRequest = async (requestId: string) => {
           </Button>
 
           {/* Additional grid content */}
+          {/*
           <Grid
             templateColumns={{ md: '1fr', lg: '1.8fr 1.2fr' }}
             templateRows={{ md: '1fr auto', lg: '1fr' }}
@@ -162,6 +163,7 @@ const handleRejectRequest = async (requestId: string) => {
               <Text>Historial de Donaciones</Text>
             </Box>
           </Grid>
+          */}
         </Flex>
       </HStack>
     </Flex>
