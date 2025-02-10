@@ -139,27 +139,6 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Inicio</Text>
         </Button>
       </Link>
-      <Link href="/adoption">
-        <Button
-          fontSize="sm"
-          ms="0px"
-          px="0px"
-          me={{ sm: '2px', md: '16px' }}
-          color={navbarIcon}
-          variant="transparent-with-icon"
-          leftIcon={
-            <AdoptionLogo
-              color={navbarIcon}
-              w="20px"
-              h="20px"
-              me="0px"
-              mb={2}
-            />
-          }
-        >
-          <Text fontSize="md">Adopciones</Text>
-        </Button>
-      </Link>
       <Link href="/ong">
         <Button
           fontSize="sm"
