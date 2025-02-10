@@ -3,10 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
-import { Flex, CircularProgress, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, CircularProgress, Grid, GridItem, Text } from '@chakra-ui/react';
 import PetCard from '@/components/petcard';
 import NavBar from '@/components/navbar';
-import { Text } from "@chakra-ui/react";
 
 
 export default function AdoptView() {
@@ -56,7 +55,7 @@ export default function AdoptView() {
                         name={card.name}
                         description={card.breed}
                         species_id={card.species_id}
-                        isLoggedIn={true}
+                        isLoggedIn
                       />
                     </GridItem>
                   ))
