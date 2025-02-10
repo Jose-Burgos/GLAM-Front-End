@@ -87,13 +87,13 @@ const helpers: HelperFunctions = {
 
     // Determine user profile type based on session data or other identifiable criteria
     let profileType: 'RegularUser' | 'Organization' | null = null;
-
+    console.log("User ID: ", session.user.id);
     // Example logic to determine profile type (this can be adjusted as per your app's logic)
     const { data: publicData, error } = await supabase
       .from('users')  // Or 'organizations' if you can check which table to expect based on session info
       .select('*')
       .eq('user_id', session.user.id);  // Check if it's a RegularUser or an Organization
-
+    console.log("Data recovered: ", publicData);
     if (error) {
       throw new Error(error.message);
     }
@@ -259,19 +259,32 @@ const helpers: HelperFunctions = {
 
   logout: async () => {
     try {
+      // Check if session is available
+      const session = supabase.auth.getSession();
+      if (!session) {
+        console.log('No active session found.');
+        alert('You are already logged out.');
+        return; // Exit if no session is found
+      }
+  
+      console.log("Attempting to sign out...");
       const { error } = await supabase.auth.signOut();
       if (error) {
-        console.log('Logout error: ', error);
+        console.error('Logout error: ', error);
         throw new Error(error.message);
       }
-      // Manually clear session data
-      localStorage.removeItem('supabase.auth.token'); // Remove token from localStorage
+  
       console.log('Logout successful');
-      // Reset any other relevant state variables
+      // Clear session data
+      localStorage.removeItem('supabase.auth.token');
+      // Trigger any additional state change here
     } catch (err) {
-      console.log('Error during sign-out process:', err);
+      console.error('Error during sign-out process:', err);
+      alert("Logout failed! Please check your network connection.");
     }
   }
+  
+  
   ,
 
   sendForgotPassEmail: async (email) => {

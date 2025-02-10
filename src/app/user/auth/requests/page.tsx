@@ -18,6 +18,7 @@ import HelperFunctions from '~/supabase/helpers';
 import { Animal } from '~/supabase/types/supabase.tables';
 import NavBar from '@/components/navbar';
 import { Separator } from '@/components/separator';
+import { request } from 'https';
 
 
 export default function Landing() {
@@ -40,7 +41,7 @@ export default function Landing() {
         
         // Obtener las solicitudes de adopción del usuario
         const requestData = await HelperFunctions.getRequestsByUser(owner);
-
+        console.log("Requested animals: ", requestData);
         // Si no hay solicitudes, detener la carga y no continuar
         if (!requestData || requestData.length === 0) {
           setCardData([]);
