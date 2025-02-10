@@ -138,29 +138,6 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
-      {isLoggedIn && (
-        <NextLink href="/adoption">
-          <Button
-            fontSize="sm"
-            ms="0px"
-            px="0px"
-            me={{ sm: '2px', md: '16px' }}
-            color={navbarIcon}
-            variant="transparent-with-icon"
-            leftIcon={
-              <DashboardLogo
-                color={navbarIcon}
-                w="30px"
-                h="30px"
-                me="0px"
-                mb={1}
-              />
-            }
-          >
-            <Text fontSize="md">Mis Solicitudes</Text>
-          </Button>
-        </NextLink>
-      )}
     </HStack>
   );
   return (
