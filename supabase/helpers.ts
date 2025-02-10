@@ -561,7 +561,7 @@ const helpers: HelperFunctions = {
       if (error) {
         throw new Error(error.message);
       }
-
+    
       return data;
     },
 

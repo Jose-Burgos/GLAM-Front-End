@@ -14,7 +14,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   AdoptionLogo,
   HomeLogo,
@@ -28,10 +28,40 @@ import NextLink from 'next/link';
 import SidebarResponsive from './sidebarResonsive';
 import AuthContext from '@/hooks/authContext';
 import HelperFunctions from '~/supabase/helpers';
+import helpers from '~/supabase/helpers';
+
+let session: any;
+let name: string;
+
+async function fetchSession() {
+  session = await helpers.getSession();
+  name = await helpers.getNameById(session.user.id);  
+}
+
+fetchSession();
+
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { logIn, isLoggedIn, logOut, type } = useContext(AuthContext);
+
+
+ // Estado para almacenar session y name
+ const [session, setSession] = useState<any>(null);
+ const [name, setName] = useState<string>('');
+
+ // Obtener la sesión y el nombre del usuario
+ useEffect(() => {
+   async function fetchSession() {
+     const sessionData = await helpers.getSession();
+     setSession(sessionData);
+     const userName = sessionData ? await helpers.getNameById(sessionData.user.id) : '';
+     setName(userName);
+   }
+   fetchSession();
+ }, []);
+
+
   const handleLogOut = () => {
     logOut();
   };
@@ -87,7 +117,7 @@ export default function NavBar(props: any) {
   );
   const linksAuth = (
     <HStack display={{ sm: 'none', lg: 'flex' }}>
-      <NextLink href="/">
+      <Link href="/">
         <Button
           fontSize="sm"
           ms="0px"
@@ -101,8 +131,8 @@ export default function NavBar(props: any) {
         >
           <Text fontSize="md">Inicio</Text>
         </Button>
-      </NextLink>
-      <NextLink href="/adoption">
+      </Link>
+      <Link href="/adoption">
         <Button
           fontSize="sm"
           ms="0px"
@@ -122,8 +152,8 @@ export default function NavBar(props: any) {
         >
           <Text fontSize="md">Adopciones</Text>
         </Button>
-      </NextLink>
-      <NextLink href="/ong">
+      </Link>
+      <Link href="/ong">
         <Button
           fontSize="sm"
           ms="0px"
@@ -137,8 +167,8 @@ export default function NavBar(props: any) {
         >
           <Text fontSize="md">Organizaciones</Text>
         </Button>
-      </NextLink>
-      <NextLink href={`/${type}/auth/home`}>
+      </Link>
+      <Link href={`/${type}/auth/home?owner=${name}`}>
         <Button
           fontSize="sm"
           ms="0px"
@@ -152,7 +182,7 @@ export default function NavBar(props: any) {
         >
           <Text fontSize="md">Perfil</Text>
         </Button>
-      </NextLink>
+      </Link>
     </HStack>
   );
   return (
@@ -223,9 +253,9 @@ export default function NavBar(props: any) {
               leftIcon={<LogOutLogo w="24px" h="24px" me="0px" />}
               onClick={handleLogOut}
             >
-              <NextLink href="/">
+              <Link href="/">
                 <Text fontSize="md">Cerrar Sesion</Text>
-              </NextLink>
+              </Link>
             </Button>
           )}
           <Icon

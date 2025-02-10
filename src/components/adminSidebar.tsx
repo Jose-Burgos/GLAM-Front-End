@@ -36,6 +36,7 @@ import {
 } from '@/assets/icons/icons';
 import AuthContext from '@/hooks/authContext';
 import helpers from '~/supabase/helpers';
+import { useState, useEffect, useRef, useContext } from 'react';
 
 interface Routes {
   path: string;
@@ -49,7 +50,7 @@ let name: string;
 
 async function fetchSession() {
   session = await helpers.getSession();
-  name = await helpers.getNameById(session.user.id);
+  name = await helpers.getNameById(session.user.id);  
 }
 
 fetchSession();
@@ -63,6 +64,22 @@ export default function AdminSidebarResponsive(props: any) {
     return location === routeName ? 'active' : '';
   };
   const { isLoggedIn, logOut, type } = React.useContext(AuthContext);
+
+  // Estado para almacenar session y name
+  const [session, setSession] = useState<any>(null);
+  const [name, setName] = useState<string>('');
+
+  // Obtener la sesión y el nombre del usuario
+  useEffect(() => {
+    async function fetchSession() {
+      const sessionData = await helpers.getSession();
+      setSession(sessionData);
+      const userName = sessionData ? await helpers.getNameById(sessionData.user.id) : '';
+      setName(userName);
+    }
+    fetchSession();
+  }, []);
+
 
   const routes: Array<Routes> = [
     {
@@ -82,44 +99,46 @@ export default function AdminSidebarResponsive(props: any) {
     },
   ];
 
-  const loggedRoutes: Array<Routes> = [
-    {
-      path: '/',
-      name: 'Inicio',
-      icon: <HomeLogo w="24px" h="24px" me="0px" />,
-      rolesAllowed: ['ong', 'user'],
-    },
-    {
-      path: '/adoption',
-      name: 'Adopciones',
-      icon: <AdoptionLogo w="20px" h="20px" me="0px" />,
-      rolesAllowed: ['ong', 'user'],
-    },
-    {
-      path: '/ong',
-      name: 'Organizaciones',
-      icon: <OngLogo w="26px" h="26px" me="0px" />,
-      rolesAllowed: ['ong', 'user'],
-    },
-    {
-      path: `/${type}/auth/home`,
-      name: 'Dashboard',
-      icon: <DashboardLogo w="26px" h="26px" me="0px" />,
-      rolesAllowed: ['ong'],
-    },
-    {
-      path: `/${type}/animals?owner=${session.user.id}`,
-      name: 'Mis Animales',
-      icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
-      rolesAllowed: ['ong'],
-    },
-    {
-      path: `/${type}/auth/requests?owner=${name}`,
-      name: 'Mis Solicitudes',
-      icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
-      rolesAllowed: ['user'],
-    },
-  ];
+  const loggedRoutes: Array<Routes> = session
+    ? [
+        {
+          path: '/',
+          name: 'Inicio',
+          icon: <HomeLogo w="24px" h="24px" me="0px" />,
+          rolesAllowed: ['ong', 'user'],
+        },
+        {
+          path: '/adoption',
+          name: 'Adopciones',
+          icon: <AdoptionLogo w="20px" h="20px" me="0px" />,
+          rolesAllowed: ['ong', 'user'],
+        },
+        {
+          path: '/ong',
+          name: 'Organizaciones',
+          icon: <OngLogo w="26px" h="26px" me="0px" />,
+          rolesAllowed: ['ong', 'user'],
+        },
+        {
+          path: `/${type}/auth/home`,
+          name: 'Dashboard',
+          icon: <DashboardLogo w="26px" h="26px" me="0px" />,
+          rolesAllowed: ['ong'],
+        },
+        {
+          path: `/${type}/animals?owner=${session.user.id}`,
+          name: 'Mis Animales',
+          icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+          rolesAllowed: ['ong'],
+        },
+        {
+          path: `/${type}/auth/requests?owner=${name || ''}`,
+          name: 'Mis Solicitudes',
+          icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+          rolesAllowed: ['user'],
+        },
+      ]
+    : [];
 
   const authRoutes: Array<Routes> = [
     {

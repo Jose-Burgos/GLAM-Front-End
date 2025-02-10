@@ -8,6 +8,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  Text,
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -18,37 +19,49 @@ import { Animal } from '~/supabase/types/supabase.tables';
 import NavBar from '@/components/navbar';
 import { Separator } from '@/components/separator';
 
+
 export default function Landing() {
-  const [cardData, setCardData] = useState<Animal[] | null>(null); // Updated to reflect when we fetch animal data
-  const [success, setSuccess] = useState<boolean>(false); // Indicator of success
+  const [cardData, setCardData] = useState<Animal[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const owner = searchParams.get("owner");
 
   useEffect(() => {
     const fetchAnimalData = async () => {
-      if (owner) {
-        // Fetch the requests by user (which should return animal IDs or references)
-        const requestData = await HelperFunctions.getRequestsByUser(owner) as Animal[];
-        console.log("Requests: ", requestData);
+      if (!owner) {
+        setLoading(false);
+        return;
+      }
 
-        // If there are requests, fetch the full animal details for each request ID
-        if (requestData?.length > 0) {
-          const animalDetailsPromises = requestData.map(async (request) => {
-            // Fetch full animal data based on the ID in each request
-            console.log(request);
-            const fullAnimal = await HelperFunctions.getAnimalById(request.animal_id);
-            return fullAnimal;
-          });
+      try {
+        setLoading(true);
+        
+        // Obtener las solicitudes de adopción del usuario
+        const requestData = await HelperFunctions.getRequestsByUser(owner);
 
-          // Wait for all animal details to be fetched
-          const animals = await Promise.all(animalDetailsPromises);
-          console.log("Fetched Animals: ", animals);
-
-          // Set the fetched animal details to state
-          setCardData(animals);
-          setSuccess(true); // Mark the fetching process as successful
+        // Si no hay solicitudes, detener la carga y no continuar
+        if (!requestData || requestData.length === 0) {
+          setCardData([]);
+          setLoading(false);
+          return;
         }
+
+        // Obtener detalles de cada animal de las solicitudes
+        const animalDetailsPromises = requestData.map(async (request) => {
+          console.log(request);
+          return HelperFunctions.getAnimalById(request.animal_id);
+        });
+
+        const animals = await Promise.all(animalDetailsPromises);
+        console.log("Fetched Animals: ", animals);
+
+        setCardData(animals);
+      } catch (err) {
+        setError("Ocurrió un error al cargar las solicitudes.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -87,16 +100,25 @@ export default function Landing() {
                     w="100%"
                     background="transparent"
                   >
-                    <Grid
-                      gap={8}
-                      templateColumns={{
-                        sm: 'repeat(1, 1fr)',
-                        md: 'repeat(1, 1fr)',
-                        lg: 'repeat(4, 1fr)',
-                      }}
-                    >
-                      {success ? (
-                        cardData?.map((card, idx) => (
+                    {loading ? ( 
+                      // Muestra el spinner mientras se cargan los datos
+                      <CircularProgress isIndeterminate color="teal.300" />
+                    ) : error ? ( 
+                      // Muestra un mensaje de error si ocurre un problema
+                      <Text fontSize="xl" color="gray.500" >
+                        Ocurrió un error al cargar las solicitudes.
+                      </Text>
+                    ) : cardData && cardData.length > 0 ? ( 
+                      // Muestra la grilla con las solicitudes si hay datos
+                      <Grid
+                        gap={8}
+                        templateColumns={{
+                          sm: 'repeat(1, 1fr)',
+                          md: 'repeat(1, 1fr)',
+                          lg: 'repeat(4, 1fr)',
+                        }}
+                      >
+                        {cardData.map((card, idx) => (
                           <GridItem key={idx}>
                             <PetCard
                               id={card.id}
@@ -107,11 +129,14 @@ export default function Landing() {
                               isLoggedIn={true}
                             />
                           </GridItem>
-                        ))
-                      ) : (
-                        <CircularProgress isIndeterminate color="teal.300" />
-                      )}
-                    </Grid>
+                        ))}
+                      </Grid>
+                    ) : ( 
+                      // Si no hay solicitudes, muestra un mensaje indicando eso
+                      <Text fontSize="xl" color="gray.500">
+                        No tienes solicitudes de adopción en este momento.
+                      </Text>
+                    )}
                   </Flex>
                 </Flex>
               </Flex>
@@ -121,4 +146,4 @@ export default function Landing() {
       </Flex>
     </>
   );
-}
+}  
