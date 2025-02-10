@@ -138,6 +138,21 @@ export default function NavBar(props: any) {
           <Text fontSize="md">Organizaciones</Text>
         </Button>
       </NextLink>
+      <NextLink href={`/${type}/auth/home`}>
+        <Button
+          fontSize="sm"
+          ms="0px"
+          px="0px"
+          me={{ sm: '2px', md: '16px' }}
+          color={navbarIcon}
+          variant="transparent-with-icon"
+          leftIcon={
+            <OngLogo color={navbarIcon} w="26px" h="26px" me="0px" mb={2} />
+          }
+        >
+          <Text fontSize="md">Perfil</Text>
+        </Button>
+      </NextLink>
     </HStack>
   );
   return (
