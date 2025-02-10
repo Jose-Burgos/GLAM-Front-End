@@ -60,7 +60,10 @@ export default function UserDashboard() {
       await supabase.deleteAnimal(animalId); 
   
       // Optionally, you can update your UI state to reflect the changes
-      setAdoptionRequests(adoptionRequests.filter(request => request.animal_id !== animalId));
+      setAdoptionRequests(
+        adoptionRequests.filter((request: any) => request.animal_id !== animalId)
+      );
+      
   
       console.log(`Animal with ID: ${animalId} has been deleted.`);
       // Add other logic if needed (e.g., updating the request status)
