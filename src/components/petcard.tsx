@@ -234,7 +234,7 @@ function AdoptedPetCard(props: PetCardProps) {        // falta hacer que llame a
       </Stack>
       <Flex>
         <Spacer />
-        <Link href={`/adoption/${id}`}>
+        {/* aca tengo que cambiar que hace el boton */}
           <Button
             bg="red"
             size="md"
@@ -247,7 +247,7 @@ function AdoptedPetCard(props: PetCardProps) {        // falta hacer que llame a
           >
             Elminiar Adopcion
           </Button>
-        </Link>
+        
       </Flex>
     </Box>
   );
@@ -270,6 +270,54 @@ export default function PetCard(props: PetCardProps) {
     <Box>
       <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
         <DesktopPetCard
+          id={props.id}
+          species_id={props.species_id} // Pass species_id
+          img={props.img}
+          name={props.name}
+          description={props.description}
+          isLoggedIn={isLoggedIn} // Pass login state
+        />
+      </Box>
+
+      <Box
+        display={{
+          sm: 'flex',
+          md: 'flex',
+          lg: 'none',
+          xl: 'none',
+        }}
+      >
+        <MobilePetCard
+          id={props.id}
+          species_id={props.species_id} // Pass species_id
+          img={props.img}
+          name={props.name}
+          description={props.description}
+          isLoggedIn={isLoggedIn} // Pass login state
+        />
+      </Box>
+    </Box>
+  );
+}
+
+
+export function PetCardForAdopted(props: PetCardProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check the session status using supabase.getSession()
+  useEffect(() => {
+    const fetchSession = async () => {
+      const session = await supabase.getSession();
+      setIsLoggedIn(!!session?.user); // Safe check using optional chaining
+    };
+    
+    fetchSession();
+  }, []);
+
+  return (
+    <Box>
+      <Box display={{ sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }}>
+        <AdoptedPetCard
           id={props.id}
           species_id={props.species_id} // Pass species_id
           img={props.img}

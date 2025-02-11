@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react';
 import AdminSidebarResponsive from '@/components/adminSidebar';
 
-import PetCard from '@/components/petcard';
+import PetCard, { PetCardForAdopted } from '@/components/petcard';
 import { Separator } from '@/components/separator';
 
 /* export default function animalInfo() {
@@ -156,7 +156,7 @@ export default function UserDashboard() {
                       >
                         {cardData.map((card, idx) => (
                           <GridItem key={idx}>
-                            <PetCard
+                            <PetCardForAdopted
                               id={card.id}
                               img="https://s1.eestatic.com/2021/11/10/actualidad/626198188_214456908_1706x960.jpg"
                               name={card.name}
