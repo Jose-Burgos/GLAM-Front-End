@@ -17,10 +17,11 @@ const useValidation = (initialState: any, validate: any, func: any) => {
     }
   }, [submitForm, values, validate, func]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     saveValues((prevState: any) => ({ ...prevState, [name]: value })); // Update the correct field
   };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

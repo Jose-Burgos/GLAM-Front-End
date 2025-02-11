@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useContext } from 'react';
-import supabase from '~/supabase/helpers';
 import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
 import {
@@ -41,7 +40,7 @@ export default function Login() {
 
   const checkSessionAndRedirect = async () => {
     try {
-      const session = await supabase.getSession();
+      const session = await helpers.getSession();
       if (session) {
         logIn();
         toast({
@@ -96,20 +95,16 @@ export default function Login() {
       }
       
       if (sessionData?.session) {
-        // Session exists and is valid, proceed with the redirection
-        console.log("Session data exists and is valid");
-  
+
         // Access the user directly from sessionData
-        const user = sessionData.session.user;  // Get the user from sessionData
-        console.log("User object from session:", user);  // Log the user object
+        const {user} = sessionData.session;  // Get the user from sessionData
   
         const profile_type = user?.user_metadata?.profile_type;
-        console.log("Profile Type:", profile_type);  // Log profile type to check
   
         if (user) {
           const userId = user.user_metadata.user_id;  // Check if you have user_id in user_metadata
           if (profile_type === 'RegularUser') {
-            console.log("You are User");
+
             toast({
               title: 'Usted es un Usuario.',
               description: '',

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Animal } from '~/supabase/types/supabase.tables';
-import supabase from '~/supabase/helpers';
+import helpers from '~/supabase/helpers';
 import AnimalForm from '@/components/animalform';
 import './editAnimal.css';
 import { useParams } from 'react-router-dom';
@@ -17,11 +17,11 @@ export default function EditAnimal() {
   useEffect(() => {
     (async () => {
       // Get user info
-      const { type } = await supabase.getCurrentUser();
-      const user = await supabase.getCurrentUserId();
+      const { type } = await helpers.getCurrentUser();
+      const user = await helpers.getCurrentUserId();
       const searchParams = new URLSearchParams(window.location.search);
       const id = searchParams.get('id');
-      const animal_id = await supabase.getAnimalById(id as string);
+      const animal_id = await helpers.getAnimalById(id as string);
       setSelectedAnimal(animal_id);
       setSelected(true);
       setUserID(user);

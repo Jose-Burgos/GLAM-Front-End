@@ -35,14 +35,14 @@ export interface HelperFunctions {
   getSession: () => Promise<Session | null>;
   askNewPassOnReset: () => void;
   requestAdoption: (animalId: string) => void;
-  getUserAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
-  getOrgAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
+  // getUserAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
+  // getOrgAdoptionRequests: () => Promise<Sb.AdoptionRequest[]>;
   cancelAdoptionRequest: (requestId: string) => void;
   reactivateAdoptionRequest: (requestId: string) => void;
   getOrganizations: () => Promise<Sb.Org[]>;
   getSpecies: () => Promise<Sb.SpeciesData[]>;
   getImages: () => Promise<Array<{ url: string; name: string }>>;       // hay que cambiar el tipo de dato que devuelve
-  //getAllImages: () => Promise<Array<{ url: string; name: string }>>;
+  // getAllImages: () => Promise<Array<{ url: string; name: string }>>;
   deleteImage: (imageName) => Promise<any>;
   uploadImage: (imageName) => Promise<any>;
   submitInKindDonation: (donationdata: Sb.InKindDonation) => Promise<void>;
@@ -54,7 +54,7 @@ export interface HelperFunctions {
   getUsernameById: (userId: string) => Promise<any>;
   getOrgAdoptionRequestsForDashboard: () => Promise<any[]>;
   deleteRequest: (requestId: string) => Promise<void>;
-  //auth: SupabaseClient['auth'];  // Make sure 'auth' is correctly typed
+  // auth: SupabaseClient['auth'];  // Make sure 'auth' is correctly typed
   supabase: SupabaseClient;  // Explicitly include supabase in helpers' type
 }
 

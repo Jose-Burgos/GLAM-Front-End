@@ -27,7 +27,7 @@ const helpers: HelperFunctions = {
     } catch (error) {
       // Catch any errors that occur during the fetch operation
       console.error("Unexpected error in getAnimals:", error);  // Log the error
-      throw new Error("Failed to fetch animals data: " + error.message);
+      throw new Error(`Failed to fetch animals data: ${  error.message}`);
     }
   },
 
@@ -259,33 +259,28 @@ const helpers: HelperFunctions = {
 
   logout: async () => {
     try {
-      // Check if session is available
-      const session = supabase.auth.getSession();
+      // Get the session first
+      const { data: session, error } = await supabase.auth.getSession();
+      if (error) throw error;
+  
       if (!session) {
-        console.log('No active session found.');
         alert('You are already logged out.');
-        return; // Exit if no session is found
+        return;
       }
   
-      console.log("Attempting to sign out...");
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Logout error: ', error);
-        throw new Error(error.message);
+      // Proceed with sign-out if session exists
+      const { error: signOutError } = await supabase.auth.signOut();
+      localStorage.clear();
+      if (signOutError) {
+        return;
       }
   
-      console.log('Logout successful');
-      // Clear session data
       localStorage.removeItem('supabase.auth.token');
-      // Trigger any additional state change here
+    
     } catch (err) {
-      console.error('Error during sign-out process:', err);
-      alert("Logout failed! Please check your network connection.");
+      console.error('Logout error:', err);
     }
-  }
-  
-  
-  ,
+  },  
 
   sendForgotPassEmail: async (email) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email);
@@ -382,17 +377,17 @@ const helpers: HelperFunctions = {
     }
   },
 
-  getUserAdoptionRequests: async () => {
-    const id = await helpers.getCurrentUserId();
-    const requests = await getAdoptionRequests('RegularUser', id);
-    return requests;
-  },
+  // getUserAdoptionRequests: async () => {
+  //   const id = await helpers.getCurrentUserId();
+  //   const requests = await getAdoptionRequests('RegularUser', id);
+  //   return requests;
+  // },
 
-  getOrgAdoptionRequests: async () => {
-    const id = await helpers.getCurrentUserId();
-    const requests = await getAdoptionRequests('Organization', id);
-    return requests;
-  },
+  // getOrgAdoptionRequests: async () => {
+  //   const id = await helpers.getCurrentUserId();
+  //   const requests = await getAdoptionRequests('Organization', id);
+  //   return requests;
+  // },
 
   cancelAdoptionRequest: async (requestId) => {
     await supabase
@@ -432,7 +427,7 @@ const helpers: HelperFunctions = {
     const userId = await helpers.getCurrentUserId();
     const { error } = await supabase.storage
       .from('animal-pictures-orgs')
-      .remove([userId + '/' + imageName]);
+      .remove([`${userId  }/${  imageName}`]);
     if (error) {
       throw new Error(error.message);
     }
@@ -442,7 +437,7 @@ const helpers: HelperFunctions = {
     // let file = e.target.files[0];
     const { data, error } = await supabase.storage
       .from('animals-pictures')
-      .upload(helpers.getCurrentUserId() + '/' + uuidv4(), file);
+      .upload(`${helpers.getCurrentUserId()  }/${  uuidv4()}`, file);
 
     if (data) {
       // if we got an image
@@ -464,7 +459,7 @@ const helpers: HelperFunctions = {
     if (error) {
       throw new Error(error.message);
     }
-    return;
+    
   },
 
   getInKindDonations: async () => {
@@ -490,11 +485,11 @@ const helpers: HelperFunctions = {
       throw new Error(error.message);
     } else {
       return data.map((element) => ({
-        url: 'https://svyzokdesnbggpplkaxn.supabase.co/storage/v1/object/public/animals-pictures/' +
-          userId +
-          '/' +
-          element.name,
-        name: userId + '/' + element.name,
+        url: `https://svyzokdesnbggpplkaxn.supabase.co/storage/v1/object/public/animals-pictures/${ 
+          userId 
+          }/${ 
+          element.name}`,
+        name: `${userId  }/${  element.name}`,
       }));
     }
   },
@@ -529,20 +524,16 @@ const helpers: HelperFunctions = {
 
     createAdoptionRequest: async (animalId: string, description: string) => {
       // Get the current logged-in user’s ID, email, and username
-      console.log("Getting current user.");
       const user = await helpers.getCurrentUser();
-      console.log("User acquired.");
       
       if (user.type !== 'RegularUser') {
           throw new Error("Only RegularUsers can make adoption requests.");
       }
       
-      const userId = user.profile.private.user_id;  // Get the user's ID from their profile
-      const email = user.profile.public.email;
-      console.log("Getting username by ID");
+      const {email} = user.profile.public;
       
       // Ensure that we're calling getUsernameById only for RegularUser
-      const username = await helpers.getUsernameById(user.profile.private.user_id);
+      const username = await helpers.getUsernameById((await helpers.getCurrentUserId()));
     
       // Fetch the animal's data (org_id)
       const { data: animal, error: animalError } = await supabase
@@ -563,7 +554,7 @@ const helpers: HelperFunctions = {
           org_id: animal.org_id,
           user_email: email,      // Insert the logged-in user's email
           user_name: username,  // Insert the logged-in user's username
-          description: description  // The description provided for the adoption request
+          description  // The description provided for the adoption request
         });
     
       if (insertError) {
@@ -609,13 +600,12 @@ const helpers: HelperFunctions = {
     ,
 
     getOrgAdoptionRequestsForDashboard: async (): Promise<Request[]> => {
-      console.log("Getting current user for adoption requests.");
       const user = await helpers.getCurrentUser();
       if (user.type !== 'Organization') {
           throw new Error("Only organizations can view their adoption requests.");
       }
     
-      const orgId = user.profile.private.id; // Assuming 'id' in private profile corresponds to org_id
+      const orgId = await helpers.getCurrentUserId(); // Assuming 'id' in private profile corresponds to org_id
       const { data, error } = await supabase
         .from('adoption_requests')
         .select('*')
@@ -666,11 +656,11 @@ const helpers: HelperFunctions = {
   //   }
   // }
 
-  //supabase: undefined
+  // supabase: undefined
 };
 
 export default helpers;
-export {supabase};
+// export {supabase};
 
 // Local functions that shouldn't be exported go here
 

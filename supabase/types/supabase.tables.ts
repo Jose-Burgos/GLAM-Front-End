@@ -10,7 +10,7 @@ export type Animal = Table<'animals'> & {
   species: Table<'species'>;
 };
 
-export type Request = Table<'adoption_requests'>;
+export type Request = Table<'requests'>;
 
 export type OrgType = 'Organization';
 export type UserType = 'RegularUser';
@@ -52,7 +52,7 @@ export enum RequestStates {
   cancelled = 4,
 }
 
-export type AdoptionRequest = Table<'adoption_requests'>;
+export type AdoptionRequest = Table<'requests'>;
 
 export type SpeciesData = Table<'species'>;
 

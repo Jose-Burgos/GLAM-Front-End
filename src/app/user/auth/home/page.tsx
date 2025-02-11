@@ -5,11 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { Animal, Request } from '~/supabase/types/supabase.tables';
 import HelperFunctions from '~/supabase/helpers';
 import { useSearchParams } from 'next/navigation';
-import supabase from '~/supabase/helpers';
 import AnimalCard from '@/components/animalCard';
 import DonationHistory from '@/components/donations';
 import NotificationsHistory from '@/components/notifications';
-import { Text } from "@chakra-ui/react";
 import {
   Box,
   Flex,
@@ -20,10 +18,11 @@ import {
   CircularProgress,
   GridItem,
   Heading,
+  Text
 } from '@chakra-ui/react';
 import AdminSidebarResponsive from '@/components/adminSidebar';
 
-import PetCard, { PetCardForAdopted } from '@/components/petcard';
+import PetCardForAdopted from '@/components/petcard';
 import { Separator } from '@/components/separator';
 
 /* export default function animalInfo() {
@@ -54,7 +53,6 @@ import { Separator } from '@/components/separator';
 
 export default function UserDashboard() {
 
-  /* Request Info*/
   const [cardData, setCardData] = useState<Animal[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -83,7 +81,7 @@ export default function UserDashboard() {
         }
 
         // Obtener detalles de cada animal de las solicitudes
-        const animalDetailsPromises = requestData.map(async (request) => {
+        const animalDetailsPromises = requestData.map(async (request:any) => {
           console.log(request);
           return HelperFunctions.getAnimalById(request.animal_id);
         });
@@ -162,7 +160,7 @@ export default function UserDashboard() {
                               name={card.name}
                               description={card.breed}
                               species_id={card.species_id}
-                              isLoggedIn={true}
+                              isLoggedIn
                             />
                           </GridItem>
                         ))}

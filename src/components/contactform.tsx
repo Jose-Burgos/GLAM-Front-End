@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 
 import helpers from '~/supabase/helpers';
-import HelperFunctions from '~/supabase/helpers';  // Ensure you have the right import path
 
 interface ContactFormProps {
   animalId: string; // Accept animalId as a prop
@@ -29,7 +28,7 @@ export default function ContactForm({ animalId }: ContactFormProps) {
 
   // Validation function
   const validate = () => {
-    let tempErrors = { email: '', message: '' };
+    const tempErrors = { email: '', message: '' };
     let isValid = true;
 
     // Validate message
@@ -61,7 +60,7 @@ export default function ContactForm({ animalId }: ContactFormProps) {
         const description = values.message; // Message as description
 
         // Call the helper function to create the adoption request
-        const response = await HelperFunctions.createAdoptionRequest(animalId, description);
+        const response = await helpers.createAdoptionRequest(animalId, description);
 
         // Show success message
         setSubmitStatus(response.message);

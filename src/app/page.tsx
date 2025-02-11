@@ -229,7 +229,7 @@ export default function Landing() {
         name={card.name}
         description={card.breed}
         species_id={card.species_id}
-        isLoggedIn={true}
+        isLoggedIn
       />
     </GridItem>
   ))

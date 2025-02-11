@@ -160,12 +160,12 @@ export default function OngInfo() {
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    {/* <ContactForm /> */}
                   </Center>
                 </TabPanel>
                 <TabPanel>
                   <Center>
-                    <ContactForm />
+                    {/* <ContactForm /> */}
                   </Center>
                 </TabPanel>
                 <TabPanel>
@@ -188,7 +188,7 @@ export default function OngInfo() {
                               name={card.name}
                               description={card.breed}
                               species_id={card.species_id}
-                              isLoggedIn={true}
+                              isLoggedIn
                             />
                           </GridItem>
                         ))
@@ -223,7 +223,7 @@ export default function OngInfo() {
                               name={card.name}
                               description={card.breed}
                               species_id={card.species_id}
-                              isLoggedIn={true}
+                              isLoggedIn
                             />
                           </GridItem>
                         ))

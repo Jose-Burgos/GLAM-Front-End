@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useEffect, useState } from 'react';
 import { Request } from '~/supabase/types/supabase.tables'; // Use the Request type
 import supabase from '~/supabase/helpers';
@@ -81,9 +82,8 @@ export default function UserDashboard() {
       await supabase.deleteRequest(requestId); 
 
       // Remove the rejected request from the state
-      setAdoptionRequests(adoptionRequests.filter(request => request.request_id !== requestId));
-
-      console.log(`Request with ID: ${requestId} has been rejected and removed from the database.`);
+      console.log(`Request with ID: ${requestId} has been rejected.`);
+      setAdoptionRequests(adoptionRequests.filter((request:any) => request.request_id !== requestId));
     } catch (error) {
       console.error("Error rejecting request:", error.message);
     }
@@ -105,7 +105,7 @@ export default function UserDashboard() {
           <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing="24px">
             {/* Render adoption request cards */}
             {adoptionRequests.length > 0 ? (
-              adoptionRequests.map((request, index) => (
+              adoptionRequests.map((request:any, index) => (
                 <Box
                   key={request.request_id || index}  // Use 'request_id' as key or fallback to 'index'
                   h={250}  // Increase height to accommodate buttons
@@ -127,7 +127,7 @@ export default function UserDashboard() {
                     <Text fontWeight="bold" fontSize="lg">
                       Mascota: {animalNames[request.animal_id] || 'Animal sin nombre'}  {/* Display animal's name */}
                     </Text>
-                    <Text>{'Pendiente'}</Text> {/* Display static 'Pending' as per your current logic */}
+                    <Text>Pendiente</Text> {/* Display static 'Pending' as per your current logic */}
                   </VStack>
 
                   {/* Buttons at the bottom */}

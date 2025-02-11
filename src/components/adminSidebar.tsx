@@ -19,7 +19,6 @@ import {
   useDisclosure,
   useColorMode,
 } from '@chakra-ui/react';
-import React from 'react';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
 import { Separator } from './separator';
@@ -36,7 +35,7 @@ import {
 } from '@/assets/icons/icons';
 import AuthContext from '@/hooks/authContext';
 import helpers from '~/supabase/helpers';
-import { useState, useEffect, useRef, useContext } from 'react';
+import  React, { useState, useEffect, useRef, useContext } from 'react';
 
 interface Routes {
   path: string;
@@ -134,13 +133,13 @@ export default function AdminSidebarResponsive(props: any) {
         {
           path: `/${type}/animals?owner=${session.user.id}`,
           name: 'Mis Animales',
-          icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+          icon: <PawPrintIcon color='black' w="26px" h="26px" me="0px" />,
           rolesAllowed: ['ong'],
         },
         {
           path: `/${type}/auth/requests?owner=${name || ''}`,
           name: 'Mis Solicitudes',
-          icon: <PawPrintIcon color={'black'} w="26px" h="26px" me="0px" />,
+          icon: <PawPrintIcon color='black' w="26px" h="26px" me="0px" />,
           rolesAllowed: ['user'],
         },
       ]

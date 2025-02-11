@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
 import NextLink from 'next/link';
 import SidebarResponsive from './sidebarResonsive';
 import AuthContext from '@/hooks/authContext';
-import HelperFunctions from '~/supabase/helpers';
 import helpers from '~/supabase/helpers';
 
 let session: any;
@@ -74,7 +73,7 @@ export default function NavBar(props: any) {
   };
   useEffect(() => {
     const checkSession = async () => {
-      const session = await HelperFunctions.getSession();
+      const session = await helpers.getSession();
       if (session) {
         logIn();
       }

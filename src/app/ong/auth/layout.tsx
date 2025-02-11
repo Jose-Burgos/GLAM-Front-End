@@ -3,7 +3,7 @@
 import { Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import supabase from '~/supabase/helpers';
+import helpers from '~/supabase/helpers';
 
 export default function RootLayout({
   children,
@@ -14,7 +14,7 @@ export default function RootLayout({
   const router = useRouter();
   useEffect(() => {
     (async () => {
-      const user = await supabase.getSession();
+      const user = await helpers.getSession();
       if (user == null) {
         router.push('/login');
       }

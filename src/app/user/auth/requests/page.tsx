@@ -50,7 +50,7 @@ export default function Landing() {
         }
 
         // Obtener detalles de cada animal de las solicitudes
-        const animalDetailsPromises = requestData.map(async (request) => {
+        const animalDetailsPromises = requestData.map(async (request:any) => {
           console.log(request);
           return HelperFunctions.getAnimalById(request.animal_id);
         });
@@ -127,7 +127,7 @@ export default function Landing() {
                               name={card.name}
                               description={card.breed}
                               species_id={card.species_id}
-                              isLoggedIn={true}
+                              isLoggedIn
                             />
                           </GridItem>
                         ))}
